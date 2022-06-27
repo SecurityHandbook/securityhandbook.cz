@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<link rel="preload" as="style" href="https://securityhandbook.cz/resources/css/main_alpha.css">
+<link href="https://securityhandbook.cz/resources/css/main_alpha.css" rel="stylesheet" media="screen">
+<link href="https://securityhandbook.cz/resources/css/fonts_min.css" rel="stylesheet">
+<title>Příručka bezpečnosti: OS Windows</title>
+<meta name="description" content="Zabezpečení OS Windows.">
+<meta property="og:title" content="Příručka bezpečnosti: OS Windows">
+<meta property="og:description" content="Zabezpečení OS Windows.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="HandheldFriendly" content="True">
+<meta name="theme-color" content="#323e4e">
+</head>
+<body>
+<header>
+<div class="hcontent">
+  <a href="https://securityhandbook.cz/cs/index.php">FAQ – Velká příručka bezpečnosti</a>
+  <img src="https://securityhandbook.cz/img/shield.png" alt="logo">
+</div></header>
+<nav>
+<div class="navcontent" id="bignav">
+  <a href="https://securityhandbook.cz/cs/index.php#basics"><strong>Základy bezpečnosti</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>OS Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>OS Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>OS Android</strong></a>
+</div>
+<div class="navcontent" id="smallnav">
+  <a href="https://securityhandbook.cz/cs/index.php"><strong>Základy</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>Android</strong></a>
+</div>
+</nav>
+<main>
+<article><div class="text">
+<h2><a href="#wnt">OS Windows</a></h2>
+<ul>
+  <li><a href="#wnt1">Základní bezpečnostní nastavení</a></li>
+  <li><a href="#wnt2">Ochrana proti malware</a></li>
+  <li><a href="#wnt3">Zabezpečení internetového prohlížeče</a></li>
+  <li><a href="#wnt4">Doporučené bezpečnostní konfigurace</a></li>
+</ul><br>
+<div class="spoilwrapper" id="tree"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Obsah" data-hide="▼ Obsah">► Obsah</span></div>
+<div class="spoilcontent">
+<ul>
+<li><a href="https://securityhandbook.cz/cs/index.php#basics">Základy bezpečnosti</a></li>
+<li><a href="https://securityhandbook.cz/cs/wnt/index.php#wnt">OS Windows</a></li>
+<li><a href="https://securityhandbook.cz/cs/lnx/index.php#lnx">OS Linux</a></li>
+<li><strong>FAQ – chytrá zařízení (chytré telefony, IoT)</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/iot/andr.php#andr">OS Android</a></li>
+</ul></li>
+<li><strong>FAQ pro pokročilé</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows</a></li>
+  <li><a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux</a></li>
+</ul></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+</div></div>
+</div></article><br>
+<article id="wnt"><div class="text">
+<h1>OS Windows</h1>
+<p>Windows se jakožto nejrozšířenější desktopový OS těší velké pozornosti hackerů, jeho dostatečné zabezpečení je proto nezbytné.</p>
+<p>Podporovanými verzemi Windows jsou <span class="green">Windows 10 May 2020 Update</span> jakožto aktuální verze OS a <strong>Windows 8.1 Update 3</strong>. Starší verze OS by neměly být používány. Informace pro Windows 8.1 jsou v kapitole standardně označeny dodatkem &bdquo;<em>(starší verze Windows)</em>&ldquo;.</p>
+<p>Tato část příručky je určena běžným a středně pokročilým uživatelům. Část pro pokročilé naleznete <a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">zde</a>.</p>
+<h4>Sekce kapitoly:</h4>
+<ul>
+<li><a href="#wnt1">Základní bezpečnostní nastavení</a></li>
+<li><a href="#wnt2">Ochrana proti malware</a></li>
+<li><a href="#wnt3">Zabezpečení internetového prohlížeče</a></li>
+<li><a href="#wnt4">Doporučené bezpečnostní konfigurace</a></li>
+</ul>
+<br>
+<h2 id="wnt1">Základní bezpečnostní nastavení</h2>
+
+<h3 id="wnt1.1">Práce pod Standardním uživatelem:</h3>
+<p>OS Windows má dva typy uživatelských účtů: <span class="green">Standardní uživatel</span> a <span class="green">Správce</span>.</p>
+<p>Z hlediska bezpečnosti je nezbytné provádět denní činnosti pod Standardním uživatelem, jelikož má omezená oprávnění, která jsou pro práci plně dostačující. Pokud se do OS i přes všechny vrstvy ochrany dostane malware, infikuje pouze uživatelský účet – na infikaci OS nebude mít potřebná oprávnění.</p>
+<div class="alert exclaim"><p><em class="icon-attention"></em><strong>Varování</strong><br>
+Jedná se o naprostý základ zabezpečení OS, bez kterého jsou veškerá další opatření zbytečná.</p></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Přidání účtu Správce a změna stávajícího uživatele na Standardního" data-hide="▼ Přidání účtu Správce a změna stávajícího uživatele na Standardního">► Přidání účtu Správce a změna stávajícího uživatele na Standardního</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Nastavení</span>. Rozklikněte kategorii <strong>Účty</strong> a následně zvolte podkategorii <span class="green">Rodina a jiní uživatelé</span>.</li>
+<li>Klikněte na tlačítko <span class="green">Přidat do tohoto počítače někoho dalšího</span>.</li>
+<li style="list-style-type: none"><img alt="wntus" src="https://securityhandbook.cz/img/cs/wntus.png"></li>
+<li>Otevře se dialog pro přidání nového uživatele. V levém dolním rohu klikněte na <span class="green">Nemám přihlašovací údaje této osoby</span>.</li>
+<li>V levém dolním rohu zvolte možnost <span class="green">Přidat uživatele bez účtu Microsoft</span>.</li>
+<li>Zadejte název účtu Správce (např. <strong>Admin</strong>) a zvolte pro něj silné bezpečné heslo. Vyplňte bezpečnostní otázky a klikněte na <span class="green">Další</span>.</li>
+<li style="list-style-type: none"><img alt="wntus1" src="https://securityhandbook.cz/img/cs/wntus1.png"></li>
+<li>V seznamu jiných uživatelů se zobrazí účet <strong>Admin</strong>. Klikněte na něj a následně zvolte <span class="green">Změnit typ účtu</span>.</li>
+<li style="list-style-type: none"><img alt="wntus2" src="https://securityhandbook.cz/img/cs/wntus2.png"></li>
+<li>Zobrazí se dialog pro změnu typu účtu. Ze seznamu zvolte možnost <span class="green">Správce</span> a klikněte na <span class="green">OK</span>.</li>
+<li style="list-style-type: none"><img alt="wntus3" src="https://securityhandbook.cz/img/cs/wntus3.png"></li>
+<li>Odhlaste se z vašeho účtu a přihlaste se jako <strong>Admin</strong>.</li>
+<li>Otevřete si <span class="green">Nastavení</span>. Rozklikněte kategorii <strong>Účty</strong> a následně zvolte podkategorii <span class="green">Rodina a jiní uživatelé</span>.</li>
+<li>V seznamu jiných uživatelů nalezněte svůj účet, klikněte na něj a následně zvolte <span class="green">Změnit typ účtu</span>.</li>
+<li>Zobrazí se dialog pro změnu typu účtu. Ze seznamu zvolte možnost <span class="green">Standardní uživatel</span> a klikněte na <span class="green">OK</span>.</li>
+<li>Odhlaste se z administrátorského účtu a přihlaste se zpět na svůj uživatelský účet.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Přidání účtu Správce a změna stávajícího uživatele na Standardního (starší verze Windows)" data-hide="▼ Přidání účtu Správce a změna stávajícího uživatele na Standardního (starší verze Windows)">► Přidání účtu Správce a změna stávajícího uživatele na Standardního (starší verze Windows)</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Nastavení</span>. Rozklikněte kategorii <strong>Účty</strong> a následně zvolte podkategorii <span class="green">Jiné účty</span>.</li>
+<li>Zvolte možnost <span class="green">Přidat účet</span>.</li>
+<li>Otevře se dialog pro přidání nového uživatele. V pravém dolním rohu klikněte na <span class="green">Přihlásit se bez účtu Microsoft</span>.</li>
+<li>Klikněte na tlačítko <span class="green">Místní účet</span>.</li>
+<li>Zadejte název účtu Správce (např. <strong>Admin</strong>) a zvolte pro něj silné bezpečné heslo.</li>
+<li>Potvrďte přidání uživatele (<span class="green">Dokončit</span>).</li>
+<li>V seznamu dalších účtů se zobrazí účet <strong>Admin</strong>. Klikněte na něj a následně zvolte <span class="green">Upravit</span>.</li>
+<li style="list-style-type: none"><img alt="wntusleg" src="https://securityhandbook.cz/img/cs/wntusleg.png"></li>
+<li>Zobrazí se dialog pro změnu typu účtu. Ze seznamu zvolte možnost <span class="green">Správce</span> a klikněte na <span class="green">OK</span>.</li>
+<li style="list-style-type: none"><img alt="wntusleg1" src="https://securityhandbook.cz/img/cs/wntusleg1.png"></li>
+<li>Odhlaste se z vašeho účtu a přihlaste se jako <strong>Admin</strong>.</li>
+<li>Otevřete si <span class="green">Nastavení</span>. Rozklikněte kategorii <strong>Účty</strong> a následně zvolte podkategorii <span class="green">Jiné účty</span>.</li>
+<li>V seznamu dalších účtů nalezněte svůj účet, klikněte na něj a následně zvolte <span class="green">Upravit</span>.</li>
+<li>Zobrazí se dialog pro změnu typu účtu. Ze seznamu zvolte možnost <span class="green">Standardní uživatel</span> a klikněte na <span class="green">OK</span>.</li>
+<li>Odhlaste se z administrátorského účtu a přihlaste se zpět na svůj uživatelský účet.</li>
+</ul></div></div>
+<br>
+
+<h3 id="wnt1.2">User Account Control:</h3>
+<p><em>User Account Control</em> je důležitá součást bezpečnostního modelu již OS od <strong>Windows Vista</strong>, kde se dočkala obrovské kritiky ze strany uživatelů a v novějších verzích OS je od té doby ve výchozím nastavením oslabena. Je důrazně doporučeno konfiguraci UAC zvýšit na nejpřísnější úroveň.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Nastavení UAC" data-hide="▼ Nastavení UAC">► Nastavení UAC</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stiskněte kláv. zkratku <img alt="win" src="https://securityhandbook.cz/img/icons/wkey.png"> <span class="ks">+ R</span>, do textového pole zadejte:</li>
+<li style="list-style-type: none"><pre><code>useraccountcontrolsettings</code></pre>
+a stiskněte <strong>Enter</strong>.</li>
+<li>Otevře se konfigurace UAC. Posuvník nastavte na nejvyšší úroveň.</li>
+<li style="list-style-type: none"><img alt="uac" src="https://securityhandbook.cz/img/cs/uac.png"></li>
+<li>Klikněte na <span class="green">OK</span>.</li>
+</ul></div></div>
+<br>
+
+<h3 id="wnt1.3">Bezpečné nastavení služeb a funkcí Windows:</h3>
+<p><img alt="batch" src="https://securityhandbook.cz/img/icons/bat.png"> <strong>WNTSec</strong>:</p>
+<ul>
+<li>Stáhněte si <a download="wntsec.zip" href="https://github.com/cuffeax/WNT_scripts/releases/download/v1.0/wntsec_cs.zip">WNTSec</a>.</li>
+<li>Uložte a obsah archivu vyextrahujte <span class="blue">na Plochu</span>.</li>
+<li>Na skript jménem <span class="green">wntsec</span> klikněte pravým tlačítkem a zvolte možnost: <img alt="admin" src="https://securityhandbook.cz/img/icons/admin.png"> <strong>Spustit jako správce</strong>.</li>
+<li>Nechte skript pracovat, na konci procesu vám řekne o souhlas k restartu OS.</li>
+</ul>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Nastavení SmartScreen (starší verze Windows)" data-hide="▼ Nastavení SmartScreen (starší verze Windows)">► Nastavení SmartScreen (starší verze Windows)</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stiskněte kláv. zkratku <img alt="win" src="https://securityhandbook.cz/img/icons/wkey.png"> <span class="ks">+ R</span>, do textového pole zadejte:</li>
+<li style="list-style-type: none"><pre><code>smartscreensettings</code></pre>
+a stiskněte <strong>Enter</strong>.</li>
+<li>Otevře se nastavení SmartScreen filtru. Upravte jej dle obrázku:</li>
+<li style="list-style-type: none"><img alt="smartscreen" src="https://securityhandbook.cz/img/cs/smartscreen.png"></li>
+<li>Klikněte na <span class="green">OK</span>.</li>
+</ul></div></div>
+<br>
+
+<h3 id="wnt1.4">Bezpečné nastavení sítě:</h3>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace síťového adaptéru + DNS" data-hide="▼ Konfigurace síťového adaptéru + DNS">► Konfigurace síťového adaptéru + DNS</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stiskněte kláv. zkratku <img alt="win" src="https://securityhandbook.cz/img/icons/wkey.png"> <span class="ks">+ R</span>, do textového pole zadejte:</li>
+<li style="list-style-type: none"><pre><code>ncpa.cpl</code></pre>
+a stiskněte <strong>Enter</strong>.</li>
+<li>Otevře se seznam síťových adaptérů. Klikněte na první adaptér (obvykle ethernet) pravým tlačítkem a zvolte možnost <span class="green">Vlastnosti</span>.</li>
+<li style="list-style-type: none"><img alt="wntnet" src="https://securityhandbook.cz/img/cs/wntnet.png"></li>
+<li>V seznamu odškrtněte všechny nepotřebné položky. Běžným uživatelům stačí ponechat pouze <span class="green">Sdílení souborů a tiskáren v sítích Microsoft</span>, <span class="green">Protokol IP verze 4 (TCP/IPv4)</span> a <span class="green">Protokol IP verze 6 (TCP/IPv6)</span>.</li>
+<li>Pokud nesdílíte žádnou tiskárnu v síti a nepoužíváte IPv6 (pokud nevíte, zdali používáte IPv6, můžete to zjistil pomocí následujícího rychlého <a target="_blank" rel="noopener"href="http://www.test-ipv6.cz/">online testu</a>), můžete pro vyšší bezpečnost ponechat zaškrtnutý pouze <span class="green">Protokol IP verze 4 (TCP/IPv4)</span>.</li>
+<li style="list-style-type: none"><img alt="wntnet1" src="https://securityhandbook.cz/img/cs/wntnet1.png"></li>
+<li>Klikněte na <strong>Protokol IP verze 4 (TCP/IPv4)</strong> a zvolte možnost <span class="green">Vlastnosti</span>.</li>
+<li style="list-style-type: none"><img alt="wntnet2" src="https://securityhandbook.cz/img/cs/wntnet2.png"></li>
+</ul>
+<div class="alert success"><p><em class="icon-ok-circled"></em><strong>Úspěch</strong><br>
+Potenciálně nebezpečné protokoly jsou nyní vypnuty. Dále nastavíme bezpečné DNS servery.</p></div>
+<ul>
+<li>Pokud vám zkratka DNS nic neříká, přečtěte si tento <a target="_blank" rel="noopener" href="https://www.nic.cz/page/312/o-domenach-a-dns/">krátký článek</a>.</li>
+<li>Klikněte na <span class="green">Použít následující adresy serverů DNS</span> a do kolonek vepište následující DNS servery:</li>
+<li style="list-style-type: none"><pre><code>193.17.47.1
+185.43.135.1</code></pre></li>
+<li style="list-style-type: none"><img alt="wntnet3" src="https://securityhandbook.cz/img/cs/wntnet3.png"></li>
+<li>Klikněte na tlačítko <span class="green">Upřesnit…</span></li>
+<li>V horním panelu se přesuňte do záložky <strong>WINS</strong> a zvolte možnost <span class="green">Zakázat rozhraní NetBIOS nad protokolem TCP/IP</span>.</li>
+<li style="list-style-type: none"><img alt="wntnet4" src="https://securityhandbook.cz/img/cs/wntnet4.png"></li>
+<li>Klikněte na <span class="green">OK</span>.</li>
+<li>Klikněte na <span class="green">OK</span> a okno zavřete.</li>
+</ul>
+<div class="alert exclaim"><p><em class="icon-attention"></em><strong>Varování</strong><br>
+Pro dosáhnutí kýženého efektu je nutné kompletní postup aplikovat pro všechny síťové adaptéry v seznamu – obvykle Wi-Fi modul.</p></div>
+</div></div>
+<br>
+
+<h3 id="win1.5">Další bezpečnostní nastavení:</h3>
+<ul>
+<li>Vypněte Usnadnění přístupu na přihlašovací obrazovce – součást skriptu <em>WinSecOpt</em>.</li>
+<li>Vypněte AutoPlay:</li>
+</ul><ul>
+<li style="list-style-type: none"><div class="spoilwrapper"><div class="spoiltitle"><span class="spoilbtn" data-show="► Návod" data-hide="▼ Návod">► Návod</span></div>
+<div class="spoilcontent">
+<ul>
+  <li>Otevřete si <span class="green">Nastavení.</span> Rozklikněte kategorii <strong>Zařízení</strong> a následně zvolte podkategorii <span class="green">Automatické přehrávání</span>.</li>
+<li>Automatické přehrávání vypněte.</li>
+<li style="list-style-type: none"><img alt="autoplay" src="https://securityhandbook.cz/img/cs/autoplay.png"></li>
+</ul></div></div></li>
+</ul><ul>
+<li>Vypněte Remote Assistance:</li>
+<li style="list-style-type: none"><div class="spoilwrapper"><div class="spoiltitle"><span class="spoilbtn" data-show="► Návod" data-hide="▼ Návod">► Návod</span></div>
+<div class="spoilcontent">
+<ul>
+  <li>Stiskněte kláv. zkratku <img src="https://securityhandbook.cz/img/icons/wkey.png" alt="win"> <span class="ks">+ R</span>, do textového pole zadejte:</li>
+  <li style="list-style-type: none"><pre><code>sysdm.cpl</code></pre>
+  a stiskněte <strong>Enter</strong>.</li>
+  <li>Zobrazí se Vlastnosti systému.</li>
+  <li>Přesuňte se do záložky <strong>Vzdálený přístup</strong> a <span style="color: #BF0000">odstraňte</span> zatržítko u položky <span class="green">Povolit připojení vzdálené pomoci k tomuto počítači</span>.</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/sysdm.png" alt="sysdm"></li>
+  <li>Klikněte na <span class="green">OK</span>.</li>
+</ul></div></div></li></ul>
+
+<br><br><hr><br>
+
+<h2 id="wnt2">Ochrana proti malware</h2>
+<p>Jako nejúčinnější metoda ochrany proti malware se osvědčila bezpečnostní konfigurace skládající se z více vrstev (<em>&bdquo;layered config&ldquo;</em>) – pokud selže jedna vrstva, nastupuje druhá. Bohužel stále není neobvyklé spoléhání se pouze na jednu tradiční vrstvu – antivirus – což je z hlediska bezpečnosti tristní.</p>
+<p>Samotný OS poskytuje jistou úroveň ochrany proti malware, která se liší v závislosti na verzi a edici OS. V základním nastavení nejsou všechny bezpečnostní funkce zapnuty či korektně nastaveny.</p>
+<br>
+
+<h3 id="wnt2.1">Aktualizace OS a SW:</h3>
+<p>Je důležité mít aktuální verzi veškerého SW, jelikož nové verze často opravují mnoho bezpečnostních chyb. Neaktuální děravý SW je implicitně nebezpečný.</p>
+<p>Windows by se měly ve výchozím nastavení aktualizovat samy (v edici <em>Home</em> automatické aktualizace dokonce nelze vypnout). Důležité aplikace (např. prohlížeče, Adobe Reader) se zpravidla aktualizují automaticky.</p>
+<p>Pro kontrolu aktualizací ostatního SW aktuálně neexistuje ideální aplikace.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Kontrola nastavení aktualizací OS (starší verze Windows)" data-hide="▼ Kontrola nastavení aktualizací OS (starší verze Windows)">► Kontrola nastavení aktualizací OS (starší verze Windows)</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stiskněte kláv. zkratku <img alt="win" src="https://securityhandbook.cz/img/icons/wkey.png"> <span class="ks">+ R</span>, do textového pole zadejte:</li>
+<li style="list-style-type: none"><pre><code>wuapp</code></pre>
+a stiskněte <strong>Enter</strong>.</li>
+<li>V levém panelu klikněte na tlačítko <span class="green">Změnit nastavení</span>.</li>
+<li>Zkontrolujte, že <strong>důležité aktualizace</strong> mají zvolenou možnost <span class="green">Instalovat aktualizace automaticky (doporučeno)</span>, případně napravte.</li>
+<li>Zkontrolujte, že je <span style="color: #BF0000">odstraněné</span> zatržítko u možnosti <span class="green">Získávat doporučené aktualizace stejným způsobem jako důležité aktualizace</span>, případně napravte.</li>
+<li>Klikněte na <span class="green">OK</span> a okno zavřete.</li>
+</ul></div></div>
+<br>
+
+<h3 id="wnt2.2">Windows Defender:</h3>
+<p>Windows Defender je integrovaný komplexní bezpečnostní systém, jenž spolehlivě pokrývá vrstvy zabezpečení <strong>antivirus / antimalware</strong>, <strong>firewall</strong> i <strong>anti-exploit</strong>.</p>
+<p>Antivirus nebo antimalware (AV/M) je uživateli často chápán jako vrstva zabezpečení, která sama o sobě stačí k zabezpečení OS. Tato teze již dlouhou dobu není pravdivá. Tradiční antimalware ochrana nicméně má v bezpečnostní konfiguraci své místo, a je integrována v rámci systému <em>Windows Defender</em>.</p>
+<div class="alert exclaim"><p><em class="icon-attention"></em><strong>Varování</strong><br>
+Instalace antivirových řešení třetích stran je důrazně nedoporučena.</p></div>
+<p>Vestavěný bezpečnostní systém je vysoce robustní a pro běžné využití plně dostačující. Výjimku z výše uvedeného tvoří profesionální kvalitní bezpečnostní produkty, kterých na trhu pro domácí použití není mnoho, za které si uživatel musí řádně zaplatit, a o jejichž reálném přínosu lze polemizovat. Jako nejrozumnější takovou investicí se v současnosti jeví <a target="_blank" rel="noopener" href="https://home.sophos.com/en-us.aspx">Sophos Home Premium</a>, který představuje přívětivou možnost vysoké úrovně ochrany až pro deset zařízení v domácnosti (Windows/Mac) a nabízí další užitečné funkce, mezi které zatím ovšem nepatří česká lokalizace.</p>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Rozebrání problematiky antivirů" data-hide="▼ Rozebrání problematiky antivirů">► Rozebrání problematiky antivirů</span></div>
+<div class="spoilcontent">
+<p>Tradiční mechanismus antiviru je založen na detekci známého malware, jehož otisk má v databázi. Pokud otisk pro malware neexistuje, nebude vyhodnocen jako škodlivý.</p>
+<p>Novější technologií je <em>heuristika</em>: škodlivost kódu je vyhodnocena podle aktivity po jeho spuštění (vzorek je testován v izolovaném prostředí), na základě předvolených pravidel a indikací, které jsou u vzorku pozorovány. Provede-li malware nekalou činnost, která není heuristickými pravidly označena jako škodlivá, malware bude vyhodnocen jako neškodný.</p>
+<p>Obejít výše zmíněné postupy není příliš náročné. Nejnovějším trendem je využití velkých dat a <em>AI</em> pro detekci malware. Tyto pokročilé technologie jsou zpravidla implementovány pouze v enterprise placených produktech nepřístupných běžným uživatelům (např. <a target="_blank" rel="noopener" href="https://www.sentinelone.com/">SentinelOne</a>), nicméně ani ty nejsou nepřůstřelné.</p>
+<p>Detekce <strong>Windows Defender</strong> je na velmi dobré úrovni. Jedná se o výchozí AV/M řešení na instalacích aktuálních verzí OS – počet uživatelů zvyšuje šanci zachytit nový malware. Implementuje vyspělý cloudový systém, díky kterému nabízí užitečné pokročilé funkce (např. <em>block on first sight</em>).</p>
+</div></div>
+<br>
+
+<h4 id="wnt2.2.1">Ochrana proti tradičnímu malware:</h3>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace Ochrany před viry a hrozbami" data-hide="▼ Konfigurace Ochrany před viry a hrozbami">► Konfigurace Ochrany před viry a hrozbami</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Otevřete si <span class="green">Centrum zabezpečení v programu Windows Defender</span>.</li>
+  <li>Rozklikněte kategorii <strong>Ochrana před viry a hrozbami</strong>.</li>
+  <li>Tlačítkem <span class="green">Spravovat nastavení</span> otevřete nastavení ochrany před viry a hrozbami.</li>
+  <li>Zkontrolujte konfiguraci ochrany a případně opravte:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdmal.png" alt="wdmal"></li>
+  </ul>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace Ochrany na základě reputace" data-hide="▼ Konfigurace Ochrany na základě reputace">► Konfigurace Ochrany na základě reputace</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Přesuňte se do kategorie <strong>Řízení aplikací a prohlížečů</strong>.</li>
+  <li>Otevřete <span class="green">Nastavení Ochrany na základě reputace</span>.</li>
+  <li>Zkontrolujte konfiguraci SmartScreen filtru a případně opravte:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdmal1.png" alt="wdmal1"></li>
+  </ul>
+</div></div>
+<br>
+
+<p>Ve starší verzi OS <strong>Windows 8.1 Update 3</strong> obsahuje <em>Windows Defender</em> podstatně méně funkcí, stále jej ovšem lze rozumně použít pro bezplatnou ochranu proti tradičnímu malware.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace Ochrany před viry a hrozbami (starší verze Windows)" data-hide="▼ Konfigurace Ochrany před viry a hrozbami (starší verze Windows)">► Konfigurace Ochrany před viry a hrozbami (starší verze Windows)</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Otevřete si <span class="green">Windows Defender</span>.</li>
+  <li>Přesuňte se do záložky <strong>Nastavení</strong> a zvolte podkategorii <span class="green">Ochrana v reálném čase</span>.</li>
+  <li>Zkontrolujte zatržítko u volby <span class="green">Zapnout ochranu v reálném čase</span>.</li>
+  <li>Přesuňte se do podkategorie <strong>Upřesnit</strong>. Zkontrolujte konfiguraci ochrany a případně opravte:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdleg.png" alt="wdleg"></li>
+  <li>Přesuňte se do podkategorie <strong>Komunita MAPS</strong>. Zkontrolujte konfiguraci ochrany a případně opravte:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdleg1.png" alt="wdleg1"></li>
+  <li>Přesuňte se do podkategorie <strong>Správce</strong> a zkontrolujte zatržítko u volby <span class="green">Zapnout tuto aplikaci</span>.</li>
+  <li>Případné změny uložte a aplikaci zavřete.</li>
+  </ul>
+</div></div>
+<br>
+
+<h4 id="wnt2.2.2">Ochrana proti ransomware:</h4>
+<p><strong>Řízený přístup ke složkám</strong> je velice cenná a důležitá integrovaná bezpečnostní funkce, která spravuje přístup aplikací k obsahu uživatelských složek. Na základě pravidel zhodnotí, zdali je pokus o přístup ze strany aplikace legitimní, a pokud vyhodnotí pokus o přístup jako podezřelý/nestandardní, odepře jej.</p>
+<p>Zmíněná funkce prozatím není ve výchozím nastavení aktivována, jelikož čas od času chybně vyhodnotí pokus o přístup legitimní aplikace k souborům a odepře jej. Takovým aplikacím se následně musí v nastavení povolit přístup několika kliknutími.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace Řízeného přístupu ke složkám" data-hide="▼ Konfigurace Řízeného přístupu ke složkám">► Konfigurace Řízeného přístupu ke složkám</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Otevřete si <span class="green">Centrum zabezpečení v programu Windows Defender</span>.</li>
+  <li>Přesuňte se do kategorie <strong>Ochrana před viry a hrozbami</strong>.</li>
+  <li>Na konci stránky zvolte <span class="green">Spravovat ochranu před ransomwarem</span>.</li>
+  <li>Zapněte <span class="green">Řízený přístup ke složkám</span>.</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdrans.png" alt="wdrans"></li>
+  <li>Ve výchozím nastavení jsou chráněny složky <strong>Dokumenty</strong>, <strong>Obrázky</strong>, <strong>Videa</strong> a <strong>Hudba</strong>.</li>
+  <li>Pro přidání chráněné složky (např. Plochy) klikněte na <span class="green">Chráněné složky</span>, zvolte <span class="green">Přidat chráněnou složku</span>, nalezněte cestu k dané složce a potvrďte.</li>
+  </ul>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Manuální povolení aplikace v Řízeném přístupu ke složkám" data-hide="▼ Manuální povolení aplikace v Řízeném přístupu ke složkám">► Manuální povolení aplikace v Řízeném přístupu ke složkám</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Ve <strong>správě ochrany před ransomwarem</strong> zvolte <span class="green">Povolit aplikace v Řízeném přístupu ke složkám</span>.</li>
+  <li>Klikněte na <span class="green">Přidat povolenou aplikaci</span>. Můžete buď požadovanou aplikaci nalézt na seznamu aplikací, jimž byl nedávno odepřen přístup, nebo aplikaci nalézt v souborovém systému.</li>
+  <li>Nalezněte požadovanou aplikaci a přidejte ji (případně ostatní její spustitelné programy) na seznam.</li>
+  </ul>
+</div></div>
+<br>
+<p>Ve starší verzi OS <strong>Windows 8.1 Update 3</strong> systém <em>Windows Defender</em> výše popisovanou funkcionalitu neobsahuje. Uživatelé mohou využít doporučený profesionální bezpečnostní systém <em>Sophos Home Premium</em>.</p>
+<br>
+
+<h4 id="wnt2.2.3">Ochrana proti exploitaci:</h4>
+<p>Každý kód obsahuje minimálně jednu chybu. Některé z těchto chyb kvůli své povaze přináší bezpečnostní riziko. Takových chyb následně využívají tzv. <em>exploity</em> za účelem kompromitace systému a provedení typicky nekalé činnosti. Windows implementují nejmodernějších mitigace, exploitace důležitých samotného OS je proto časově náročná a velmi nákladná. Některé důležité aplikace (např. prohlížeč <em>Google Chrome</em>) jsou z hlediska mitigací proti exploitům také na velmi vysoké úrovni. Poté jsou zde ovšem aplikace, které dostatečné mitigace neimplementují, a jsou bohužel pro uživatele nezbytné.</p>
+<p>Systém <em>Windows Defender</em> integruje velice robustní a silnou ochranu proti exploitaci kritických částí OS na bázi virtualizace, která ovšem ve výchozím nastavení není povolena z důvodu nepatrné ztráty systémových prostředků. <strong>Je důrazně doporučeno funkcionalitu aktivovat.</strong></p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace izolace jádra" data-hide="▼ Konfigurace izolace jádra">► Konfigurace izolace jádra</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Otevřete si <span class="green">Centrum zabezpečení v programu Windows Defender</span>.</li>
+  <li>Přesuňte se do kategorie <strong>Zabezpečení zařízení</strong>.</li>
+  <li>Otevřete <span class="green">Podrobnosti o izolaci jádra</span>.</li>
+  <li>Aktivujte fuknci <span class="green">Integrita paměti</span>:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wd2.png" alt="wd2"></li>
+  <li>Potvrďte restart OS.</li>
+  </ul>
+</div></div>
+<p>Dále integruje <em>anti-exploit</em> řešení, které umožňuje na libovolnou aplikaci nabalit různé mitigace a tím výrazně ztížit její exploitaci. Tuto funkcionalitu standardně ve výchozím nastavení aplikuje na některé důležité systémové procesy.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace mitigací pro jednotlivé aplikace (příklad: VoodooShield)" data-hide="▼ Konfigurace mitigací pro jednotlivé aplikace (příklad: VoodooShield)">► Konfigurace mitigací pro jednotlivé aplikace (příklad: VoodooShield)</span></div>
+<div class="spoilcontent">
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Aplikace <em>VoodooShield</em> je rozebírána v sekci <a href="#wnt2.3">Anti-executable</a> níže.</p></div>
+<div class="alert exclaim"><p><em class="icon-attention"></em><strong>Varování</strong><br>
+Níže uvedená konfigurace je určena pro aplikaci <strong>VoodooShield</strong> a nemusí být kompatibilní s jinými aplikacemi.</p></div>
+  <ul>
+  <li>Otevřete si <span class="green">Centrum zabezpečení v programu Windows Defender</span>.</li>
+  <li>Přesuňte se do kategorie <strong>Řízení aplikací a prohlížečů</strong></li>
+  <li>Otevřete <span class="green">Nastavení Ochrany Exploit Protection</span>.</li>
+  <li>V horním panelu se přesuňte do záložky <strong>Nastavení programu</strong>.</li>
+  <li>Klikněte na <span class="green">Přidat program, který chcete přizpůsobit</span> a poté <span class="green">Zvolit přesnou cestu k souboru</span>.</li>
+  <li>Nalezněte a potvrďte požadovanou aplikaci, kterou chcete mitigovat (<em>VoodooShield.exe</em>).</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdexpl.png" alt="wdexpl"></li>
+  <li>Upravte konfiguraci dle obrázku:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdexplvs.png" alt="wdexplvs"></li>
+  <li>Klikněte na <span class="green">Použít</span>.</li>
+  <li>Postup zopakujte pro <strong>VoodooShieldService.exe</strong> ve stejném umístění s následující konfigurací:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdexplvss.png" alt="wdexplvss"></li>
+  </ul>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace mitigací pro Microsoft Office" data-hide="▼ Konfigurace mitigací pro Microsoft Office">► Konfigurace mitigací pro Microsoft Office</span></div>
+<div class="spoilcontent">
+<div class="alert exclaim"><p><em class="icon-attention"></em><strong>Varování</strong><br>
+Níže uvedená konfigurace je určena pro aplikace <strong>MS Office</strong> a nemusí být kompatibilní s jinými aplikacemi.</p></div>
+  <ul>
+  <li>Klikněte na <span class="green">Přidat program, který chcete přizpůsobit</span> a poté <span class="green">Přidat podle názvu aplikace</span>.</li>
+  <li>Do textového pole zadejte:</li>
+  <li style="list-style-type: none"><pre><code>WINWORD.EXE</code></pre></li>
+  <li>Upravte konfiguraci dle obrázku:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdexplmso.png" alt="wdexplmso"></li>
+  <li>Klikněte na tlačítko <span class="green">Použít</span>.</li>
+  <li>Obdobný způsob aplikujte pro aplikaci MS Excel:</li>
+  <li style="list-style-type: none"><pre><code>EXCEL.EXE</code></pre></li>
+  <li>Obdobný způsob aplikujte pro aplikaci MS PowerPoint:</li>
+  <li style="list-style-type: none"><pre><code>POWERPNT.EXE</code></pre></li>
+  </ul>
+</div></div>
+<br>
+<p>Ve starší verzi OS <strong>Windows 8.1 Update 3</strong> systém <em>Windows Defender</em> žádnou z výše popisovaných funkcionalit neobsahuje. Uživatelé mohou využít doporučený profesionální bezpečnostní systém <em>Sophos Home Premium</em>. Alternativně mohou využít placený software <a target="_blank" rel="noopener" href="https://www.hitmanpro.com/en-us/alert.aspx">HitmanPro.Alert</a>, jehož funkcionalitu zmíněný systém integruje, chtějí-li pouze zaplnit anti-exploit vrstvu zabezpečení.</p>
+<br>
+
+<h4 id="wnt2.2.4">Firewall:</h4>
+<p>Firewall je velmi důležitá vrstva zabezpečení, která chrání OS před síťovými útoky. Systém <em>Windows Defender</em> integruje <strong>Windows Defender Firewall</strong> (WDF), který je pro standardní použití plně dostačující.</p>
+<div class="alert exclaim"><p><em class="icon-attention"></em><strong>Varování</strong><br>
+Instalace firewall řešení třetích stran je důrazně nedoporučena.</p></div>
+<p>Firewall je v základu korektně nastaven na blokování příchozí komunikace, která není explicitně povolena. Pro citelné zvýšení bezpečnosti je možné nastavit FW na blokování veškeré odchozí komunikace, která není explicitně povolena. V novějších verzích OS je taková konfigurace ovšem nesnadný počin a rámcový návod je proto dostupný pouze v <a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt1">sekci pro pokročilé</a>.</p>
+
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Windows Defender může zobrazovat varování, pokud používáte lokální uživatelský účet bez propojení s účtem Microsoftu. Varování se snadno zbavíte otevřením <em>Centra zabezpečení v programu Windows Defender</em> a následně tlačítkem <em>Zavřít</em>.</p></div>
+
+<br>
+
+<h3 id="wnt2.3">Anti-executable:</h4>
+<p>Anti-executable je specifická vrstva ochrany. Jedná se o řešení, které na základě definovaných pravidel spravuje, jaký kód je v OS spuštěn. Tímto principem ideálně zachytí pokus o spuštění malware a zabrání mu. Většina řešení funguje na principu <em>allowlistu</em> – má nastaveno, které spustitelné soubory povolit, a při spuštění neznámého souboru zobrazí uživateli dialog pro povolení/zakázání, případně v závislosti na nastavení souboru přímo exekuci odepře. Nastavení allowlistu není triviální úkol, existují ovšem i řešení, která umí allowlist vytvořit s minimem uživatelské interakce.</p>
+<p>Nejpřívětivějším řešením je software <a target="_blank" rel="noopener" href="https://voodooshield.com/">VoodooShield</a>, jenž kromě placené verze nabízí i bezplatnou pro nekomerční využití, která poskytuje srovnatelnou ochranu, akorát nenabízí možnost rozšířené konfigurace. Jedinou zásadní nevýhodou je absence českého rozhraní.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace a konfigurace VoodooShield" data-hide="▼ Instalace a konfigurace VoodooShield">► Instalace a konfigurace VoodooShield</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Stáhněte si <a target="_blank" rel="noopener" href="https://voodooshield.com/#download">VoodooShield</a>.</li>
+  <li>Aplikaci nainstalujte. Zadejte email pro bezplatnou registraci, zvolte <span class="green">Application Whitelisting Mode</span>.</li>
+  <li>Vyčkejte na dokončení konfigurace. Uvítací okno následně zavřete.</li>
+  <li>Klikněte pravým tlačítkem na ikonu aplikace v hlavním panelu a vyberte možnost <span class="green">Hide Desktop Shield</span>, čímž skryjete widget aplikace z pracovního prostoru.</li>
+  <li>Klikněte pravým tlačítkem na ikonu aplikace v hlavním panelu a zvolte mód <span class="green">TRAINING</span>.</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/vs.png" alt="vs"></li>
+  <li>VoodooShield se nyní učí aplikace, které používáte, aby je následně mohl povolit bez uživatelské interakce. Ideální je v tréninkovém módu zařízení používat jeden den, aby VoodooShield vše stihl zapsat.</li>
+  <li>Po ukončení tréninku VoodooShield klikněte pravým tlačítkem na ikonu aplikace v hlavním panelu a zvolte mód <span class="green">ALWAYS ON</span>.</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/vs1.png" alt="vs1"></li>
+  </ul>
+<div class="alert success"><p><em class="icon-ok-circled"></em><strong>Úspěch</strong><br>
+Nyní máte plně funkční anti-executable ochranu aplikace VoodooShield. Když budete chtít instalovat libovolnou aplikaci, dočasně přepněte mód ochrany na <strong>DISABLE / INSTALL</strong>.</p></div>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Ukázky a poznatky z provozu VoodooShield" data-hide="▼ Ukázky a poznatky z provozu VoodooShield">► Ukázky a poznatky z provozu VoodooShield</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Jakmile VS zablokuje neznámou, ale možná bezpečnou aplikaci, zobrazí následující bublinu:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/vs2.png" alt="vs2"></li>
+  <li>Pokud chcete aplikaci povolit, na bublinu klikněte a v následujícím okně zvolte možnost <span class="green">Install</span>.</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/vs3.png" alt="vs3"></li>
+  <li>Když VS zablokuje aplikaci, kterou detekuje alespoň 1 antivirový produkt nebo VoodooAI jako malware, zobrazí následující bublinu:</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/vs4.png" alt="vs4"></li>
+  <li>Zde je povolení o pár kliků delší, jedná-li se o legitimní aplikaci. Klikněte na bublinu, v následujícím okně zvolte možnost <span class="green">Allow False Positive</span> a odsouhlaste veškerá vyskakovací okna.</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/vs5.png" alt="vs5"></li>
+  <li>Po povolení aplikace a provedení vámi požadované akce se vždy přesvědčte, že VS běží v módu <span class="green">ALWAYS ON</span>.</li>
+  </ul>
+</div></div>
+<br>
+
+<h3 id="wnt2.4">Virtualizace:</h3>
+<p>Virtualizace může být velmi bezpečný způsob ochrany před malware v závislosti na způsobu implementace, jelikož odděluje požadovanou část OS od jeho zbytku. Standardních způsobů implementace virtualizace je několik:</p>
+<ul>
+  <li>virtuální stroj (VM; virtual machine)</li>
+  <li>semivirtuální stroj (např. docker)</li>
+  <li>sandbox</li>
+</ul>
+
+<h4 id="wnt2.4.1">Virtuální stroj:</h4>
+<p>Nejpokročilejší způsob virtualizace je emulace na nejnižší úrovni, kdy je virtualizován celý OS. Za korektního použití a nastavení (např. snapshoty) může jít o vysoce robustní bezpečnostní vrstvu. Po patřičné konfiguraci můžete virtuální stroj používat např. k relativně bezpečnému brouzdání internetem. Virtualizován může být libovolný OS jako Windows nebo linuxová distribuce. Pro virtualizaci OS Windows pro něj ovšem budete potřebovat dodatečnou licenci, nebo členství v programu Insider.</p>
+<ul>
+  <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/cs-cz/virtualization/hyper-v-on-windows/about/">Hyper-V</a></li>
+  <li><a target="_blank" rel="noopener" href="https://www.vmware.com/go/downloadworkstationplayer">VMware Workstation Player</a></li>
+  <li><a target="_blank" rel="noopener" href="https://www.virtualbox.org/">VirtualBox</a></li>
+</ul>
+<p>Majitelé edic OS Windows <strong>Pro</strong> a <strong>Enterprise</strong> mohou využít vestavěné profesionální řešení <a target="_blank" rel="noopener" href="https://docs.microsoft.com/cs-cz/virtualization/hyper-v-on-windows/about/">Hyper-V</a>. Majitelé nižších edic OS mají na výběr z několika bezplatných a mnoha placených řešení třětích stran.</p>
+<p>Z bezplatných řešení je jedinou volbou integrující důležité bezpečnostní funkce (mj. snapshoty) software <span class="red">VirtualBox</span>, populární bezplatné open-source řešení. Není ideální k profesionálnímu nasazení, spíše na hraní. Možnou robustnější alternativu tvoří <span class="red">VMware Workstation Player</span>, který je zdarma pro nekomerční využití, nepodporuje ovšem tvorbu snapshotů a neobsahuje české rozhraní.</p>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Vytvoření VM pomocí VirtualBox" data-hide="▼ Vytvoření VM pomocí VirtualBox">► Vytvoření VM pomocí VirtualBox</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Stáhněte si .iso obraz OS, který chcete virtualizovat.</li>
+  <li>Stáhněte si <a target="_blank" rel="noopener" href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>.</li>
+  <li>Aplikaci nainstalujte.</li>
+  <li>Po otevření aplikace v horním menu klikněte na tlačítko <span class="green">Nový</span>.</li>
+  <li>V dolním panelu zvolte <span class="green">Expertní režim</span>.</li>
+  <li>Zvolte název VM a požadovaný OS. Následně určete velikost paměti OS a tlačítkem <span class="green">Vytvořit</span> otevřete dialog k vytvoření virtuálního pevného disku.</li>
+  <li>Zvolte jeho velikost (alespoň <em>22 GB</em>) a vytvořte jej.</li>
+  <li>Upravte nastavení VM dle potřeby a následně virtuální stroj spusťte. Vyberte bootovací disk požadovaného OS a klikněte na tlačítko <span class="green">Spustit</span>.</li>
+  <li>Nainstalujte a nakonfigurujte OS. Po úspěšné konfiguraci pro požadované účely virtuální stroj vypněte.</li>
+  <li>V pravém horním menu rozklikněte nabídku <strong>Machine Tools</strong> a zvolte <span class="green">Snímky</span>.</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/vbox.png" alt="vbox"></li>
+  <li>Tlačítkem <span class="green">Take</span> vytvořte nový snapshot virtuálního stroje.</li>
+  <li>Snapshot pojmenujte a klikněte na <span class="green">OK</span>.</li>
+  <li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/vbox1.png" alt="vbox1"></li>
+  <li>Při následujícím vypnutí virtuálního stroje nastavte automatické obnovení vytvořeného snapshotu.</li>
+  <li>Čas od času (např. 1x měsíčně) virtuální OS aktualizujte a vytvořte nový snapshot.</li>
+  </ul>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Vytvoření VM pomocí VMware Workstation Player" data-hide="▼ Vytvoření VM pomocí VMware Workstation Player">► Vytvoření VM pomocí VMware Workstation Player</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Stáhněte si .iso obraz OS, který chcete virtualizovat.</li>
+  <li>Stáhněte si <a target="_blank" rel="noopener" href="https://www.vmware.com/go/downloadworkstationplayer">VMware Workstation Player</a>.</li>
+  <li>Aplikaci nainstalujte a otevřete. Potvrďte nekomerční účel využití.</li>
+  <li>Klikněte na <span class="green">Create a New Virtual Machine</span>.</li>
+  <li>Zvolte umístění instalace z <strong>Installer disc image file (iso)</strong> a nalezněte požadovaný ISO soubor. VMWare Player automaticky detekuje OS.</li>
+  <li>Projděte postupně konfigurací VM. Pojmenujte virtuální stroj, přidělte mu alespoň <em>25 GB</em> místa na disku, zvolte variantu <strong>Store virtual disk as a single file</strong>. Na konci zvolte možnost <span class="green">Customize hardware&#8230;</span>.</li>
+  <li>V zařízení <strong>Memory</strong> přidělte virtuálnímu stroji alespoň <em>3072 MB</em> paměti. V zařízení <strong>Processors</strong> přidělte virtuálnímu stroji minimálně polovinu jader vašeho CPU, ideálně alespoň <em>4</em>.</li>
+  <li>Klikněte na <span class="green">Close</span> a následně <span class="green">Finish</span>.</li>
+  </ul>
+</div></div>
+<br>
+
+<h4 id="wnt2.4.2">Sandbox:</h4>
+<p>Sandbox je populární způsob implementace virtualizace. Existují dva druhy sandboxu:</p>
+<ul>
+<li>sandbox nativně integrovaný v aplikaci (např. <em>Microsoft Edge</em>)</li>
+<li>externí sandbox – např. <a target="_blank" rel="noopener" href="https://www.sandboxie.com/">Sandboxie</a></li>
+</ul>
+<p>Sandbox nativně integrovaný v aplikaci je nejúčinnější možností implementace sandboxu, jelikož je nastaven přesně na míru dané aplikaci. Externí sandbox nemusí být nutně účinný jako sandbox integrovaný v aplikaci, jelikož není dělaný přesně na míru určité aplikaci, a při porovnání může ponechat větší prostor pro exploitaci. Stále ovšem může být velmi účinný a přirozeně je mnohem lepší, nežli žádný sandbox.</p>
+<p>Bezplatné řešení <a target="_blank" rel="noopener" href="https://www.sandboxie.com/">Sandboxie</a> poskytující externí sandbox pro aplikace, je spíše na hraní. <em>Tato část sekce již nemá příliš praktické využití.</em></p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace a konfigurace Sandboxie" data-hide="▼ Instalace a konfigurace Sandboxie">► Instalace a konfigurace Sandboxie</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stáhněte si <a target="_blank" rel="noopener"href="https://www.sandboxie.com/DownloadSandboxie">Sandboxie</a>.</li>
+<li>Aplikaci nainstalujte a projděte úvodním tutoriálem.</li>
+<li>Otevřete <strong>Ovládání Sandboxie</strong>.</li>
+<li>Klikněte pravým tlačítkem na <strong>Sandbox DefaultBox</strong> a zvolte možnost <span class="green">Nastavení Sandboxu</span>.</li>
+<li style="list-style-type: none"><img alt="sbie" src="https://securityhandbook.cz/img/cs/sbie.png"></li>
+<li>V pravém panelu rozbalte možnost <strong>Vymazat</strong> a klikněte na <span class="green">Smazat pracovní soubory</span>.</li>
+<li>Zatrhněte možnost <span class="green">Automaticky smazat obsah Sandboxu</span> a klikněte na <span class="green">OK</span>.</li>
+<li style="list-style-type: none"><img alt="sbie1" src="https://securityhandbook.cz/img/cs/sbie1.png"></li>
+</ul></div></div>
+<br>
+
+<h3 id="wnt2.5">Ostatní aplikace:</h3>
+<p>Užitečné aplikace související s bezpečností, které nelze zařadit pod určitou vrstvu zabezpečení.</p>
+<h4>Doporučené ostatní aplikace:</h4>
+<ul>
+  <li><a target="_blank" rel="noopener" href="https://unchecky.com/">Unchecky</a></li>
+  <li><a target="_blank" rel="noopener" href="https://www.novirusthanks.org/products/anti-autoexec/">NVT Anti-AutoExec</a></li>
+  <li><a target="_blank" rel="noopener" href="http://implbits.com/products/hashtab/">HashTab</a></li>
+</ul>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace a konfigurace Unchecky" data-hide="▼ Instalace a konfigurace Unchecky">► Instalace a konfigurace Unchecky</span></div>
+<div class="spoilcontent">
+<ul>
+  <li>Stáhněte si <a target="_blank" rel="noopener"href="https://unchecky.com/files/unchecky_setup.exe">Unchecky</a>.</li>
+  <li>Aplikaci nainstalujte.</li>
+  <li>Otevřete rozhraní aplikace a přesuňte se do sekce <strong>Nastavení</strong>.</li>
+  <li>Vypněte zobrazování ikony v oznamovací oblasti a klikněte na <span class="green">Použít</span>.</li>
+  <li style="list-style-type: none"><img alt="un" src="https://securityhandbook.cz/img/cs/un.png"></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace a konfigurace NVT Anti-AutoExec" data-hide="▼ Instalace a konfigurace NVT Anti-AutoExec">► Instalace a konfigurace NVT Anti-AutoExec</span></div>
+<div class="spoilcontent">
+  <ul>
+  <li>Stáhněte si <a target="_blank" rel="noopener" href="https://downloads.novirusthanks.org/files/anti-autoexec_setup.exe">NVT Anti-AutoExec</a>.</li>
+  <li>Aplikaci nainstalujte.</li>
+  </ul>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace a konfigurace HashTab" data-hide="▼ Instalace a konfigurace HashTab">► Instalace a konfigurace HashTab</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stáhněte si <a target="_blank" rel="noopener"href="http://implbits.com/products/hashtab/">HashTab</a>.</li>
+<li>Aplikaci nainstalujte.</li>
+<li>Nalezněte libovolný soubor na disku a otevřete jeho <strong>Vlastnosti</strong>.</li>
+<li>V horním panelu se přesuňte do záložky <strong>File Hashes</strong> a klikněte na tlačítko <span class="green">Settings</span>.</li>
+<li style="list-style-type: none"><img alt="ht" src="https://securityhandbook.cz/img/en/ht.png"></li>
+<li>Upravte konfiguraci dle obrázku a klikněte na <span class="green">OK</span>.</li>
+<li style="list-style-type: none"><img alt="ht1" src="https://securityhandbook.cz/img/en/ht1.png"></li>
+</ul></div></div>
+
+<br><br><hr><br>
+
+<h2 id="wnt3">Zabezpečení internetového prohlížeče</h2>
+<ul>
+<li>bezpečnější nastavení (vypnutí nebezpečných funkcí, ideálně vč. JavaScriptu)</li>
+<li>blokování reklamy</li>
+</ul>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Porovnání prohlížečů z ohledu bezpečnosti" data-hide="▼ Porovnání prohlížečů z ohledu bezpečnosti">► Porovnání prohlížečů z ohledu bezpečnosti</span></div>
+<div class="spoilcontent">
+<p>Všechny prohlížeče jsou po korektním nastavení relativně bezpečné, kritickým důležitým faktorem je také samotný uživatel. V následující sekci naleznete postup pro bezpečnou konfiguraci <strong>Microsoft Edge</strong>, <strong>Google Chrome</strong> i <strong>Mozilla Firefox</strong> jakožto dominantních prohlížečů. Také zde naleznete prohlížeče <strong>Brave</strong> (open-source prohlížeč vycházející z Chromium, v <em>základu integruje blokování reklam a trackerů</em>) a <strong>Chromium</strong> (open-source prohlížeč, ze kterého vychází Google Chrome).</p>
+<p>Z uvedených prohlížečů jsou z hlediska bezpečnosti nejlepší volbou <span class="green">Microsoft Edge</span> a <span class="green">Chromium</span>, případně jeho proprietární varianta <a target="_blank" rel="noopener" href="https://www.google.com/chrome/browser/index.html">Google Chrome</a> či prohlížeč <a target="_blank" rel="noopener" href="https://brave.com/">Brave</a>.</p>
+<p><span class="green">Microsoft Edge / Google Chrome / Chromium</span> využívají špičkovou implementaci vestavěného sandboxu OS (LP-AC) a integrují všechny moderní mitigace včetně <strong>CFG</strong>. Prohlížeč <em>Brave</em> je na tom obdobně. <span class="red">Mozilla Firefox</span> z hlediska zabezpečení v porovnání s konkurencí stále zaostává, nicméně na OS Windows již situace není tak kritická jak dříve.</p>
+</div></div>
+<br>
+
+<h3 class="ed"><img alt="edge_icon" src="https://securityhandbook.cz/img/icons/edge.png"> Microsoft Edge</h3>
+
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Návod je určen pro novou verzi MS Edge, aktualizace dostupná zde: <a target="_blank" rel="noopener" href="https://www.microsoft.com/cs-cz/edge">https://www.microsoft.com/cs-cz/edge</a></p></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Bezpečnější nastavení" data-hide="▼ Bezpečnější nastavení">► Bezpečnější nastavení</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>Přesuňte se do sekce <span class="green">Ochrana osobních údajů a služby</span>.</li>
+<li>Zvolte <span class="green">vyvážený</span> režim <strong>Prevence sledování</strong>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edge.png" alt="edge"></li>
+<li>Ve spodní části stránky v sekci <strong>Služby</strong> zkontrolujte nastavení dle obrázku:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edge1.png" alt="edge1"></li>
+<li>Přesuňte se do sekce <span class="green">Oprávnění pro web</span>.</li>
+<li>V sekci <strong>Soubory cookie a data webů</strong> zatrhněte možnost <span class="green">Blokovat soubory cookie třetích stran</span>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edge2.png" alt="edge2"></li>
+<li>V sekci <strong>Reklamy</strong> povolte reklamy (blokování reklamy je ošetřeno lépe níže).</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edge3.png" alt="edge3"></li>
+<li>V sekci <strong>Synchronizace na pozadí</strong> zablokujte nedávno zavřeným webům dokončit odeslání a příjem dat.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edge4.png" alt="edge4"></li>
+<li>V sekci <strong>Přístup k modulu plug-in mimo sandbox</strong> zablokujte webům přístup do počítače pomocí pluginu.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edge5.png" alt="edge5"></li>
+<li>V sekci <strong>Úpravy souborů</strong> zakažte webům upravovat soubory nebo složky v zařízení.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edge6.png" alt="edge6"></li>
+<li>V sekci <strong>Schránka</strong> zablokujte webům přístup k datům ve schránce.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edge7.png" alt="edge7"></li>
+<li>Prohlížeč restartujte.</li>
+</ul>
+</div></div>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Omezení JavaScript" data-hide="▼ Omezení JavaScript">► Omezení JavaScript</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>Přesuňte se do sekce <span class="green">Oprávnění pro web</span></li>
+<li>V sekci <strong>JavaScript</strong> zablokujte spouštění JS.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edge8.png" alt="edge8"></li>
+<li>Chcete-li manuálně zadat weby, kde je spouštění JS povoleno (rychlejší zadání subdomén přes <strong>*</strong>), klikněte na tlačítko <span class="green">Přidat</span> v sekci <strong>Povolit</strong>. Syntax je jednoduchý.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch8.png" alt="ch8"></li>
+<li>Klikněte na <span class="green">Přidat</span>.</li>
+<li>Spouštění JavaScript také můžete snadno povolovat při otevření webové stránky v pravém rohu prohlížeče.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/edgejs.png" alt="edgejs"></li>
+</ul>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Blokování reklamy" data-hide="▼ Blokování reklamy">► Blokování reklamy</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Nainstalujte si následující bezpečnostní doplněk: <a target="_blank" rel="noopener"href="https://microsoftedge.microsoft.com/addons/detail/odfafepnkmbhccpbejgmiehpchacaeak?hl=cs">uBlock Origin</a></li>
+</ul>
+<h4>Nastavení uBlock:</h4>
+<ul>
+<li>Klikněte na ikonu uBlock v horním panelu prohlížeče a následně otevřete nastavení uBlock Origin.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/chublock.png" alt="chublock"></li>
+<li>V sekci <strong>Soukromí</strong> zatrhněte možnost <span class="green">Předejít úniku lokálních IP adres přes WebRTC</span>.</li>
+<li>Přesuňte do záložky <span class="green">Filtry třetích stran</span>.</li>
+<li>Upravte filtry dle obrázku a klikněte na <span class="green">Aktualizovat nyní</span>. Během aktualizace panel nezavírejte.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ublock.png" alt="ublock"></li>
+</ul>
+</div></div>
+
+<br>
+
+<h3 class="ch"><img alt="ch_icon" src="https://securityhandbook.cz/img/icons/ch16.png"> Google Chrome</h3>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace" data-hide="▼ Instalace">► Instalace</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stáhněte si nejnovější verzi <a target="_blank" rel="noopener"href="https://www.google.com/chrome/">Google Chrome</a>.</li>
+<li>Aplikaci nainstalujte.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Bezpečnější nastavení" data-hide="▼ Bezpečnější nastavení">► Bezpečnější nastavení</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>V sekci <strong>Ochrana soukromí a zabezpečení</strong> otevřete <span class="green">Nastavení webu</span></li>
+<li>V sekci <strong>Soubory cookie a data webových stránek</strong> zatrhněte možnost <span class="green">Blokovat soubory cookie třetích stran</span>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch.png" alt="ch"></li>
+<li>V sekci <strong>Reklamy</strong> povolte reklamy (blokování reklamy je ošetřeno lépe níže).</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch1.png" alt="ch1"></li>
+<li>V sekci <strong>Synchronizace na pozadí</strong> zablokujte nedávno zavřeným webům dokončit odeslání a příjem dat.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch2.png" alt="ch2"></li>
+<li>V sekci <strong>Přístup pluginu mimo izolovaný prostor</strong> zablokujte webům přístup do počítače pomocí pluginu.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch3.png" alt="ch3"></li>
+<li>V sekci <strong>Sériové porty</strong> zakažte webům přístup k sériovým portům.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch4.png" alt="ch4"></li>
+<li>V sekci <strong>Úprava souborů</strong> zakažte webům upravovat soubory nebo složky v zařízení.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch5.png" alt="ch5"></li>
+<li>V sekci <strong>Schránka</strong> zablokujte webům přístup k datům ve schránce.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch6.png" alt="ch6"></li>
+<li>Prohlížeč restartujte.</li>
+</ul>
+</div></div>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Omezení JavaScript" data-hide="▼ Omezení JavaScript">► Omezení JavaScript</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>V sekci <strong>Ochrana soukromí a zabezpečení</strong> otevřete <span class="green">Nastavení webu</span></li>
+<li>V sekci <strong>JavaScript</strong> zablokujte spouštění JS.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch7.png" alt="ch7"></li>
+<li>Chcete-li manuálně zadat weby, kde je spouštění JS povoleno (rychlejší zadání subdomén přes <strong>*</strong>), klikněte na tlačítko <span class="green">Přidat</span> v sekci <strong>Povolit</strong>. Syntax je jednoduchý.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch8.png" alt="ch8"></li>
+<li>Klikněte na <span class="green">Přidat</span>.</li>
+<li>Spouštění JavaScript také můžete snadno povolovat při otevření webové stránky v pravém rohu prohlížeče.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/chjs.png" alt="chjs"></li>
+</ul>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Blokování reklamy" data-hide="▼ Blokování reklamy">► Blokování reklamy</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Nainstalujte si následující bezpečnostní doplněk: <a target="_blank" rel="noopener"href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm?hl=cs">uBlock Origin</a></li>
+</ul>
+<h4>Nastavení uBlock:</h4>
+<ul>
+<li>Klikněte na ikonu uBlock v horním panelu prohlížeče a následně otevřete nastavení uBlock Origin.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/chublock.png" alt="chublock"></li>
+<li>V sekci <strong>Soukromí</strong> zatrhněte možnost <span class="green">Předejít úniku lokálních IP adres přes WebRTC</span>.</li>
+<li>Přesuňte do záložky <span class="green">Filtry třetích stran</span>.</li>
+<li>Upravte filtry dle obrázku a klikněte na <span class="green">Aktualizovat nyní</span>. Během aktualizace panel nezavírejte.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ublock.png" alt="ublock"></li>
+</ul>
+</div></div>
+
+<br>
+
+<h3 class="brv"><img alt="brv_icon" src="https://securityhandbook.cz/img/icons/brv.png"> Brave</h3>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace" data-hide="▼ Instalace">► Instalace</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stáhněte si nejnovější verzi <a target="_blank" rel="noopener"href="https://brave.com/download/">Brave</a>.</li>
+<li>Aplikaci nainstalujte.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Bezpečnější nastavení" data-hide="▼ Bezpečnější nastavení">► Bezpečnější nastavení</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>V sekci <strong>Brave shields defaults</strong> zkontrolujte konfiguraci a případně opravte:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/brv.png" alt="brv"></li>
+<li>Vyjeďte na začátek stránky.</li>
+<li>V sekci <strong>Ochrana soukromí a zabezpečení</strong> otevřete <span class="green">Nastavení webu</span></li>
+<li>V sekci <strong>Soubory cookie a data webových stránek</strong> zatrhněte možnost <span class="green">Blokovat soubory cookie třetích stran</span>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch.png" alt="ch"></li>
+<li>V sekci <strong>Reklamy</strong> povolte reklamy (blokování reklamy je ošetřeno lépe níže).</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch1.png" alt="ch1"></li>
+<li>V sekci <strong>Synchronizace na pozadí</strong> zablokujte nedávno zavřeným webům dokončit odeslání a příjem dat.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch2.png" alt="ch2"></li>
+<li>V sekci <strong>Přístup pluginu mimo izolovaný prostor</strong> zablokujte webům přístup do počítače pomocí pluginu.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch3.png" alt="ch3"></li>
+<li>V sekci <strong>Sériové porty</strong> zakažte webům přístup k sériovým portům.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch4.png" alt="ch4"></li>
+<li>V sekci <strong>Úprava souborů</strong> zakažte webům upravovat soubory nebo složky v zařízení.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch5.png" alt="ch5"></li>
+<li>V sekci <strong>Schránka</strong> zablokujte webům přístup k datům ve schránce.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch6.png" alt="ch6"></li>
+<li>Prohlížeč restartujte.</li>
+</ul>
+</div></div>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Omezení JavaScript" data-hide="▼ Omezení JavaScript">► Omezení JavaScript</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>V sekci <strong>Brave shields defaults</strong> upravte konfiguraci dle obrázku:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/brv1.png" alt="brv1"></li>
+<li>Spouštění JavaScript také můžete snadno povolovat při otevření webové stránky v pravém rohu prohlížeče.</li>
+</ul>
+</div></div>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Blokování reklamy" data-hide="▼ Blokování reklamy">► Blokování reklamy</span></div>
+<div class="spoilcontent">
+<p>Prohlížeč v základu integruje blokování reklam a trackerů.</p>
+</div></div>
+
+<br>
+
+<h3 class="ff"><img alt="ff_icon" src="https://securityhandbook.cz/img/icons/ff.png"> Mozilla Firefox</h3>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace" data-hide="▼ Instalace">► Instalace</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stáhněte si nejnovější verzi <a target="_blank" rel="noopener"href="https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=cs">Mozilla Firefox</a>.</li>
+<li>Aplikaci nainstalujte.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Bezpečnější nastavení" data-hide="▼ Bezpečnější nastavení">► Bezpečnější nastavení</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Možnosti</strong>.</li>
+<li>V levém panelu se přesuňte do <span class="green">Soukromí a zabezpečení</span>.</li>
+<li>V sekci <strong>Rozšířená ochrana proti sledování</strong> zvolte úroveň <span class="green">Vlastní</span>, kterou nakonfigurujte dle obrázku:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ff.png" alt="ff"></li>
+<li>Sjeďte níže do sekce <strong>Oprávnění</strong> a upravte konfiguraci dle obrázku:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ff1.png" alt="ff1"></li>
+</ul>
+<ul>
+<li>Do adresního řádku prohlížeče zadejte:</li>
+<li style="list-style-type: none"><pre><code>about:config</code></pre>
+a stiskněte <strong>Enter</strong>.</li>
+<li>Varování potvrďte tlačítkem <span class="green">Beru na vědomí a chci pokračovat</span>.</li>
+<li>Do vyhledávacího pole ve vrchní části stránky zadejte:</li>
+<li style="list-style-type: none"><pre><code>ocsp</code></pre></li>
+<li>Vyhledávání zobrazí veškeré hodnoty s <strong>OCSP</strong> v názvu. Dvakrát poklepejte levým myšítkem na následující hodnotu:</li>
+<li style="list-style-type: none"><pre><code>security.OCSP.require</code></pre></li>
+<li>Tím změníte konfiguraci hodnoty (zapnete/vypnete požadovanou funkci).</li>
+<li style="list-style-type: none"><img alt="ff2" src="https://securityhandbook.cz/img/cs/ff2.png"></li>
+<li>Výše uvedeným způsobem vyhledejte a opravte nastavení následujících hodnot (pokud se neshoduje):</li>
+<li style="list-style-type: none"><pre><code>accessibility.blockautorefresh  ---  true
+security.mixed_content.block_display_content  ---  true
+security.mixed_content.block_object_subrequest --- true
+media.peerconnection.ice.no_host --- true
+javascript.options.asmjs  ---  false</code></pre></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Blokování reklamy" data-hide="▼ Blokování reklamy">► Blokování reklamy</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Nainstalujte si následující bezpečnostní doplněk: <a target="_blank" rel="noopener"href="https://addons.mozilla.org/cs/firefox/addon/ublock-origin/">uBlock Origin</a></li>
+</ul>
+<h4>Nastavení uBlock:</h4>
+<ul>
+<li>Klikněte na ikonu uBlock v horním panelu prohlížeče a následně otevřete nastavení uBlock Origin.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/chublock.png" alt="chublock"></li>
+<li>V sekci <strong>Soukromí</strong> zatrhněte možnost <span class="green">Předejít úniku lokálních IP adres přes WebRTC</span>.</li>
+<li>Přesuňte do záložky <span class="green">Filtry třetích stran</span>.</li>
+<li>Upravte filtry dle obrázku a klikněte na <span class="green">Aktualizovat nyní</span>. Během aktualizace panel nezavírejte.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ublock.png" alt="ublock"></li>
+</ul>
+</div></div>
+
+<br><br><hr><br>
+
+<h2 id="wnt4">Doporučené bezpečnostní konfigurace</h2>
+<p>Zde naleznete několik příkladů bezpečnostních konfigurací, čistě pro inspiraci.</p>
+
+<h4 id="wnt4.1">Bezplatná konfigurace pro běžného uživatele, který neumí anglicky:</h4>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace" data-hide="▼ Konfigurace">► Konfigurace</span></div>
+<div class="spoilcontent">
+<ul>
+  <li>OS – Windows <strong>10 May 2020 Update</strong> (bezpečně nakonfigurován)</li>
+  <li>AV/M – <strong>Windows Defender</strong></li>
+  <li>FW – <strong>Windows Defender Firewall</strong></li>
+  <li>anti-exploit – <strong>Windows Defender</strong></li>
+  <li>anti-ransomware – <strong>Windows Defender</strong></li>
+  <li>anti-executable – <strong>N/A</strong></li>
+  <li>virtualizace – <strong>integrovaná</strong></li>
+  <li>internetový prohlížeč – <strong>MS Edge</strong>, <strong>Google Chrome</strong> / <strong>Brave</strong></li>
+  <li>užitečné aplikace – <strong>Unchecky</strong>, <strong>NVT Anti-AutoExec</strong></li>
+  <li>(konfigurace z kapitoly pro pokročilé dle znalostí)</li>
+</ul>
+</div></div>
+
+<h4 id="wnt4.2">Konfigurace pro středně pokročilého, který umí anglicky:</h4>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace" data-hide="▼ Konfigurace">► Konfigurace</span></div>
+<div class="spoilcontent">
+<ul>
+  <li>OS – Windows <strong>10 May 2020 Update</strong> / <strong>8.1 Update 3</strong> (bezpečně nakonfigurován)</li>
+  <li>AV/M:<ul>
+  <li>bezplatný – <strong>Windows Defender</strong></li>
+  <li>placený – <strong>Sophos Home Premium</strong> / <strong>&#8230;</strong></li>
+  </ul>
+  </li>
+  <li>FW – <strong>Windows (Defender) Firewall</strong></li>
+  <li>anti-exploit:<ul>
+  <li>W10 bezplatný – <strong>Windows Defender</strong></li>
+  <li>placený – <strong>Sophos Home Premium</strong></li>
+  </ul>
+  </li>
+  <li>anti-ransomware:<ul>
+  <li>W10 bezplatný – <strong>Windows Defender</strong></li>
+  <li>placený – <strong>Sophos Home Premium</strong></li>
+  </ul>
+  </li>
+  <li>anti-executable – <strong>VoodooShield</strong></li>
+  <li>virtualizace – <strong>integrovaná</strong>, <strong>virtuální stroj</strong></li>
+  <li>internetový prohlížeč – <strong>MS Edge</strong>, <strong>Chromium</strong> / <strong>Brave</strong></li>
+  <li>užitečné aplikace – <strong>HashTab</strong></li>
+  <li>(konfigurace z kapitoly pro pokročilé dle znalostí)</li>
+</ul>
+</div></div>
+
+<br><br><hr>
+<h3 class="nocol">To je vše. Stay safe! <img class="smile" src="https://securityhandbook.cz/img/sm/smile.svg" alt="smile"></h3>
+</div></article>
+</main>
+<footer>
+<p>Toto dílo podléhá licenci <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>Podrobnosti o výjimkách z výše zmíněné licence naleznete <a target="_blank" rel="noopener" href="https://securityhandbook.cz/license_cs.php">zde</a>.</p>
+<p>2016-2020 <a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook">@SecurityHandbook</a></p>
+<p><a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs"><img alt="Creative Commons Licence" style="border-width:0" src="https://securityhandbook.cz/img/license.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook/handbook"><img alt="github" src="https://securityhandbook.cz/img/github.png"></a></p>
+</footer>
+<noscript><p>Zapněte si prosím JavaScript, je důležitý pro využití všech funkcí webu. Jedná se pouze o jQuery a pár řádků.</p></noscript>
+<a href="#0" class="cd-top">Top</a>
+<script src="https://securityhandbook.cz/resources/js/jquery-3.4.1.min.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scripts.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scroll.js"></script>
+</body></html>

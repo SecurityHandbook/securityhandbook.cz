@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<link rel="preload" as="style" href="https://securityhandbook.cz/resources/css/main_alpha.css">
+<link href="https://securityhandbook.cz/resources/css/main_alpha.css" rel="stylesheet" media="screen">
+<link href="https://securityhandbook.cz/resources/css/fonts_min.css" rel="stylesheet">
+<title>Příručka bezpečnosti: Základy</title>
+<meta name="description" content="Základy zabezpečení nejen PC">
+<meta property="og:title" content="Příručka bezpečnosti: Základy">
+<meta property="og:description" content="Základy zabezpečení nejen PC">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="HandheldFriendly" content="True">
+<meta name="theme-color" content="#323e4e">
+</head>
+<body>
+<header>
+<div class="hcontent">
+  <a href="https://securityhandbook.cz/cs/index.php">FAQ – Velká příručka bezpečnosti</a>
+  <img src="https://securityhandbook.cz/img/shield.png" alt="logo">
+</div></header>
+<nav>
+<div class="navcontent" id="bignav">
+  <a href="https://securityhandbook.cz/cs/index.php#basics"><strong>Základy bezpečnosti</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>OS Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>OS Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>OS Android</strong></a>
+</div>
+<div class="navcontent" id="smallnav">
+  <a href="https://securityhandbook.cz/cs/index.php"><strong>Základy</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>Android</strong></a>
+</div>
+</nav>
+<main>
+<article><div class="text">
+<p>Počítačová bezpečnost je v dnešní době kritickou – byť bohužel často podceňovanou – záležitostí. Uživatelé nezřídka nechápou, proč by se tímto tématem měli zaobírat. <em>Bezpečnost</em> je všudypřítomný faktor lidského života, který lidé standardně vnímají v jedné rovině: jejich <strong>fyzické bezpečnosti</strong>. Člověk například zpravidla neleze po skalách nezajištěný, jelikož vidí spojená rizika případné fatální následky. <strong>Počítačová bezpečnost</strong> je z velké části abstraktní pojem, kde spojená rizika a případné fatální následky nejsou okem viditelná a jejich zobrazení vyžaduje nemalou dávku lidské představivosti. Tato vlastnost spolu s nedostatečnou osvětou tvoří hlavním důvod, proč uživatelé nechápou, že zanedbaná počítačová bezpečnost pro ně může znamenat stejně fatální následky, jako zanedbaná fyzická bezpečnost.</p>
+<p>Naše společnost z velké míry závisí na počítačových systémech a chytrých zařízeních – např. čističky vod, produkce potravin či léků, chytrá auta, zabezpečení objektů, vojenské systémy, správa financí, osobní komunikace,&#8230; A tento vliv již zřejmě bude pouze stoupat. V případě napadení čističky vod může útočník efektivně otrávit celé město, v případě napadení chytrého vozu mohou být následky pro cestující fatální. Nicméně i napadení osobního zařízení, extrakce a případné zveřejnění nalezených intimních dat mohou mít likvidační dopady. Je proto nezbytné, <strong>aby každý přijal počítačovou bezpečnost jako faktor svého každodenního života</strong> a postavil na úroveň své fyzické bezpečnosti.</p>
+<p>Žádné zařízení nikdy nemůže být 100% bezpečné, v procesu jeho zabezpečení figuruje příliš mnoho proměnných faktorů (fyzické zabezpečení, HW, SW, uživatelský komfort,&#8230;). Bezpečnost je vždy o kompromisu. Sekce této příručky se soustředí na dosáhnutí co nejefektivnějšího zabezpečení za co nejnižší ztráty uživatelského komfortu. Pokud by všichni dodržovali zmíněné rady a aplikovaly nastíněné postupy, napadení uživatelských zařízení by se stalo výrazně složitějším a v důsledku dražším.</p>
+<div class="spoilwrapper" id="tree"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Obsah" data-hide="▼ Obsah">► Obsah</span></div>
+<div class="spoilcontent">
+<ul>
+<li><a href="https://securityhandbook.cz/cs/index.php#basics">Základy bezpečnosti</a></li>
+<li><a href="https://securityhandbook.cz/cs/wnt/index.php#wnt">OS Windows</a></li>
+<li><a href="https://securityhandbook.cz/cs/lnx/index.php#lnx">OS Linux</a></li>
+<li><strong>FAQ – chytrá zařízení (chytré telefony, IoT)</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/iot/andr.php#andr">OS Android</a></li>
+</ul></li>
+<li><strong>FAQ pro pokročilé</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows</a></li>
+  <li><a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux</a></li>
+</ul></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+</div></div>
+</div></article><br>
+<article id="basics"><div class="text">
+
+<h1>Základy bezpečnosti</h1>
+<h2 id="basics1">Základní pojmy:</h2>
+<ul>
+<li><span class="green">hacker</span> – člověk zneužívající svých znalostí, např. v oblasti počítačové bezpečnosti, za účelem osobního zisku (význam původně převzatý z <em>cracker</em>)</li>
+<li><span class="green">malware</span> – termín označující škodlivý software, jež se dělí na mnoho podskupin</li>
+<li><span class="green">ransomware</span> – software, který zabraňuje uživateli v přístupu ke svým datům a za obnovení přístupu požaduje poplatek</li>
+<li><strong>adware</strong> – software, který obsahuje reklamy a zobrazuje je uživateli</li>
+<li><strong>rootkit</strong> – kód, který skrývá přítomnost malware v OS a ztěžuje jeho detekci</li>
+<li><span class="green">exploit</span> – kód využívající chyby v jiném SW za účelem provedení specifikované (zpravidla škodlivé) akce</li>
+<li><strong>zero-day (0-day)</strong> – zranitelnost, která byla zneužita v den jejího zveřejnění, příp. před ním</li>
+<li><strong>payload</strong> – hlavní část kódu malware, která vykonává klíčovou škodlivou akci</li>
+</ul>
+<br>
+
+<h2 id="basics2">Základní bezpečnostní pravidla:</h2>
+<ul>
+<li>Pravidelně zálohujte uživatelská data.</li>
+<li>Používejte nejnovější záplatovanou <strong>originální</strong> verzi OS.</li>
+<li>Vyvarujte se nelegálnímu software – většina cracků je infikována.</li>
+<li>Před vykonáním libovolné akce dvakrát zkontrolujte její autenticitu.</li>
+<li>Instalujte aplikace výhradně z důvěryhodných zdrojů: <em>stránek výrobce</em> / <em>Microsoft Store</em><ul>
+<li>na mobilních zařízeních: <em>Google Play</em> / <em>Apple Store</em></li>
+</ul>
+</li>
+<li>Používejte silná hesla. Nerecyklujte hesla na více služeb, zvažte použití <a href="#basics7">správce hesel</a>.</li>
+<li style="list-style-type: none"><p class="imgsrc"><em>Password Strength.</em> Zdroj: <a target="_blank" rel="noopener" href="https://xkcd.com/936/">xkcd</a> | <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5</a></p>
+<img alt="password_strength_sm" src="https://securityhandbook.cz/img/en/passwd.png"></li>
+<li><strong>Na mobilních zařízeních</strong>:<ul>
+<li>neprovádějte <em>root</em> / <em>jailbreak</em> – touto akcí rozbíjíte bezpečnostní model OS</li>
+<li>neinstalujte aplikace vyžadující nesmyslná oprávnění (např. Flashlight+ vyžadující přístup k SMS a kontaktům)</li>
+</ul>
+</li>
+<li>Dávejte si pozor, kam jaké údaje zadáváte – s osobními údaji se dobře obchoduje.</li>
+<li>Nezapomeňte na fyzické zabezpečení zařízení: nastavte UEFI heslo, vypněte boot menu, neodemykejte bootloader,…</li>
+</ul>
+<br>
+
+<h2 id="basics3">Bezpečný pohyb na internetu:</h2>
+<ul>
+<li>Nepřipojujte se k neznámým/veřejným bezdrátovým sítím a vyvarujte se nebezpečným protokolům – HTTP, FTP,… – případně přes ně neposílejte citlivé údaje. Zvažte použití VPN.</li>
+<li>Používejte bezpečně nastavený prohlížeč.</li>
+<li>Zvažte využití odděleného prohlížeče pro citlivé věci (např. bankovnictví).</li>
+<li>Nenavštěvujte pochybné/neznámé stránky a nestahujte z nich žádné soubory.</li>
+<li>Omezte navštěvování erotických stránek, velmi často jsou oběti malwaretisingu a obsahují škodlivý kód.</li>
+<li>Nepoužívejte sociální tlačítka na žádných stránkách mimo stránky dané sociální sítě. Falšování sociálních tlačítek je triviální.</li>
+<li>Vyvarujte se tzv. <strong>zkráceným odkazům</strong> – např. <a href="#">https://bit.ly/tinyurlwiki</a> – mohou jednoduše maskovat nebezpečné odkazy.</li>
+<li>Otevírejte pouze důvěryhodné e-mailové přílohy / odkazy.</li>
+</ul>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Tip</strong><br>
+Nejbezpečnější možnost prohlížení internetu: <span class="green">bezpečně nastavený live OS</span>. Nutno podotknout, že tato možnost také nemusí být 100% – např. pokud zařízení, ze kterého je OS spouštěn, bylo dříve napadeno, může být infikováno EFI.</p></div>
+<br>
+
+<h2 id="basics4">Informace o aktuálních událostech v počítačové bezpečnosti:</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://csirt.cz/news/security/">CSIRT.cz</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.root.cz/bezpecnost/">Root.cz – bezpečnost</a></li>
+<li><a target="_blank" rel="noopener" href="https://twitter.com/hashtag/ITbezpecnost">Twitter – #ITbezpecnost</a></li>
+</ul>
+<h3 id="basics4.1">Anglické zdroje:</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/">BleepingComputer</a></li>
+<li><a target="_blank" rel="noopener" href="https://thehackernews.com/">The Hacker News</a></li>
+<li><a target="_blank" rel="noopener" href="https://threatpost.com/">Threatpost</a></li>
+</ul>
+<br>
+
+<h2 id="basics5">Online analýza souborů:</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/">VirusTotal</a> – AV databáze</li>
+<li><a target="_blank" rel="noopener" href="https://www.metadefender.com/">Metadefender</a> – AV databáze</li>
+<li><a target="_blank" rel="noopener" href="https://www.reverse.it/">Hybrid Analysis</a> – sandbox + VT</li>
+<li><a target="_blank" rel="noopener" href="https://malwr.com/submission/">Malwr</a> – sandbox</li>
+</ul>
+<br>
+
+<h2 id="basics6">Doporučené VPN:</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.f-secure.com/en/web/home_global/freedome/">Freedome VPN</a> – blokuje malware, trackery a reklamy</li>
+<li><a target="_blank" rel="noopener" href="https://www.ivpn.net/">IVPN</a></li>
+<li><a target="_blank" rel="noopener" href="https://protonvpn.com/">ProtonVPN</a></li>
+<li><a target="_blank" rel="noopener" href="https://cryptostorm.is/">Cryptostorm</a></li>
+</ul>
+<br>
+
+<h2 id="basics7">Doporučení správci hesel:</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://1password.com/">1Password</a></li>
+<li><a target="_blank" rel="noopener" href="https://bitwarden.com/">Bitwarden</a></li>
+</ul>
+<br>
+
+
+</div></article>
+</main>
+<footer>
+<p>Toto dílo podléhá licenci <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>Podrobnosti o výjimkách z výše zmíněné licence naleznete <a target="_blank" rel="noopener" href="https://securityhandbook.cz/license_cs.php">zde</a>.</p>
+<p>2016-2020 <a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook">@SecurityHandbook</a></p>
+<p><a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs"><img alt="Creative Commons Licence" style="border-width:0" src="https://securityhandbook.cz/img/license.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook/handbook"><img alt="github" src="https://securityhandbook.cz/img/github.png"></a></p>
+</footer>
+<noscript><p>Zapněte si prosím JavaScript, je důležitý pro využití všech funkcí webu. Jedná se pouze o jQuery a pár řádků.</p></noscript>
+<a href="#0" class="cd-top">Top</a>
+<script src="https://securityhandbook.cz/resources/js/jquery-3.4.1.min.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scripts.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scroll.js"></script>
+</body></html>

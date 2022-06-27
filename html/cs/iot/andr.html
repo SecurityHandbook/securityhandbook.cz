@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<link rel="preload" as="style" href="https://securityhandbook.cz/resources/css/main_alpha.css">
+<link href="https://securityhandbook.cz/resources/css/main_alpha.css" rel="stylesheet" media="screen">
+<link href="https://securityhandbook.cz/resources/css/fonts_min.css" rel="stylesheet">
+<title>Příručka bezpečnosti: OS Android</title>
+<meta name="description" content="Zabezpečení OS Android.">
+<meta property="og:title" content="Příručka bezpečnosti: OS Android">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="HandheldFriendly" content="True">
+<meta name="theme-color" content="#323e4e">
+</head>
+<body>
+<header>
+<div class="hcontent">
+  <a href="https://securityhandbook.cz/cs/index.php">FAQ – Velká příručka bezpečnosti</a>
+  <img src="https://securityhandbook.cz/img/shield.png" alt="logo">
+</div></header>
+<nav>
+<div class="navcontent" id="bignav">
+  <a href="https://securityhandbook.cz/cs/index.php#basics"><strong>Základy bezpečnosti</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>OS Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>OS Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>OS Android</strong></a>
+</div>
+<div class="navcontent" id="smallnav">
+  <a href="https://securityhandbook.cz/cs/index.php"><strong>Základy</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>Android</strong></a>
+</div>
+</nav>
+<main>
+<article><div class="text">
+<p>Počítačová bezpečnost je v dnešní době kritickou – byť bohužel často podceňovanou – záležitostí. Uživatelé nezřídka nechápou, proč by se tímto tématem měli zaobírat. Toto je obzvlášť důležité u chytrých zařízení, která se od běžných počítačů liší v drobném detailu: denně je nosíme v kapse. Obhospodařují velkou část komunikace, obsahují různé senzory a mikrofony,&#8230; Infikované zařízení může mimo jiné odposlouchávat rozhovory s okolím, sledovat geografickou polohu uživatele, fotit a natáčet jej, jeho rodinu i domácnost. Možnosti zneužití jsou téměř neomezené.</p>
+<p>„We used to say a man’s home is his castle. Today, a man’s phone is his castle.“<br>
+– Edward Snowden</p>
+<br>
+<h2><a href="#andr">OS Android</a></h2>
+<ul>
+  <li><a href="#andr1">Bezpečná zařízení</a></li>
+  <li><a href="#andr2">Základní bezpečnostní nastavení</a></li>
+  <li><a href="#andr3">Doporučené aplikace</a></li>
+  <li><a href="#andr4">Bezpečné ROM</a></li>
+</ul><br>
+<div class="spoilwrapper" id="tree"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Obsah" data-hide="▼ Obsah">► Obsah</span></div>
+<div class="spoilcontent">
+<ul>
+<li><a href="https://securityhandbook.cz/cs/index.php#basics">Základy bezpečnosti</a></li>
+<li><a href="https://securityhandbook.cz/cs/wnt/index.php#wnt">OS Windows</a></li>
+<li><a href="https://securityhandbook.cz/cs/lnx/index.php#lnx">OS Linux</a></li>
+<li><strong>FAQ – chytrá zařízení (chytré telefony, IoT)</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/iot/andr.php#andr">OS Android</a></li>
+</ul></li>
+<li><strong>FAQ pro pokročilé</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows</a></li>
+  <li><a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux</a></li>
+</ul></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+</div></div>
+</div></article><br>
+<article id="andr"><div class="text">
+
+<h1>OS Android</h1>
+<p>Android se jakožto nejrozšířenější mobilní OS těší velké pozornosti hackerů, jeho dostatečné zabezpečení je proto nezbytné. Android má robustní bezpečnostní model, který předpokládá, že aplikace třetích stran běžící v OS nejsou důvěryhodné. Hlavním bezpečnostním problémem je rozmanitost zařízení, z nichž většina modelů nedostává pravidelné bezpečnostní záplaty a/nebo běží na zastaralých verzích OS.</p>
+<p>Podporovanou verzí Android je <span class="green">Q (10)</span> jakožto aktuální verze OS. Starší verze OS by neměly být používány. Přesto je většina obsažených informací platná i pro starší verze OS, pouze se může lišit přesný postup aplikace různých kroků.</p>
+<h4>Sekce kapitoly:</h4>
+<ul>
+<li><a href="#andr1">Bezpečná zařízení</a></li>
+<li><a href="#andr2">Základní bezpečnostní nastavení</a></li>
+<li><a href="#andr3">Doporučené aplikace</a></li>
+<li><a href="#andr4">Bezpečné ROM</a></li>
+</ul>
+<br>
+
+<h2 id="andr1">Bezpečná zařízení:</h2>
+<p>Jak již bylo zmíněno, diverzita zařízení s OS Android je z pohledu bezpečnosti velký problém. Ne všichni výrobci nabízejí pravidelné bezpečnostní záplaty a aktualizace OS pro své modely, důvody mohou být různé. Na trhu tedy můžeme nalézt zbrusu nová zařízení se starou verzí OS Android, která již od výroby obsahují známé bezpečnostní díry a výrazně zvyšují pravděpodobnost exploitace. Tato praxe se bohužel nevztahuje pouze na levné modely, nýbrž i na dražší telefony. Uživatel by se měl při výběru svého zařízení zajímat o jeho bezpečnostní parametry. Níže naleznete několik parametrů, které by mělo zařízení splňovat, aby se o něm dalo uvažovat.</p>
+<h3 id="andr1.1">Bezpečnostní kritéria pro zařízení s OS Android:</h3>
+<ul>
+<li>verze dodávaného OS minimálně <strong>Q</strong> (<em>10</em>)</li>
+<li>časté (měsíční, minimálně čtvrtletní) bezpečnostní aktualizace pro firmware a proprietární komponenty</li>
+<li>garance bezpečnostních aktualizací po dobu morální životnosti modelu</li>
+<li>full verified boot</li>
+<li>64-bit architektura (x86/ARM)</li>
+<li>jádro &gt;= 4.4</li>
+</ul>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Existují dvě úrovně měsíčních bezpečnostních aktualizací – <strong>prvního</strong> dne v měsíci a <strong>pátého</strong> dne v měsíci. Obě úrovně jsou aplikovatelné pro většinu modelů na trhu. Pokud výrobce celkem pravidelně zařízení aktualizuje, ale implementuje pouze první úroveň (např. <em>1. listopadu 2019</em>), může to značit problém.</p></div>
+<br>
+
+<h3 id="andr1.2">Přijatelné modely dle bezpečnostních kritérií:</h3>
+<ul>
+<li><strong>libovolný model</strong> řady <strong><span class="go">Pixel</span></strong></li>
+<li><strong>libovolný model</strong> projektu <a target="_blank" rel="noopener" href="https://www.android.com/one/">Android One</a></li>
+<li><strong>libovolný model</strong> výrobce <strong><span class="no">Nokia</span></strong></li>
+<li>vlajkové lodě většiny známých výrobců jako <strong>SONY</strong>, <strong><span class="sam">Samsung</span></strong>, <strong><span class="lg">LG</span></strong>, <strong><span class="hu">Huawei</span></strong> apod.</li>
+<li>vyšší modely výrobců <strong><span class="sam">Samsung</span></strong> a <strong>SONY</strong></li>
+</ul>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Tip</strong><br>
+Pro inspiraci se také můžete podívat na <a target="_blank" rel="noopener" href="https://androidenterprisepartners.withgoogle.com/devices/">seznam doporučených modelů pro firemní sféru</a> od Google.</p></div>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Výše rozebíraná kritéria jsou především z hlediska SW, které je v praxi nejkritičtější. Z hlediska HW splňují bezpečnostní standardy porovnatelné s iPhone <strong>pouze modely řady Pixel 3. generace a výše</strong>.</p></div>
+<br><br><hr><br>
+<h2 id="andr2">Základní bezpečnostní nastavení:</h2>
+<p>Android je většinou bezpečně nastaven již v základu, není ovšem od věci konfiguraci zkontrolovat.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Kontrola nastavení zabezpečení" data-hide="▼ Kontrola nastavení zabezpečení">► Kontrola nastavení zabezpečení</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Nastavení</span>.</li>
+<li>Přesuňte se do podkategorie <strong>Zabezpečení</strong>.</li>
+<li>Zkontrolujte bezpečnou konfiguraci <strong>Zámku obrazovky</strong> – <span class="green">Heslo</span>, nebo alespoň <span class="green">PIN</span></li>
+<li style="list-style-type: none"><img alt="andinf" src="https://securityhandbook.cz/img/cs/andinf.png"></li>
+<li>V <em>rozšířených nastavení</em> zkontrolujte <strong>Aplikace pro správu zařízení</strong>. Jedinou důvěryhodnou povolenou aplikací by měla být <span class="green">Najdi moje zařízení</span>, je-li uživatelem vyžadována.</li>
+<li>Výjimku tvoří MDM aplikace nezbytné pro umožnění přístupu k firemním datům ve vašem zaměstnání (např. <span class="green">Device Policy</span> pro gSuite).</li>
+<li style="list-style-type: none"><img alt="andinf1" src="https://securityhandbook.cz/img/cs/andinf1.png"></li>
+<li>Zkontrolujte <strong>Šifrování</strong> vašeho zařízení a absenci jakýchkoli <strong>Agentů důvěry</strong>.</li>
+<li>Aplikaci zavřete.</li>
+</ul>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Kontrola aktuálního OS" data-hide="▼ Kontrola aktuálního OS">► Kontrola aktuálního OS</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Nastavení</span>.</li>
+<li>Přesuňte se do podkategorie <strong>Zabezpečení</strong>.</li>
+<li>Klikněte na <span class="green">Aktualizace zabezpečení</span>.</li>
+<li>Zkontrolujte, zdali máte aktuální <strong>verzi systému Android</strong> – <span class="green">10</span> či výše.</li>
+<li>Zkontrolujte, zdali máte nejnovější <strong>aktualizaci zabezpečení Androidu</strong>.</li>
+<li style="list-style-type: none"><img alt="andinf2" src="https://securityhandbook.cz/img/cs/andinf2.png"></li>
+<li>Máte-li starší <em>verzi systému Android</em> než <strong>9.0</strong> a výrobce nepotvrdil aktualizaci, zařízení je implicitně nebezpečné – můžete se dívat po náhradě. Máte-li starší <em>aktualizaci zabezpečení Androidu</em> než <strong>3 měsíce</strong>, zařízení není bezpečné – můžete se dívat po náhradě.</li>
+<li>Aplikaci zavřete.</li>
+</ul>
+</div></div>
+<br>
+
+<h3 id="andr2.1">Správce oprávnění:</h3>
+<p>Správce oprávnění umožňuje nastavit, k jakým informacím a komponentům má konkrétní aplikace přístup.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Nastavení oprávnění aplikací" data-hide="▼ Nastavení oprávnění aplikací">► Nastavení oprávnění aplikací</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Nastavení</span>.</li>
+<li>Přesuňte se do podkategorie <strong>Aplikace a oznámení</strong>.</li>
+<li>V <em>rozšířených nastavení</em> otevřete <span class="green">Správce oprávnění</span>.</li>
+<li>Rozklikněte postupně všechny kategorie a zakažte všem aplikacím nepotřebný přístup.</li>
+<li style="list-style-type: none"><img alt="andapp" src="https://securityhandbook.cz/img/cs/andapp.png"></li>
+<li style="list-style-type: none"><img alt="andapp1" src="https://securityhandbook.cz/img/cs/andapp1.png"></li>
+<li>Následně se ze <em>Správce oprávnění</em> přesuňte o úroveň výše a rozklikněte <span class="green">Přístup ke spec. aplikacím</span>.</li>
+<li>Zde můžete nastavit např. které aplikace mají přístup k prémiovým SMS, mohou měnit nastavení systému nebo instalovat neznámé aplikace. Zakažte všechen nepotřebný přístup.</li>
+<li style="list-style-type: none"><img alt="andapp2" src="https://securityhandbook.cz/img/cs/andapp2.png"></li>
+<li>Aplikaci zavřete.</li>
+</ul>
+</div></div>
+<br><br><hr><br>
+<h2 id="andr3">Doporučené aplikace:</h2>
+<p>V následující sekci naleznete doporučené bezpečnostní aplikace a aplikace s bezpečností úzce související. Aplikace jsou děleny na FOSS (free and open source) a proprietární.</p>
+<h3 id="andr3.1">Obchod s aplikacemi:</h3>
+<p>Obchod s aplikacemi velmi úzce souvisí s bezpečností, jelikož z něj stahujete a instalujete veškeré aplikace do OS. <span class="red">Je důrazně doporučeno používat pouze předinstalovaný obchod s aplikacemi.</span></p>
+<h4 class="nocol">FOSS:</h4>
+<ul>
+<li>F-Droid: <a target="_blank" rel="noopener" href="https://f-droid.org/">https://f-droid.org/</a></li>
+<li><em>Aurora Store – open-source frontend pro obchod Google Play</em></li>
+</ul>
+<h4 class="nocol">Proprietární:</h4>
+<ul>
+<li><span class="green">Google Play</span>: <a target="_blank" rel="noopener" href="https://play.google.com/">https://play.google.com/</a></li>
+<li>Huawei AppGallery: <a target="_blank" rel="noopener" href="https://huaweimobileservices.com/appgallery/">https://huaweimobileservices.com/appgallery/</a></li>
+</ul>
+<p>Obchody typu <em>Amazon</em> či <em>Samsung</em> nemusí vždy mít nejnovější verze aplikací, zvláště těch, které jsou často aktualizovány. Zejména Amazon má extrémně zdlouhavý proces kontroly aplikací (prováděno ručně).</p>
+<br>
+
+<h3 id="andr3.2">Firewall:</h3>
+<p>Firewall je velmi důležitá bezpečnostní vrstva OS, která poskytuje ochranu před síťovými útoky. Na veřejných WiFi připojeních je nutností. Android integruje základní firewall.</p>
+<p>Aplikační firewall OS neintegruje, funkcionalitu je možné dodat externí aplikací, která pro implementaci zneužije <em>VPN API</em>, což není nejčistší a nejspolehlivější implementace FW, nicméně se jedná o nejschůdnější variantu, která nevyžaduje destrukci bezpečnostního modelu OS.</p>
+<h4 class="nocol">FOSS:</h4>
+<ul>
+<li><span class="green">NetGuard</span>: <a target="_blank" rel="noopener" href="https://www.netguard.me/">https://www.netguard.me/</a></li>
+</ul>
+<br>
+
+<h3 id="andr3.3">Blokování reklamy:</h3>
+<p>Blokování reklamy je bohužel z hlediska bezpečnosti nezbytné kvůli výskytu škodlivých reklam na internetu. Rozumnější je oblíbené stránky podporovat jinou a bezpečnější – např. finanční – formou.</p>
+<p>VPN je dobrý způsob blokace reklam, standardním typem připojení je ovšem přes <em>OpenVPN</em> a Android bohužel tento druh připojení neintegruje, uživatel je tedy zpravidla odkázán na aplikaci svého poskytovatele. Použití prohlížeče blokující reklamy (viz sekce níže) je na OS Android nejlepším řešením. <strong>Google Chrome</strong> nativně blokuje agresivní reklamy. Prohlížeč <strong>Brave</strong> v základu integruje blokování reklam a trackerů.</p>
+<h4 class="nocol">FOSS lokální VPN:</h4>
+<ul>
+<li>Blokada: <a target="_blank" rel="noopener" href="http://blokada.org/">http://blokada.org/</a></li>
+<li>DNS66: <a target="_blank" rel="noopener" href="https://github.com/julian-klode/dns66">https://github.com/julian-klode/dns66</a></li>
+</ul>
+<h4 class="nocol">Proprietární lokální VPN:</h4>
+<ul>
+<li>Adguard: <a target="_blank" rel="noopener" href="https://adguard.com/en/adguard-android/overview.html">https://adguard.com/en/adguard-android/overview.html</a></li>
+</ul>
+<h4 class="nocol">VPN:</h4>
+<ul>
+<li><span class="green">F-Secure Freedome</span>: <a target="_blank" rel="noopener" href="https://www.f-secure.com/en/home/products/freedome">https://www.f-secure.com/en/home/products/freedome</a></li>
+</ul>
+<h4 class="nocol">Internetový prohlížeč:</h4>
+<ul>
+<li>Brave: <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.brave.browser&amp;hl=cs">https://play.google.com/store/apps/details?id=com.brave.browser&amp;hl=cs</a></li>
+<li>Google Chrome</li>
+<li>…</li>
+</ul>
+<br>
+
+<h3 id="andr3.4">Internetový prohlížeč:</h3>
+<p>Chrome/Chromium je prohlížeč s nejkvalitnějšími mitigacemi proti exploitům. Prohlížeče založené na <em>Mozilla Firefox</em> stále v této oblasti za Chromium zaostávají, na OS Android dvojnásob.</p>
+<h4 class="nocol">FOSS:</h4>
+<ul>
+<li><span class="green">Brave</span>: <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.brave.browser&amp;hl=cs">https://play.google.com/store/apps/details?id=com.brave.browser&amp;hl=cs</a></li>
+<li>Chromium: <a target="_blank" rel="noopener" href="https://www.chromium.org/developers/how-tos/android-build-instructions">https://www.chromium.org/developers/how-tos/android-build-instructions</a></li>
+</ul>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Bezpečné nastavení a omezení JavaScript Brave" data-hide="▼ Bezpečné nastavení a omezení JavaScript Brave">► Bezpečné nastavení a omezení JavaScript Brave</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete prohlížeč <span class="green">Brave</span>.</li>
+<li>Přes menu v pravém rohu otevřete <span class="green">Nastavení</span>.</li>
+<li>Rozklikněte nabídku <strong>Ochrana soukromí</strong>. Zatrhněte položky <span class="green">Blokování reklam</span>, <span class="green">Blokování regionálních reklam</span> a <span class="green">Ochrana proti otisku prohlížeče</span>.</li>
+<li style="list-style-type: none"><img alt="brvand" src="https://securityhandbook.cz/img/cs/brvand.png"></li>
+<li>Vraťte se o úroveň výše a rozklikněte nabídku <span class="green">Nastavení webu</span>.</li>
+<li>V sekci <strong>JavaScript</strong> zablokujte spouštění JS.</li>
+<li style="list-style-type: none"><img alt="brvand1" src="https://securityhandbook.cz/img/cs/brvand1.png"></li>
+<li>V sekci <strong>Schránka</strong> zablokujte webům přístup k datům ve schránce.</li>
+<li style="list-style-type: none"><img alt="brvand2" src="https://securityhandbook.cz/img/cs/brvand2.png"></li>
+</ul>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Nyní máte ve výchozím nastavení vypnutý JS pro všechny weby. Jakmile budete chtít spuštění JS pro určitý web povolit, stačí poklepat na ikonu prohlížeče v horním panelu a skripty povolit.</p></div>
+</div></div>
+<h4 class="nocol">Proprietární:</h4>
+<ul>
+<li>Google Chrome: <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.android.chrome&amp;hl=cs">https://play.google.com/store/apps/details?id=com.android.chrome&amp;hl=cs</a></li>
+</ul>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Omezení JavaScript v Google Chrome / Chromium" data-hide="▼ Omezení JavaScript v Google Chrome / Chromium">► Omezení JavaScript v Google Chrome / Chromium</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Google Chrome</span> / <span class="green">Chromium</span>.</li>
+<li>Kliknutím na tři tečky v horním pravém rohu otevřete boční panel a klikněte na tlačítko <span class="green">Nastavení</span>.</li>
+<li>Klikněte na <strong>Nastavení webu</strong> a otevřete podkategorii <span class="green">JavaScript</span>.</li>
+<li>Zablokujte spouštění JS.</li>
+<li style="list-style-type: none"><img alt="chmandrjs" src="https://securityhandbook.cz/img/cs/chmandrjs.png"></li>
+<li>Klikněte na tlačítko <span class="green">Přidat výjimku pro konkrétní web</span>.</li>
+<li>Zadejte adresu důvěryhodného webu, na kterém se může spouštět JS. Syntax je oproti desktopové verzi značně omezený.</li>
+<li style="list-style-type: none"><img alt="chmandrjs1" src="https://securityhandbook.cz/img/cs/chmandrjs1.png"></li>
+<li>Klikněte na <span class="green">Přidat</span>.</li>
+</ul>
+</div></div>
+<br><br><hr><br>
+<h2 id="andr4">Bezpečné ROM:</h2>
+<p>Aby ROM mohla být považována za bezpečnou, musí udržovat striktní bezpečnostní standardy. Musí implementovat pravidelné bezpečnostní aktualizace a podporovat verified boot, nesmí jakýmkoli způsobem degradovat integrované bezpečnostní funkce, nesmí zpřístupňovat pravomoci root uživatele atd.</p>
+<p>Nejbezpečnější ROM je originální ROM spravovaná společností Google – <span class="green">Pixel</span>, nebo součást projektu <span class="green"><a target="_blank" rel="noopener" href="https://www.android.com/one/">Android One</a></span>.</p>
+<p>Originální ROM implementované ostatními výrobci s <em>integrovanými službami Google</em> zpravidla základní bezpečnostní kritéria splňují. <strong>Zařízením bez integrovaných služeb Google je důrazně doporučeno se vyhnout.</strong></p>
+<p><span class="red">Custom ROM bezpečnostní kritéria nesplňují.</span> Například bohužel velmi oblíbený <em>LineageOS</em> nesplňuje ani jedno z několika výše vyjmenovaných kritérií. Výjimku potvrzující pravidlo tvoří projekt <a target="_blank" rel="noopener" href="https://grapheneos.org/">GrapheneOS</a>, který ovšem cílí na specifickou skupinu uživatelů, neobsahuje služby Google a podporuje pouze bezpečný HW (modely řady Pixel).</p>
+<div class="alert exclaim"><p><em class="icon-attention"></em><strong>Varování</strong><br>
+Instalace libovolné neoriginální ROM je důrazně nedoporučena.</p></div>
+
+
+<h3 class="nocol">To je vše. Stay safe! <img class="smile" src="https://securityhandbook.cz/img/sm/smile.svg" alt="smile"></h3>
+</div></article>
+</main>
+<footer>
+<p>Toto dílo podléhá licenci <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>Podrobnosti o výjimkách z výše zmíněné licence naleznete <a target="_blank" rel="noopener" href="https://securityhandbook.cz/license_cs.php">zde</a>.</p>
+<p>2016-2020 <a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook">@SecurityHandbook</a></p>
+<p><a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs"><img alt="Creative Commons Licence" style="border-width:0" src="https://securityhandbook.cz/img/license.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook/handbook"><img alt="github" src="https://securityhandbook.cz/img/github.png"></a></p>
+</footer>
+<noscript><p>Zapněte si prosím JavaScript, je důležitý pro využití všech funkcí webu. Jedná se pouze o jQuery a pár řádků.</p></noscript>
+<a href="#0" class="cd-top">Top</a>
+<script src="https://securityhandbook.cz/resources/js/jquery-3.4.1.min.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scripts.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scroll.js"></script>
+</body></html>

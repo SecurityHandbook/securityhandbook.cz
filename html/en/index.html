@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preload" as="style" href="https://securityhandbook.cz/resources/css/main_alpha.css">
+<link href="https://securityhandbook.cz/resources/css/main_alpha.css" rel="stylesheet" media="screen">
+<link href="https://securityhandbook.cz/resources/css/fonts_min.css" rel="stylesheet">
+<title>FAQ – Security Handbook</title>
+<meta name="description" content="How to secure your PC.">
+<meta property="og:title" content="FAQ – Security Handbook">
+<meta property="og:description" content="How to secure your PC.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="HandheldFriendly" content="True">
+<meta name="theme-color" content="#323e4e">
+</head>
+<body>
+  <header>
+  <div class="hcontent">
+    <a href="https://securityhandbook.cz/en/index.php">FAQ – Security Handbook</a>
+    <img src="https://securityhandbook.cz/img/shield.png" alt="logo">
+  </div></header>
+  <nav>
+  <div class="navcontent" id="bignav">
+    <a href="https://securityhandbook.cz/en/index.php#basics"><strong>Security Basics</strong></a>
+    <a href="https://securityhandbook.cz/en/wnt/index.php#wnt"><strong><span class="s">Windows OS</span></strong></a>
+    <a href="https://securityhandbook.cz/en/wnt/adv.php#wnt"><span class="s">Windows OS for the advanced</span></a>
+    <a href="https://securityhandbook.cz/en/lnx/index.php#lnx"><strong><span class="s">Linux OS</span></strong></a>
+    <a href="https://securityhandbook.cz/en/lnx/adv.php#lnx">Linux OS for the advanced</a>
+    <a href="https://securityhandbook.cz/en/iot/andr.php#andr"><strong>Android OS</strong></a>
+  </div>
+  <div class="navcontent" id="smallnav">
+    <a href="https://securityhandbook.cz/en/index.php#basics"><strong>Basics</strong></a>
+    <a href="https://securityhandbook.cz/en/wnt/index.php#wnt"><strong><span class="s">Windows</span></strong></a>
+    <a href="https://securityhandbook.cz/en/lnx/index.php#lnx"><strong><span class="s">Linux</span></strong></a>
+    <a href="https://securityhandbook.cz/en/iot/andr.php#andr"><strong>Android</strong></a>
+  </div>
+  </nav>
+<main>
+<article><div class="text">
+<hr>
+<h3>Alpha release:</h3>
+<ul>
+  <li><strong>unrevised translations</strong> – should improve in near future</li>
+  <li>translated chapters: <a href="#basics"><strong>Basics</strong></a></li>
+</ul>
+<hr>
+<p>Computer security’s nowadays a critical – yet, sadly enough, regularly underestimated – matter. Users often fail to understand why they should care. <em>Security</em> is an ubiquitous factor of human life, typically perceived in one of its aspects by people: as their <strong>physical security</strong>. A person for instance usually doesn’t climb mountains without climbing gear, because they see the risks and possible fatal consequences. <strong>Computer security</strong> is mostly an abstract term where the risks and possible fatal consequences aren’t visible to the eye and their depiction requires a significant portion of one’s imagination. This attribute along with insufficient education of the general public make for the main reason people don’t understand that <em>neglected computer security may come with similarly fatal consequences as neglected physical security</em>.</p>
+<p>Our society largely depends on computer systems and smart devices – e.g. water treatment, food or pharma production, smart cars, home security systems, military, finance management, personal communication,&#8230; And this dependance will probably only rise. An attacker can effectively posion a whole city by attacking a water treatment facility, attacking a smart car would probably result in fatal consequences for the passengers. However, even in an event of personal device hack, the extraction and leakage of sensitive data may prove fatal to the user. It’s therefore essential <strong>everyone accepts computer security as an everyday factor of their lives</strong> and treats it equally as their physical security.</p>
+<p>No device can ever be 100% secure as there are too many variables in the process (physical security, HW, SW, user comfort,&#8230;). Security’s all about compromise. Chapters of this handbook focus on achieving the most effective security with minimum user comfort loss. If everyone adhered to the provided recommendations and applied the proveded steps, attacking user devices would prove much more difficult and, in result, expensive.</p>
+<div class="spoilwrapper" id="tree"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Table Of Contents" data-hide="▼ Table Of Contents">► Table Of Contents</span></div>
+<div class="spoilcontent">
+<ul>
+<li><a href="https://securityhandbook.cz/en/index.php#basics">Security Basics</a></li>
+<li><a href="https://securityhandbook.cz/en/wnt/index.php#wnt"><span class="s">Windows OS</span> (TBA)</a></li>
+<li><a href="https://securityhandbook.cz/en/lnx/index.php#lnx"><span class="s">Linux OS</span> (TBA)</li>
+<li><strong>FAQ – smart devices (smartphones, IoT)</strong><ul>
+  <li><a href="https://securityhandbook.cz/en/iot/andr.php#andr">Android OS</a></li>
+</ul></li>
+<li><strong>FAQ for the advanced</strong><ul>
+  <li><a href="https://securityhandbook.cz/en/wnt/index.php#wnt"><span class="s">Windows OS</span> (TBA)</a></li>
+  <li><a href="https://securityhandbook.cz/en/lnx/adv.php#lnx">Linux OS</a></li>
+</ul></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+</div></div>
+</div></article><br>
+<article id="basics"><div class="text">
+<h1>FAQ – Security Basics</h1>
+<h2 id="basics1">Glossary:</h2>
+<ul>
+<li><span class="green">hacker</span> – an individual misusing their knowledge, e.g. in computer security, for personal gain (definition originally comes from the <em>cracker</em>)</li>
+<li><span class="green">malware</span> – generic term for malicious software which further divides into many categories</li>
+<li><span class="green">ransomware</span> – software preventing user from accessing their data and demanding payment to reinstate such access</li>
+<li><strong>adware</strong> – software containing ads and displaying them to the user</li>
+<li><strong>rootkit</strong> – code intended to mask the presence of other malware in OS and aggravate their detection</li>
+<li><span class="green">exploit</span> – code taking advantage of a software vulnerability in order to perform a specific (typically malicious) action</li>
+<li><strong>zero-day (0-day)</strong> – vulnerability exploited at the day of its disclosure (or prior to it)</li>
+<li><strong>payload</strong> – core part of malware code responsible for the key malicious action</li>
+</ul>
+<br>
+
+<h2 id="basics2">Basic Security Guidelines:</h2>
+<ul>
+<li>Periodically backup user data.</li>
+<li>Always use the latest patched <strong>original</strong> version of the OS.</li>
+<li>Refrain from using illegal software – most cracks are infected.</li>
+<li>Prior to performing any action, double-check its autencity.</li>
+<li>Install applications exclusively from trusted sources: <em>official website</em> / <em>Microsoft Store</em>.<ul>
+<li>on mobile devices: <em>Google Play</em> / <em>Apple Store</em></li>
+</ul></li>
+<li>Use strong passwords that are easy to remember. Use different passwords for various services, consider using a <a href="#basics7">password manager</a>.</li>
+<li style="list-style-type: none"><p class="imgsrc"><em>Password Strength.</em> Source: <a target="_blank" rel="noopener" href="https://xkcd.com/936/">xkcd</a> | <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc/2.5/">CC BY-NC 2.5</a></p>
+<img alt="password_strength_sm" src="https://securityhandbook.cz/img/en/passwd.png"></li>
+<li><strong>On mobile devices:</strong><ul>
+<li>don’t perform <em>root</em> / <em>jailbreak</em> – such action destroys the respective OS’s security model</li>
+<li>avoid installing apps requesting unreasonable permissions (e.g. Flashlight+ demanding access to your SMS and contacts)</li>
+</ul></li>
+<li>Pay attention to where you enter your data – selling personal data is a highly profitable business.</li>
+<li>Don’t forget the physical security factor – lock your device, set a UEFI password, disable boot menu, refrain from unlocking the bootloader,&#8230;</li>
+</ul>
+<br>
+
+<h2 id="basics3">Secure Web Browsing:</h2>
+<ul>
+<li>Don’t connect to unknown/public networks and avoid using unsafe protocols – HTTP, FTP,&#8230; – or at least don’t send any personal data through them. Consider using a VPN.</li>
+<li>Use a securely configured web browser.</li>
+<li>Consider using a separate browser for sensitive business (e.g. online banking).</li>
+<li>Don’t visit unknown/untrusted sites and never download any files from them.</li>
+<li>Reduce the visits of pornographic sites, it’s quite common for them to be a victim of malwaretising and serve malicious code.</li>
+<li>Don’t use social buttons outside the respective social network as it’s trivial to mimick these.</li>
+<li>Avoid the <strong>short URLs</strong> – like <a href="https://bit.ly/tinyurlwiki">https://bit.ly/tinyurlwiki</a> – as they can easily mask dangerous links.</li>
+<li>Only open email attachments / links from trusted senders.</li>
+</ul>
+<div class="alert success"><p><em class="icon-ok-circled"></em><strong>Tip</strong><br>
+The safest way to browse the web: <span class="green">securely configured live OS</span>. However, it should be pointed out that this option doesn’t have to be 100% safe as well – for example if the device has been hacked in the past, the EFI may be infected.</p></div>
+<br>
+
+<h2 id="basics4">Security News Sources:</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/">BleepingComputer</a></li>
+<li><a target="_blank" rel="noopener" href="http://thehackernews.com/">The Hacker News</a></li>
+<li><a target="_blank" rel="noopener" href="https://threatpost.com/">Threatpost</a></li>
+</ul>
+<br>
+<h2 id="basics5">Online File Analysis:</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.virustotal.com/">VirusTotal</a> – AV database</li>
+<li><a target="_blank" rel="noopener" href="https://www.metadefender.com/">Metadefender</a> – AV database</li>
+<li><a target="_blank" rel="noopener" href="https://www.reverse.it/">Hybrid Analysis</a> – sandbox + VT</li>
+<li><a target="_blank" rel="noopener" href="https://malwr.com/submission/">Malwr</a> – sandbox</li>
+</ul>
+<br>
+<h2 id="basics6">Recommended VPNs:</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.f-secure.com/en/web/home_global/freedome/">Freedome VPN</a> – blocks malware, trackers and ads</li>
+<li><a target="_blank" rel="noopener" href="https://www.ivpn.net/">IVPN</a></li>
+<li><a target="_blank" rel="noopener" href="https://cryptostorm.is/">Cryptostorm</a></li>
+</ul>
+<br>
+<h2 id="basics7">Recommended Password Managers:</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://1password.com/">1Password</a> – paid</li>
+<li><a target="_blank" rel="noopener" href="https://bitwarden.com/">Bitwarden</a> – free/paid</li>
+</ul>
+<br>
+</div></article>
+</main>
+<footer>
+<p>This work is licensed under a <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>Details about few license exceptions can be found <a target="_blank" rel="noopener" href="https://securityhandbook.cz/license_en.php">here</a>.</p>
+<p>2016-2022 <a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook">@SecurityHandbook</a></p>
+<p><a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://securityhandbook.cz/img/license.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook/handbook"><img alt="github" src="https://securityhandbook.cz/img/github.png"></a></p>
+</footer>
+<noscript><p>Please turn on JavaScript as it's necessary for accessing some features of this website. It's just jQuery & few lines.</p></noscript>
+<a href="#0" class="cd-top">Top</a>
+<script src="https://securityhandbook.cz/resources/js/jquery-3.4.1.min.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scripts.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scroll.js"></script>
+</body></html>

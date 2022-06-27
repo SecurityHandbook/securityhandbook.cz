@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preload" as="style" href="https://securityhandbook.cz/resources/css/main_alpha.css">
+<link href="https://securityhandbook.cz/resources/css/main_alpha.css" rel="stylesheet" media="screen">
+<link href="https://securityhandbook.cz/resources/css/fonts_min.css" rel="stylesheet">
+<title>Security Handbook – Android OS</title>
+<meta name="description" content="How to secure Android OS.">
+<meta property="og:title" content="Security Handbook – Android OS">
+<meta property="og:description" content="How to secure Android OS.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="HandheldFriendly" content="True">
+<meta name="theme-color" content="#323e4e">
+</head>
+<body>
+  <header>
+  <div class="hcontent">
+    <a href="https://securityhandbook.cz/en/index.php">FAQ – Security Handbook</a>
+    <img src="https://securityhandbook.cz/img/shield.png" alt="logo">
+  </div></header>
+  <nav>
+  <div class="navcontent" id="bignav">
+    <a href="https://securityhandbook.cz/en/index.php#basics"><strong>Security Basics</strong></a>
+    <a href="https://securityhandbook.cz/en/wnt/index.php#wnt"><strong><span class="s">Windows OS</span></strong></a>
+    <a href="https://securityhandbook.cz/en/wnt/adv.php#wnt"><span class="s">Windows OS for the advanced</span></a>
+    <a href="https://securityhandbook.cz/en/lnx/index.php#lnx"><strong><span class="s">Linux OS</span></strong></a>
+    <a href="https://securityhandbook.cz/en/lnx/adv.php#lnx">Linux OS for the advanced</a>
+    <a href="https://securityhandbook.cz/en/iot/andr.php#andr"><strong>Android OS</strong></a>
+  </div>
+  <div class="navcontent" id="smallnav">
+    <a href="https://securityhandbook.cz/en/index.php#basics"><strong>Basics</strong></a>
+    <a href="https://securityhandbook.cz/en/wnt/index.php#wnt"><strong><span class="s">Windows</span></strong></a>
+    <a href="https://securityhandbook.cz/en/lnx/index.php#lnx"><strong><span class="s">Linux</span></strong></a>
+    <a href="https://securityhandbook.cz/en/iot/andr.php#andr"><strong>Android</strong></a>
+  </div>
+  </nav>
+<main>
+<article><div class="text">
+<p>Computer security's nowadays a very important, yet shockingly underestimated, topic – most likely due to insufficient education of the general public. This can't be stressed enough when it comes to smartphones and IoT devices. Such devices varies from PCs in one major detail – we carry them around with us all day long. They handle most of our communication, contain various sensors and microphones,&#8230; An infected device can among other things spy on conversations, track location of its user, photograph and record them, their family and household. Possibilities of misuse are nearly infinite.</p>
+<p>&bdquo;We used to say a man's home is his castle. Today, a man's phone is his castle.&ldquo;<br>
+– Edward Snowden</p>
+<br>
+<h2><a href="#andr">Android OS</a></h2>
+<ul>
+  <li><a href="#andr1">Secure Devices</a></li>
+  <li><a href="#andr2">Elementary Security Configuration</a></li>
+  <li><a href="#andr3">Recommended Apps</a></li>
+</ul><br>
+<div class="spoilwrapper" id="tree"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Table Of Contents" data-hide="▼ Table Of Contents">► Table Of Contents</span></div>
+<div class="spoilcontent">
+<ul>
+<li><a href="https://securityhandbook.cz/en/index.php#basics">Security Basics</a></li>
+<li><a href="https://securityhandbook.cz/en/wnt/index.php#wnt"><span class="s">Windows OS</span> (TBA)</a></li>
+<li><a href="https://securityhandbook.cz/en/lnx/index.php#lnx"><span class="s">Linux OS</span> (TBA)</li>
+<li><strong>FAQ – smart devices (smartphones, IoT)</strong><ul>
+  <li><a href="https://securityhandbook.cz/en/iot/andr.php#andr">Android OS</a></li>
+</ul></li>
+<li><strong>FAQ for the advanced</strong><ul>
+  <li><a href="https://securityhandbook.cz/en/wnt/index.php#wnt"><span class="s">Windows OS</span> (TBA)</a></li>
+  <li><a href="https://securityhandbook.cz/en/lnx/adv.php#lnx">Linux OS</a></li>
+</ul></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+</div></div>
+</div></article><br>
+<article id="andr"><div class="text">
+<h1>FAQ – Android OS</h1>
+<p>Android's the dominant mobile OS (&gt;88% share) developed by <strong>Google, Inc.</strong> Due to its major share, Android enjoys a lot of attention from hackers.</p>
+<p>Android has a robust security model which treats all apps as implicitly untrusted, its main security issue being the diversity of devices running Android, of which only a minority gets periodical security updates and/or runs on newest OS version.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► A little theory regarding Android OS security model" data-hide="▼ A little theory regarding Android OS security model">► A little theory regarding Android OS security model</span></div>
+<div class="spoilcontent">
+<p>Android has a robust multilayer security model. It uses the Linux kernel, implements a <abbr title="Mandatory Access Control">MAC</abbr> and mitigations against <em>memory corruption</em> exploits – Android's the only linux distribution not supporting running <em>non-<abbr title="Position Independent Executable">PIE</abbr></em> code. Each app's assigned their unique user ID and runs in sandbox, thus can't intervene with other apps and only is allowed to operate with files/OS components for which the user gives their permission.</p>
+<img alt="Android Security Model" src="https://securityhandbook.cz/img/en/and.png">
+<p class="imgsrcf"><em>The Android security model (modified).</em> Source: <a target="_blank" rel="noopener" href="http://source.android.com/security/reports/Google_Android_Security_2015_Report_Final.pdf">Android Security 2015 Annual Report</a></p>
+<h4>Kernel:</h4>
+<p>Android's built on the Linux kernel. Linux kernel arguably might not be the best choice from security perspective, but offers a decent permission model based on users and user groups, process isolation etc.</p>
+<h4>MAC:</h4>
+<p>Android <strong>Kitkat</strong> and above uses a significantly modified Linux MAC implementation – <em>SEAndroid</em>. SEAndroid considerably reduces the attack surface and also plays an important role in Android's permission model. Thanks to the MAC implementation, only a tiny portion of code now runs with full root permissions. Major enhancements regarding MAC have been introduced in <strong>Lollipop</strong> and <strong>Oreo</strong> releases.</p>
+<h4>Apps:</h4>
+<p>Android requires all apps to be digitally signed – unsigned apps won't run. By default, apps can only be installed from a preinstalled app store – typically <strong>Google Play</strong>. Each app's confined in its own sandbox (<em>IsolatedProcess</em>), effectively being isolated from other apps and the OS. Android implements <strong>seccomp</strong> sandbox, providing advanced means isolation and higher degree of security. Seccomp sandbox's internally used e.g. by <em>Google Chrome</em> browser.</p>
+<p>Android <strong>Marshmallow</strong> and above implements an app permission model – user chooses to which files/components apps gain access. Several enhancements've been introduced with every OS release, the last being <strong>Q</strong> right now. <span class="red">Using third-party permission managers (such as <em>XPrivacy</em>) is strongly discouraged.</span></p>
+<p>Features dependent on Google services (e.g. <em>VerifyApps</em>, <em>Google Play Protect</em>) shall be omitted.</p>
+</div></div>
+<h4>FAQ is divided into several sections:</h4>
+<ul>
+<li><a href="#andr1">Secure Devices</a></li>
+<li><a href="#andr2">Elementary Security Configuration</a></li>
+<li><a href="#andr3">Recommended Apps</a></li>
+</ul>
+<br>
+<h2 id="andr1">Secure Devices:</h2>
+<p>As mentioned above, variety and diversity of devices running Android OS is a major security issue. Only a few manufacturers provide periodical security patches and OS updates for their models, for different reasons. As a result, brand new devices with old OS version and many known vulnerabilities – significantly raising the risk of exploitation – can be found on the market. Such practise unfortunately isn't only limited to cheap models, but more expensive ones as well. Users are therefore encouraged to consider security parametres when picking their device. Below you'll find several parametres a device should offer in order to be considered for selection.</p>
+<h3>Security criteria for devices running Android OS:</h3>
+<ul>
+<li>bundled OS version at least <strong>Q</strong> (<em>10</em>)</li>
+<li>periodical (monthly, at minimum quarterly) security updates for firmware and SoC</li>
+<li>guarantee of security updates for device's life span</li>
+<li>full verified boot</li>
+<li>64-bit architecture (x86/ARM)</li>
+<li>kernel &gt;= 4.4</li>
+<li><em>Treble</em> support</li>
+</ul>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+There're two levels of monthly security patches – <strong>1st</strong> day of month and <strong>5th</strong> day of month. Both levels are relevant for most devices on the market. If a manufacturer provides frequent updates for their device, but only implements the first patch level (e.g. <em>1 November 2019</em>), this may pose an issue.</p></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Why OS version matters" data-hide="▼ Why OS version matters">► Why OS version matters</span></div>
+<div class="spoilcontent">
+<p>Each new OS release introduces significant security and other enhancements. For example, <strong>Marshmallow</strong> introduced app permission model, empowering users to choose what each app can access. <strong>Nougat</strong> introduced a rewritten <em>MediaServer</em>, effectively incapacitating several families of exploits such as <em>Stagefright</em>. <strong>Oreo</strong> elevated sandboxing to a whole new level by introducing <em>Project Treble</em> and flat use of <em>seccomp</em> for apps. Above that enhanced <em>WebView</em> and app permission model. The list goes on for every release. It can be said with a clear conscience that <span class="red">no Android OS release prior to <em>Pie</em> is secure and shouldn't be used.</span></p>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Why security updates matter" data-hide="▼ Why security updates matter">► Why security updates matter</span></div>
+<div class="spoilcontent">
+<p>Let's look at one example. You install a malicious app on older <span class="green">8.1</span> Android – you've got control over app's permissions and can disable shady permissions. However, you don't have the newest security patches. The app can therefore exploit the OS using a known vulnerability – and user won't notice a thing, ever. Such practise's daily bread for Android malware as it's the simplest and cheapest way of device infection – more than <strong>90 % of the devices hasn't got critical security patches</strong>.</p>
+</div></div>
+<br>
+<h3 id="andr1.1">Acceptable models meeting the criteria:</h3>
+<ul>
+<li><strong>any model</strong> of the <strong><span class="go">Pixel</span></strong> family</li>
+<li><strong>any model</strong> of the <a target="_blank" rel="noopener" href="https://www.android.com/one/">Android One</a> project</li>
+<li><strong>any model</strong> of the Nokia brand</li>
+<li>flagships of known manufacturers such as <strong>SONY</strong>, <strong><span class="sam">Samsung</span></strong>, <strong><span class="lg">LG</span></strong>, <strong><span class="hu">Huawei</span></strong> etc.</li>
+<li>higher <strong><span class="sam">Samsung</span></strong>'s and <strong>SONY</strong>'s models</li>
+</ul>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Tip</strong><br>
+You can also find inspiration in the <a target="_blank" rel="noopener" href="https://androidenterprisepartners.withgoogle.com/devices/">list of recommended devices for enterprises</a> od Google.</p></div>
+<br><br><hr><br>
+<h2 id="andr2">Elementary Security Configuration:</h2>
+<p>Android's typically safely configured by default, but it never hurts to check your configuration.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Security config check" data-hide="▼ Security config check">► Security config check</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Open the <span class="green">Settings</span>.</li>
+<li>Find <strong>Security & location</strong> subcategory and enter it.</li>
+<li>Check secure config of the <strong>Screen lock</strong> – <span class="green">Password</span> or at least <span class="green">PIN</span></li>
+<li>Check your <strong>Device admin apps</strong>. There should be none, except for Google's if you use them.</li>
+<li>Check <strong>Encryption & credentials</strong> status of your device.</li>
+<li>Close the app.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Up-to-date OS check" data-hide="▼ Up-to-date OS check">► Up-to-date OS check</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Open the <span class="green">Settings</span>.</li>
+<li>Find <strong>System</strong> subcategory and enter it.</li>
+<li>Tap on the <span class="green">About phone</span>.</li>
+<li>Check whether your <strong>Android OS version</strong> is up-to-date – <strong>10.0</strong> or above.</li>
+<li>Check whether your <strong>Android security patch level</strong> is the newest available.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/andinf.png" alt="andinf"></li>
+<li>Should your device run older <em>Android OS version</em> than <strong>9.0</strong> and the manufacturer hasn't confirmed an update, it's inherently insecure – consider looking for a replacement. Should your device contain older <em>Android security patch level</em> than <strong>3 months</strong>, it's unsafe to use – consider looking for a replacement.</li>
+<li>Close the app.</li>
+</ul></div></div>
+<br>
+<h3 id="andr2.1">Permissions manager:</h3>
+<p>Permissions manager empowers user to configure what information and components can each application access.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► App permissions configuration" data-hide="▼ App permissions configuration">► App permissions configuration</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Open the <span class="green">Settings</span>.</li>
+<li>Find <strong>Apps & notification</strong> subcategory and enter it.</li>
+<li>Tap <span class="green">App permissions</span>.</li>
+<li>Go through the categories one by one and deny unnecessary access to all apps.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/andapp.png" alt="andapp"></li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/andapp1.png" alt="andapp1"></li>
+<li>Upon finishing go up a level from <em>App permissions</em> and expand <strong>Advanced</strong> options.</li>
+<li>Scroll down and enter <span class="green">Special app access</span>.</li>
+<li>Here you can set e.g. which apps have access to premium SMS or modifying system settings.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/andapp2.png" alt="andapp2"></li>
+<li>Close the app.</li>
+</ul></div></div>
+<br>
+<h3 id="andr2.2">Guest account:</h3>
+<p>Guest account provides a relatively safe means of e.g. browsing the web. Installing shady apps is discouraged even from the Guest account as apps' arsenal for exploiting the OS is considerably larger than a website's. Not even factory reset would help in such scenario.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Switching to Guest account" data-hide="▼ Switching to Guest account">► Switching to Guest account</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Open the <span class="green">Settings</span>.</li>
+<li>Find <strong>Users & accounts</strong> subcategory and enter it.</li>
+<li>Tap <span class="green">Users</span>.</li>
+<li>Switch to <strong>Guest</strong> account by tapping it in the list.</li>
+<li>Should you wish to return, pull down the notification bar and extend <strong>Android system · Guest user</strong>.</li>
+<li>Tap <span class="green">Remove Guest</span>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/andg1.png" alt="andg1"></li>
+<li>Confirm the action.</li>
+</ul></div></div>
+<br><br><hr><br>
+<h2 id="andr3">Recommended Apps:</h2>
+<p>The following section contains recommended security apps and apps closely related to security. Applications are divided into FOSS (free & open source) and proprietary.</p>
+<h3 id="andr3.1">App Store:</h3>
+<p>As the source of installed apps, an application store should be considered a crucial security component.</p>
+<h4>FOSS:</h4>
+<ul>
+<li>F-Droid: <a target="_blank" rel="noopener" href="https://f-droid.org/">https://f-droid.org/</a></li>
+<li><em>Aurora Store – open-source frontend for Google Play</em></li>
+</ul>
+<h4>Proprietary:</h4>
+<ul>
+<li>Google Play: <a target="_blank" rel="noopener" href="https://play.google.com/">https://play.google.com/</a></li>
+</ul>
+<p>Stores like <em>Amazon</em> or <em>Samsung</em> don't always have the latest app releases, especially of the frequently updated apps. Namely Amazon has an extremely long process of checking applications (done manually).</p>
+<br>
+<h3 id="andr3.2">Firewall:</h3>
+<p>Firewall's an essential OS security layer providing protection against network attacks. Its use on public WiFi connections is a must.</p>
+<p>Integrated FW makes for the best option, unfortunately few ROMs offer any enhancements to the basic firewall. Abusing <em>VPN API</em> (NetGuard, NoRoot Data Firewall,&#8230;) may not be the nicest and most reliable option, but at least doesn't require destroying the OS's security model and works quite well.</p>
+<h4>FOSS:</h4>
+<ul>
+<li>integrated</li>
+<li>NetGuard (VPN): <a target="_blank" rel="noopener" href="https://github.com/M66B/NetGuard">https://github.com/M66B/NetGuard</a></li>
+</ul>
+<h4>Proprietary:</h4>
+<ul>
+<li>NoRoot Data Firewall (VPN): <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.jianjia.firewall">https://play.google.com/store/apps/details?id=com.jianjia.firewall</a></li>
+</ul>
+<br>
+<h3 id="andr3.3">Ad Blocking:</h3>
+<p>Ad blocking's become a necessity beacuse of the web's amount of malicious ads. Supporting your favourite websites should be carrited out in a different and more secure way – donations, subscribtions,&#8230;</p>
+<h4>FOSS Local VPN:</h4>
+<ul>
+<li>Blokada: <a target="_blank" rel="noopener" href="http://blokada.org/">http://blokada.org/</a></li>
+<li>DNS66: <a target="_blank" rel="noopener" href="https://github.com/julian-klode/dns66">https://github.com/julian-klode/dns66</a></li>
+</ul>
+<h4>Proprietary Local VPN:</h4>
+<ul>
+<li>Adguard: <a target="_blank" rel="noopener" href="https://adguard.com/en/adguard-android/overview.html">https://adguard.com/en/adguard-android/overview.html</a></li>
+</ul>
+<h4>VPN:</h4>
+<ul>
+<li>Freedome: <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.fsecure.freedome.vpn.security.privacy.android">https://play.google.com/store/apps/details?id=com.fsecure.freedome.vpn.security.privacy.android</a></li>
+</ul>
+<h4>Web Browser:</h4>
+<ul>
+<li>Brave: <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.brave.browser">https://play.google.com/store/apps/details?id=com.brave.browser</a></li>
+<li>Google Chrome</li>
+<li>&#8230;</li>
+</ul>
+<p>VPN's a great option for blocking ads, unfortunately Android doesn't natively support <em>OpenVPN</em> nor <em>WireGuard</em>, and users in most cases have to rely on third-party (typically their provider's) apps. Using a web browser capable of blocking ads appears as the best available option. <strong>Chrome</strong> already blocks aggressive ads. <strong>Brave</strong> browser by default blocks ads and trackers.</p>
+<br>
+<h3 id="andr3.4">Web Browser:</h3>
+<p>Chrome/Chromium's a browser with superior exploit mitigations. Browsers based on <em>Mozilla Firefox</em> are still lagging behind Chrome, especially on Android OS.</p>
+<h4>FOSS:</h4>
+<ul>
+<li>Chromium: <a target="_blank" rel="noopener" href="https://www.chromium.org/developers/how-tos/android-build-instructions">https://www.chromium.org/developers/how-tos/android-build-instructions</a></li>
+<li>Brave: <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.brave.browser">https://play.google.com/store/apps/details?id=com.brave.browser</a></li>
+</ul>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Brave – secure configuration & JavaScript restriction" data-hide="▼ Brave – secure configuration & JavaScript restriction">► Brave – secure configuration & JavaScript restriction</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Open <span class="green">Brave</span> browser.</li>
+<li>Enter <span class="green">Settings</span> via the bottom right menu.</li>
+<li>Find <strong>Privacy</strong> subcategory and open it. Tick <span class="green">Ad Block</span>, <span class="green">Regional Ad Block</span> and <span class="green">Fingerprint Protection</span>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/brvand.png" alt="brvand"></li>
+<li>Go up a level and enter <span class="green">Site settings</span> subcategory.</li>
+<li>Disable running JS in <strong>JavaScript</strong> section.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/brvand1.png" alt="brvand1"></li>
+<li>Disable website clipboard access in <strong>Clipboard</strong> section.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/brvand2.png" alt="brvand2"></li>
+</ul>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Now JS is by default disabled for all websites. Should you want to allow JS for a specific website, all you have to do is tap the browser icon in upper panel and allow scripts.</p></div>
+<img src="https://securityhandbook.cz/img/en/brvand3.png" alt="brvand3">
+</div></div>
+<h4>Proprietary:</h4>
+<ul>
+<li>Google Chrome: <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.android.chrome">https://play.google.com/store/apps/details?id=com.android.chrome</a></li>
+</ul>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Restricting JavaScript in Google Chrome / Chromium" data-hide="▼ Restricting JavaScript in Google Chrome / Chromium">► Restricting JavaScript in Google Chrome / Chromium</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Open <span class="green">Google Chrome</span> / <span class="green">Chromium</span>.</li>
+<li>Enter <span class="green">Settings</span> via the top right menu.</li>
+<li>Open <strong>Site settings</strong> subcategory and <span class="green">JavaScript</span> section.</li>
+<li>Disable running JS.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/chmandrjs.png" alt="chmandrjs"></li>
+<li>Tap <span class="green">Add Site Exception</span>.</li>
+<li>Enter the URL of a trustworthy website for which you wish to allow JS execution. The syntax is rather restricted in comparison with desktop version.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/chmandrjs1.png" alt="chmandrjs1"></li>
+<li>Tap the <span class="green">Add</span> button.</li>
+</ul></div></div>
+<br><br><hr>
+<h3 class="nocol">That's all. Stay safe! <img class="smile" src="https://securityhandbook.cz/img/sm/smile.svg" alt="smile"></h3>
+</div></article>
+</main>
+<footer>
+<p>This work is licensed under a <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>Details about few license exceptions can be found <a target="_blank" rel="noopener" href="https://securityhandbook.cz/license_en.php">here</a>.</p>
+<p>2016-2022 <a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook">@SecurityHandbook</a></p>
+<p><a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://securityhandbook.cz/img/license.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook/handbook"><img alt="github" src="https://securityhandbook.cz/img/github.png"></a></p>
+</footer>
+<a href="#0" class="cd-top">Top</a>
+<noscript><p>Please turn on JavaScript as it's necessary for accessing some features of this website. There's no malware (jQuery & few lines).</p></noscript>
+<script src="https://securityhandbook.cz/resources/js/jquery-3.4.1.min.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scripts.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scroll.js"></script>
+</body></html>

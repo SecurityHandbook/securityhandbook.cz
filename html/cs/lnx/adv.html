@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<link rel="preload" as="style" href="https://securityhandbook.cz/resources/css/main_alpha.css">
+<link href="https://securityhandbook.cz/resources/css/main_alpha.css" rel="stylesheet" media="screen">
+<link href="https://securityhandbook.cz/resources/css/fonts_min.css" rel="stylesheet">
+<title>OS Linux pro pokročilé</title>
+<meta name="description" content="Zabezpečení OS Linux pro pokročilé.">
+<meta property="og:title" content="OS Linux pro pokročilé">
+<meta property="og:description" content="Zabezpečení OS Linux pro pokročilé.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="HandheldFriendly" content="True">
+<meta name="theme-color" content="#323e4e">
+</head>
+<body>
+<header>
+<div class="hcontent">
+  <a href="https://securityhandbook.cz/cs/index.php">FAQ – Velká příručka bezpečnosti</a>
+  <img src="https://securityhandbook.cz/img/shield.png" alt="logo">
+</div></header>
+<nav>
+<div class="navcontent" id="bignav">
+  <a href="https://securityhandbook.cz/cs/index.php#basics"><strong>Základy bezpečnosti</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>OS Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>OS Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>OS Android</strong></a>
+</div>
+<div class="navcontent" id="smallnav">
+  <a href="https://securityhandbook.cz/cs/index.php"><strong>Základy</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>Android</strong></a>
+</div>
+</nav>
+<main>
+<article><div class="text">
+<h2><a href="#lnx">OS Linux</a></h2>
+<ul>
+  <li><a href="#lnx1">Ochrana proti malware</a></li>
+  <li><a href="#lnx2">Ochrana proti exploitaci</a></li>
+  <li><a href="#lnx3">Audit</a></li>
+</ul><br>
+<div class="spoilwrapper" id="tree"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Obsah" data-hide="▼ Obsah">► Obsah</span></div>
+<div class="spoilcontent">
+<ul>
+<li><a href="https://securityhandbook.cz/cs/index.php#basics">Základy bezpečnosti</a></li>
+<li><a href="https://securityhandbook.cz/cs/wnt/index.php#wnt">OS Windows</a></li>
+<li><a href="https://securityhandbook.cz/cs/lnx/index.php#lnx">OS Linux</a></li>
+<li><strong>FAQ – chytrá zařízení (chytré telefony, IoT)</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/iot/andr.php#andr">OS Android</a></li>
+</ul></li>
+<li><strong>FAQ pro pokročilé</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows</a></li>
+  <li><a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux</a></li>
+</ul></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+</div></div>
+</div></article><br>
+<article id="lnx"><div class="text">
+<h1>OS Linux pro pokročilé</h1>
+<p>Linux se díky svému minoritnímu zastoupení na desktopech v porovnání s OS Windows těší řádově menší pozornosti hackerů – většina malware pro Linux je směřována pouze na servery. Malware pro desktopové linuxové distribuce také existuje, akorát v mnohonásobně menším množství. Ačkoliv je tedy stav mnohých desktopových linuxových distribucí z pohledu bezpečnosti tristní, v praxi je riziko infikace nižší nežli u jiných OS. Moderní <em>exploit kity</em> jsou ovšem často multiplatformní a jejich počet roste. Dostatečné zabezpečení OS je proto nezbytné.</p>
+<p>Tato kapitola využívá distribuci <strong>Arch Linux</strong>.</p>
+<p>Tato část příručky počítá s tím, že jste pročetli kapitolu <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx">OS Linux pro méně pokročilé</a> a máte minimálně znalosti v kapitole rozebírané.</p>
+<h4>Sekce kapitoly:</h4>
+<ul>
+<li><a href="#lnx1">Základní bezpečnostní nastavení</a></li>
+<li><a href="#lnx2">Ochrana proti malware</a></li>
+<li><a href="#lnx3">Audit</a></li>
+</ul>
+<br>
+<h2 id="lnx1">Základní bezpečnostní nastavení:</h2>
+<h3 id="lnx1.1">Sudo:</h3>
+<pre><code>/etc/sudoers
+-----------------------------------
+
+Defaults   !visiblepw
+Defaults    always_set_home
+Defaults    match_group_by_gid
+Defaults    always_query_group_plugin
+
+Defaults    env_reset
+Defaults    env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"
+Defaults    env_keep += "MAIL QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"
+Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
+Defaults    env_keep += "LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE"
+Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY"
+
+Defaults    secure_path = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Defaults    use_pty
+
+root        ALL=(ALL)    ALL
+uživatel    ALL=(ALL)    ALL
+</code></pre>
+<br>
+<h3 id="lnx1.2">Uzamknutí roota:</h3>
+<pre><code>sudo passwd -l root</code></pre>
+<br><br><hr><br>
+<h2 id="lnx2">Ochrana proti malware:</h2>
+<h3 id="lnx2.1">Firewall:</h3>
+<p>Pro běžné počítače stačí zakázat <em>forward</em> chain a bezpečně nastavit <em>input</em>. Nejjednodušší konfiguraci pro ipv4/6 nabízí <strong>nftables</strong>. Aplikační FW lze implementovat skrz <abbr title="Mandatory Access Control">MAC</abbr>.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Příklad pravidel pro běžný počítač" data-hide="▼ Příklad pravidel pro běžný počítač">► Příklad pravidel pro běžný počítač</span></div>
+<div class="spoilcontent">
+<pre><code>/etc/nftables.conf
+-----------------------------------
+
+table inet filter {
+    chain input {
+        type filter hook input priority 0; policy drop;
+        ct state invalid drop
+        ct state established,related accept
+        iif "lo" accept
+    }
+
+    chain forward {
+        type filter hook forward priority 0; policy drop;
+    }
+
+    chain output {
+        type filter hook output priority 0; policy accept;
+    }
+}</code></pre>
+</div></div>
+<br>
+<h3 id="lnx2.2">MAC:</h3>
+<p><abbr title="Mandatory Access Control">MAC</abbr> se stal důležitou součástí bezpečnostního modelu linuxových distribucí. Implementací existuje více.</p>
+<p><strong>SELinux</strong> je velmi robustní implementace MAC využívána např. distribucí <strong><span class="fe">Fedora</span></strong> nebo OS Android. <strong>AppArmor</strong> je implementace MAC poskytující nižší úroveň ochrany než SELinux (mj. neumí omezit ioctl) využívána distribucemi <strong><span class="os">openSUSE</span></strong> či <strong><span class="ub">Ubuntu</span></strong>. <strong>TOMOYO Linux</strong> je zajímavou méně známou alternativou, poskytující vyšší úroveň ochrany než AppArmor a zároveň nabízející mnohem jednodušší konfiguraci nežli SELinux.</p>
+<p>Na Arch Linux lze bez problému provozovat TOMOYO nebo AppArmor, přičemž pro TOMOYO není třeba kompilovat vlastní kernel. SELinux je o něco složitější.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace TOMOYO Linux" data-hide="▼ Instalace TOMOYO Linux">► Instalace TOMOYO Linux</span></div>
+<div class="spoilcontent">
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+TOMOYO Linux není příliš rozšířený MAC a velmi těžko někde naleznete profily pro aplikace. Budete si je tedy muset sami vytvořit (příp. přepsat z AppArmor profilů – ty jsou všude). Dokumentaci naleznete <a target="_blank" rel="noopener" href="https://tomoyo.osdn.jp/2.6/index.html.en">zde</a>.</p></div>
+<ul>
+<li>Povolte TOMOYO Linux v GRUB:</li>
+<li style="list-style-type: none"><pre><code>/etc/default/grub
+-----------------------------------
+
+GRUB_CMDLINE_LINUX_DEFAULT="quiet security=tomoyo TOMOYO_trigger=/usr/lib/systemd/systemd"</code></pre></li>
+<li>Aktualizujte GRUB (grub-mkconfig -o /boot/grub/grub.cfg).</li>
+<li>Nainstalujte <strong>tomoyo-tools</strong>:</li>
+<li style="list-style-type: none"><pre><code>sudo pacman -S gnupg
+gpg --recv-keys 43C83369623D7AD3A96C2FC7425F128D0C64F52A
+git clone https://aur.archlinux.org/tomoyo-tools.git
+cd tomoyo-tools
+gedit PKGBUILD</code></pre></li>
+<li>Zkontrolujte instrukce a spusťte instalaci:</li>
+<li style="list-style-type: none"><pre><code>makepkg -si</code></pre></li>
+<li>Restartujte OS.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Použití TOMOYO Linux jako aplikační FW" data-hide="▼ Použití TOMOYO Linux jako aplikační FW">► Použití TOMOYO Linux jako aplikační FW</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Po úspěšné instalaci a restartu OS inicializujte TOMOYO:</li>
+<li style="list-style-type: none"><pre><code>sudo /usr/lib/tomoyo/init_policy</code></pre></li>
+<li>Následně upravte pravidla TOMOYO:</li>
+<li style="list-style-type: none"><pre><code>/etc/tomoyo/policy/current/profile.conf
+-----------------------------------
+
+PROFILE_VERSION=20110903
+0-COMMENT=-----Disabled Mode-----
+0-PREFERENCE={ max_audit_log=1024 max_learning_entry=2048 }
+0-CONFIG={ mode=disabled grant_log=no reject_log=yes }
+0-CONFIG::network::unix_stream_bind={ mode=disabled grant_log=no reject_log=no }
+0-CONFIG::network::unix_stream_listen={ mode=disabled grant_log=no reject_log=no }
+0-CONFIG::network::unix_stream_connect={ mode=disabled grant_log=no reject_log=no }
+0-CONFIG::network::unix_dgram_bind={ mode=disabled grant_log=no reject_log=no }
+0-CONFIG::network::unix_dgram_send={ mode=disabled grant_log=no reject_log=no }
+0-CONFIG::network::unix_seqpacket_bind={ mode=disabled grant_log=no reject_log=no }
+0-CONFIG::network::unix_seqpacket_listen={ mode=disabled grant_log=no reject_log=no }
+0-CONFIG::network::unix_seqpacket_connect={ mode=disabled grant_log=no reject_log=no }
+0-CONFIG::network={ mode=enforcing grant_log=no reject_log=yes }
+1-COMMENT=-----Disabled Mode (net access)-----
+1-PREFERENCE={ max_audit_log=1024 max_learning_entry=2048 }
+1-CONFIG={ mode=disabled grant_log=no reject_log=no }
+2-COMMENT=-----Learning Mode-----
+2-PREFERENCE={ max_audit_log=1024 max_learning_entry=2048 }
+2-CONFIG={ mode=learning grant_log=no reject_log=yes }
+3-COMMENT=-----Permissive Mode-----
+3-PREFERENCE={ max_audit_log=1024 max_learning_entry=2048 }
+3-CONFIG={ mode=permissive grant_log=no reject_log=yes }
+4-COMMENT=-----Enforcing Mode-----
+4-PREFERENCE={ max_audit_log=1024 max_learning_entry=2048 }
+4-CONFIG={ mode=enforcing grant_log=no reject_log=yes }</code></pre></li>
+<li>Restartujte OS.</li>
+<li>Otevřete konfiguraci TOMOYO pro aplikace:</li>
+<li style="list-style-type: none"><pre><code>sudo tomoyo-editpolicy</code></pre></li></ul>
+<div class="alert exclaim"><p><em class="icon-attention"></em><strong>Varování</strong><br>
+TOMOYO detekuje pouze aplikace, které byly od jeho aktivace alespoň 1x spuštěny.</p></div>
+<ul><li>Šipkami se posunujete mezi aplikacemi. Profil aplikace změníte klávesou <span class="red">S</span>, zadáním čísla profilu a stisknutím <strong>Enter</strong>.</li>
+<li style="list-style-type: none"><pre><code>0     #  bez přístupu k internetu
+1     #  s přístupem k internetu
+</code></pre></li>
+<li>Klávesou <span class="red">Q</span> konfiguraci ukončíte.</li>
+<li>Po dokončení konfigurace ji následně uložte:</li>
+<li style="list-style-type: none"><pre><code>sudo tomoyo-savepolicy</code></pre></li>
+</ul></div></div>
+<br>
+<h3 id="lnx2.3">Hardened alokátor:</h3>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Hardened malloc může působit problémy s aplikacemi, instalací znefunkčníte ze standardně využívaných např. <em>man</em>.</p></div>
+<ul>
+<li>Stáhněte si <a href="https://github.com/GrapheneOS/hardened_malloc/releases/latest">nejnovější verzi zdrojového kódu</a>.</li>
+<li>Rozbalte, přesuňte se do extrahované složky a otevřete terminál. Instalace:</li>
+<li style="list-style-type: none"><pre><code>make
+sudo cp libhardened_malloc.so /usr/local/lib</code></pre></li>
+<li>Vyvořte potřebné konfigurační soubory:</li>
+<li style="list-style-type: none"><pre><code>/etc/ld.so.preload
+-----------------------------------
+
+/usr/local/lib/libhardened_malloc.so</code></pre></li>
+<li style="list-style-type: none"><pre><code>/etc/sysctl.d/hardened_malloc.conf
+-----------------------------------
+
+vm.max_map_count = 524240</code></pre></li>
+<li>Restartujte OS.</li>
+</ul>
+<br>
+<h3 id="lnx2.4">Hardening aplikací:</h3>
+<p>Balíčky mohou být kompilovány s <em>memory corruption</em> mitigacemi (ASLR, PIE, RELRO, Canary,&#8230;), které následně významně ztěžují jejich exploitaci. Většina balíčků by standardně měla důležité mitigace obsahovat. Balíčky neobsahující zmíněné mitigace je nutné zkompilovat ručně.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Audit mitigací běžících procesů" data-hide="▼ Audit mitigací běžících procesů">► Audit mitigací běžících procesů</span></div>
+<div class="spoilcontent">
+<pre><code>checksec --proc-all</code></pre>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Skript <strong>checksec</strong> je podrobněji rozebírán níže.</p></div>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Kompilace aplikace s mitigacemi" data-hide="▼ Kompilace aplikace s mitigacemi">► Kompilace aplikace s mitigacemi</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Nainstalujte si <strong>ASP</strong> a <strong>GPG</strong>:</li>
+<li style="list-style-type: none"><pre><code>sudo pacman -S asp gnupg
+asp export extra/networkmanager
+cd ./networkmanager</code></pre></li>
+<li>Zahajte kompilaci + automatickou instalaci:</li>
+<li style="list-style-type: none"><pre><code>makepkg -si</code></pre></li>
+<li>Po úspěšné instalaci restartujte OS.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Automatizace kompilace problémových balíčků" data-hide="▼ Automatizace kompilace problémových balíčků">► Automatizace kompilace problémových balíčků</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Použijte <strong>srcpac</strong>.</li>
+<li style="list-style-type: none"><pre><code>sudo pacman -S srcpac
+man srcpac</code></pre></li>
+</ul></div></div>
+<br><br><hr><br>
+<h2 id="lnx3">Audit:</h2>
+<h3 id="lnx3.1">Rootkit Hunter:</h3>
+<p>Rootkit Hunter je on-demand skener rootkitů, který umí zachytávat změny v důležitých souborech OS atd. Jedná se o vcelku solidní aplikaci určenou primárně pro servery, neztratí se ovšem ani na desktopu.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Návod" data-hide="▼ Návod">► Návod</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Instalace a spuštění auditu:</li>
+<li style="list-style-type: none"><pre><code>pacman -S rkhunter
+rkhunter --versioncheck
+rkhunter --propupd
+rkhunter -c --enable all --disable none --rwo</code></pre></li>
+<li>Rkhunter vypíše veškerá svá varování, pravděpodobně false positives. Ty je potřeba opravit, aby se již v budoucnu nezobrazovaly.</li>
+<li>Příklad mých úprav:</li>
+<li style="list-style-type: none"><pre><code>gedit /etc/rkhunter.conf
+-----------------------------------
+#
+# FP Fix
+SCRIPTWHITELIST="/usr/bin/egrep"
+SCRIPTWHITELIST="/usr/bin/fgrep"
+SCRIPTWHITELIST="/usr/bin/ldd"
+SCRIPTWHITELIST="/usr/bin/vendor_perl/GET"
+ALLOWDEVFILE="/dev/shm/pulse-shm-*"
+ALLOWDEVFILE="/dev/shm/user-Shm_*"
+ALLOWDEVFILE="/dev/shm/user-Valve*"
+ALLOWHIDDENFILE="/etc/.updated"
+ALLOWHIDDENFILE="/usr/share/man/man5/.k5identity.5.gz"
+ALLOWHIDDENFILE="/usr/share/man/man5/.k5login.5.gz"</code></pre></li>
+<li>Nyní byste již měli být bez false positive varování a rkhunter by měl být plně funkční. Má uloženou databázi kritických souborů OS, takže v případě jakékoli změny (např. pomocí malware) zobrazí varování. Sken můžete dát do cronu.</li>
+<li>Více informací naleznete na <a target="_blank" rel="noopener" href="http://rkhunter.sourceforge.net/">oficiálních stránkách</a> a <a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-use-rkhunter-to-guard-against-rootkits-on-an-ubuntu-vps">zde</a>.</li>
+</ul></div></div>
+<br>
+<h3 id="lnx3.2">Lynis:</h3>
+<p>Lynis umožňuje bezpečnostní audit mnoha OS založených na UNIXu. Provádí velmi detailní audit OS a po dokončení auditu zobrazí doporučení pro zvýšení bezpečnosti.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Návod" data-hide="▼ Návod">► Návod</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Instalace a spuštění auditu:</li>
+<li style="list-style-type: none"><pre><code>pacman -S lynis
+lynis update info
+lynic -c</code></pre></li>
+</ul></div></div>
+<br>
+<h3 id="lnx3.3">Checksec:</h3>
+<p>Checksec je skript určený pro kontrolu nastavení kernelu a zobrazení <em>memory corruption</em> mitigací spustitelných souborů.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Návod" data-hide="▼ Návod">► Návod</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Instalace:</li>
+<li style="list-style-type: none"><pre><code>pacman -S checksec</code></pre></li>
+<li>Můžete auditovat bezpečnost nastavení kernelu:</li>
+<li style="list-style-type: none"><pre><code>checksec --kernel</code></pre></li>
+<li>Dále můžete auditovat bezpečnostní funkce balíčků:</li>
+<li style="list-style-type: none"><pre><code>checksec --proc-all</code></pre></li>
+<li>Více informací naleznete na <a target="_blank" rel="noopener" href="https://github.com/slimm609/checksec.sh">oficiálních stránkách</a>.</li>
+</ul></div></div>
+<br><br><hr>
+<h3 class="nocol">To je vše. Stay safe! <img class="smile" src="https://securityhandbook.cz/img/sm/smile.svg" alt="smile"></h3>
+</div></article>
+</main>
+<footer>
+<p>Toto dílo podléhá licenci <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>Podrobnosti o výjimkách z výše zmíněné licence naleznete <a target="_blank" rel="noopener" href="https://securityhandbook.cz/license_cs.php">zde</a>.</p>
+<p>2016-2020 <a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook">@SecurityHandbook</a></p>
+<p><a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs"><img alt="Creative Commons Licence" style="border-width:0" src="https://securityhandbook.cz/img/license.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook/handbook"><img alt="github" src="https://securityhandbook.cz/img/github.png"></a></p>
+</footer>
+<noscript><p>Zapněte si prosím JavaScript, je důležitý pro využití všech funkcí webu. Jedná se pouze o jQuery a pár řádků.</p></noscript>
+<a href="#0" class="cd-top">Top</a>
+<script src="https://securityhandbook.cz/resources/js/jquery-3.4.1.min.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scripts.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scroll.js"></script>
+</body></html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<link rel="preload" as="style" href="https://securityhandbook.cz/resources/css/main_alpha.css">
+<link href="https://securityhandbook.cz/resources/css/main_alpha.css" rel="stylesheet" media="screen">
+<link href="https://securityhandbook.cz/resources/css/fonts_min.css" rel="stylesheet">
+<title>Příručka bezpečnosti: OS Linux</title>
+<meta name="description" content="Zabezpečení OS Linux">
+<meta property="og:title" content="Příručka bezpečnosti: OS Linux">
+<meta property="og:description" content="Zabezpečení OS Linux">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="HandheldFriendly" content="True">
+<meta name="theme-color" content="#323e4e">
+</head>
+<body>
+<header>
+<div class="hcontent">
+  <a href="https://securityhandbook.cz/cs/index.php">FAQ – Velká příručka bezpečnosti</a>
+  <img src="https://securityhandbook.cz/img/shield.png" alt="logo">
+</div></header>
+<nav>
+<div class="navcontent" id="bignav">
+  <a href="https://securityhandbook.cz/cs/index.php#basics"><strong>Základy bezpečnosti</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>OS Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>OS Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>OS Android</strong></a>
+</div>
+<div class="navcontent" id="smallnav">
+  <a href="https://securityhandbook.cz/cs/index.php"><strong>Základy</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>Android</strong></a>
+</div>
+</nav>
+<main>
+<article><div class="text">
+<h2><a href="#lnx">OS Linux</a></h2>
+<ul>
+  <li><a href="#lnx1">Doporučené distribuce</a></li>
+  <li><a href="#lnx2">Základní bezpečnostní nastavení</a></li>
+  <li><a href="#lnx3">Ochrana proti malware</a></li>
+  <li><a href="#lnx4">Zabezpečení internetového prohlížeče</a></li>
+</ul><br>
+<div class="spoilwrapper" id="tree"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Obsah" data-hide="▼ Obsah">► Obsah</span></div>
+<div class="spoilcontent">
+<ul>
+<li><a href="https://securityhandbook.cz/cs/index.php#basics">Základy bezpečnosti</a></li>
+<li><a href="https://securityhandbook.cz/cs/wnt/index.php#wnt">OS Windows</a></li>
+<li><a href="https://securityhandbook.cz/cs/lnx/index.php#lnx">OS Linux</a></li>
+<li><strong>FAQ – chytrá zařízení (chytré telefony, IoT)</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/iot/andr.php#andr">OS Android</a></li>
+</ul></li>
+<li><strong>FAQ pro pokročilé</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows</a></li>
+  <li><a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux</a></li>
+</ul></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+</div></div>
+</div></article><br>
+<article id="lnx"><div class="text">
+<h1>OS Linux</h1>
+<p>Linux se díky svému minoritnímu zastoupení na desktopech v porovnání s OS Windows těší řádově menší pozornosti hackerů – většina malware pro Linux je směřována pouze na servery. Malware pro desktopové linuxové distribuce také existuje, akorát v mnohonásobně menším množství. Ačkoliv je tedy stav mnohých desktopových linuxových distribucí z pohledu bezpečnosti tristní, v praxi je riziko infikace nižší nežli u jiných OS. Moderní <em>exploit kity</em> jsou ovšem často multiplatformní a jejich počet roste. Dostatečné zabezpečení OS je proto nezbytné.</p>
+<p>Tato část příručky je určena běžným a středně pokročilým uživatelům. Část pro pokročilé naleznete <a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">zde</a>.</p>
+<h4>Sekce kapitoly:</h4>
+<ul>
+<li><a href="#lnx1">Doporučené distribuce</a></li>
+<li><a href="#lnx2">Základní bezpečnostní nastavení</a></li>
+<li><a href="#lnx3">Ochrana proti malware</a></li>
+<li><a href="#lnx4">Zabezpečení internetového prohlížeče</a></li>
+</ul>
+<br>
+
+<h2 id="lnx1">Doporučené distribuce:</h2>
+<ul>
+<li><strong><span class="fe">Fedora</span></strong>: <a target="_blank" rel="noopener" href="https://getfedora.org/cs/workstation/">https://getfedora.org/cs/workstation/</a></li>
+<li><strong><span class="os">openSUSE</span></strong> (Leap): <a target="_blank" rel="noopener" href="https://www.opensuse.org/#Leap">https://www.opensuse.org/#Leap</a></li>
+<li><strong><span class="ub">Ubuntu</span></strong>: <a target="_blank" rel="noopener" href="https://www.ubuntu.com/desktop">https://www.ubuntu.com/desktop</a></li>
+</ul>
+<p>V kapitole OS Linux naleznete tipy převážně pro distribuci <strong><span class="fe">Fedora</span></strong>.</p>
+<p><strong>Fedora</strong> je nejlepší volbou pro běžného uživatele. U některých kroků také naleznete pokyny pro distribuci <strong><span class="os">openSUSE</span></strong> a distribuci <strong><span class="ub">Ubuntu</span></strong>, která je velmi populární, z hlediska bezpečnosti ovšem o něco méně vhodná. Všechny uvedené distribuce využívají grafické prostředí <a target="_blank" rel="noopener" href="https://www.gnome.org/">GNOME</a>, které je v hlediska bezpečnosti rozumná volba. Výjimku tvoří rozhraní <em>GNOME Classic</em>, jež lze zvolit na přihlašovací obrazovce a jehož používání není doporučeno.</p>
+<p>Většina obsažených informací je aplikovatelná pro většinu distribucí, pouze se bude lišit přesný postup.</p>
+<br><br><hr><br>
+
+<h2 id="lnx2">Základní bezpečnostní nastavení:</h2>
+<h3 id="lnx2.1">Oddělení /tmp oddílu během instalace a jeho bezpečné připojení:</h3>
+<p>Malware se často spouští z dočasných složek. Zakázání exekuce spustitelných souborů v dočasných složkách (konkrétně /tmp) tedy dokáže vyřadit z provozu mnoho rodin malware.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Návod" data-hide="▼ Návod">► Návod</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Při instalaci OS otevřete možnosti rozdělení disků.</li>
+<li>V sekci <strong>Konfigurace úložiště</strong> zvolte možnost <span class="green">Pokročilé uživatelské nastavení (Blivet-GUI)</span> a v levém horním rohu klikněte na <span class="green">Hotovo</span>.</li>
+<li>V levém sloupci zvolte disk, na který chcete OS instalovat a klikněte na tlačítko <span class="green">+</span> pro přidání oddílu.</li>
+<li>Jako <strong>typ zařízení</strong> vyberte <span class="green">Oddíl</span>.</li>
+<li>Do kolonky <strong>velikost</strong> zadejte <span class="blue">0,5 GiB</span>.</li>
+<li>Jako <strong>souborový systém</strong> zvolte <span class="green">ext4</span>, jako <strong>label</strong> zadejte <em>boot</em>, <strong>přípojný bod</strong> nastavte na "<span class="red">/boot</span>" a následně klikněte na tlačítko <span class="green">Budiž</span>.</li><li style="list-style-type: none"><img alt="lnxtmp" src="https://securityhandbook.cz/img/cs/lnxtmp.png"></li>
+<li>V pravém sloupci kliknutím označte <strong>volné místo</strong> a klikněte na tlačítko <span class="green">+</span> pro přidání dalšího oddílu.</li>
+<li>Jako <strong>typ zařízení</strong> vyberte <span class="green">Oddíl</span>.</li>
+<li>Do kolonky <strong>velikost</strong> zadejte velikost, kterou chcete vyhradit pro OS, akorát od ní odečtěte <span class="blue">4 GiB</span>.</li>
+<li>Jako <strong>souborový systém</strong> zvolte <span class="green">btrfs</span>, jako <strong>přípojný bod</strong> nastavte na "<span class="red">/</span>" a následně klikněte na tlačítko <span class="green">Budiž</span>.</li><li style="list-style-type: none"><img alt="lnxtmp1" src="https://securityhandbook.cz/img/cs/lnxtmp1.png"></li>
+<li>V pravém sloupci kliknutím označte <strong>volné místo</strong> a klikněte na tlačítko <span class="green">+</span> pro přidání dalšího oddílu.</li>
+<li>Jako <strong>typ zařízení</strong> vyberte <span class="green">Oddíl</span>.</li>
+<li>Do kolonky <strong>velikost</strong> zadejte <span class="blue">2,0 GiB</span> (budete muset přepnout jednotky na <em>GiB</em>).</li>
+<li>Jako <strong>souborový systém</strong> zvolte <span class="green">ext4</span>, jako <strong>label</strong> zadejte <em>tmp</em>, <strong>přípojný bod</strong> nastavte na "<span class="red">/tmp</span>" a následně klikněte na tlačítko <span class="green">Budiž</span>.</li><li style="list-style-type: none"><img alt="lnxtmp2" src="https://securityhandbook.cz/img/cs/lnxtmp2.png"></li>
+<li>V pravém sloupci kliknutím označte <strong>volné místo</strong> a klikněte na tlačítko <span class="green">+</span> pro přidání dalšího oddílu.</li>
+<li>Jako <strong>typ zařízení</strong> vyberte <span class="green">Oddíl</span>.</li>
+<li>V kolonce <strong>velikost</strong> ponechte původní hodnotu (měla by být <span class="blue">2047 MiB</span>).</li>
+<li>Jako <strong>souborový systém</strong> zvolte <span class="green">swap</span>, jako <strong>label</strong> zadejte <em>swap</em> a následně klikněte na tlačítko <span class="green">Budiž</span>.</li>
+<li>V levém horním rohu klikněte na <span class="green">Hotovo</span>.</li>
+<li>Rozložení disku potvrďte tlačítkem <span class="green">Přijmout změny</span>.</li>
+<li>Pokračujte v instalaci.</li>
+<li>Po úspěšné instalaci si otevřete <span class="green">Terminál</span>. Zadejte do něj následující příkaz:</li>
+<li style="list-style-type: none"><pre><code>sudo su -
+dnf -y install nano
+nano -\$ /etc/fstab</code></pre></li>
+<li>V textovém souboru šipkami nalezněte řádek, který obsahuje "<span class="red">/tmp</span>". Řádek by měl vypadat následovně:</li>
+<li style="list-style-type: none"><pre><code>UUID=... /tmp           ext4    defaults     1 2</code></pre></li>
+<li>Na řádku nalezněte slovo "<span class="green">defaults</span>" a a za něj dopište "<span class="red">,nodev,noexec,nosuid</span>". Fstab tedy bude vypadat následovně:</li><li style="list-style-type: none"><img alt="lnxfstab" src="https://securityhandbook.cz/img/en/lnxfstab.png"></li>
+<li>Stiskněte klávesovou zkratku <span class="green">Ctrl + X</span>. Pro uložení změn v souboru stiskněte tlačítko <span class="red">Y</span> a následně <span class="green">Enter</span>.</li>
+<li>Budete vráceni do konzole. Zadejte do ní následující příkazy:</li>
+<li style="list-style-type: none"><pre><code>exit
+exit</code></pre></li>
+<li>Restartujte OS.</li>
+</ul></div></div>
+<br>
+
+<h3 id="lnx2.2">Práce pod Běžným uživatelem:</h3>
+<p>OS Linux má dva typy uživatelských účtů: <span class="green">Běžný uživatel</span> a <span class="green">Správce</span>.</p>
+<p>Z hlediska bezpečnosti je nezbytné provádět denní činnosti pod Běžným uživatelem, jelikož má omezená oprávnění, která jsou pro práci plně dostačující. Pokud se do OS i přes všechny vrstvy ochrany dostane malware, infikuje pouze uživatelský účet – na infikaci OS nebude mít potřebná oprávnění.</p>
+<div class="alert exclaim"><p><em class="icon-attention"></em><strong>Varování</strong><br>
+Jedná se o naprostý základ zabezpečení OS, bez kterého jsou veškerá další opatření zbytečná.</p></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Přidání účtu Správce a změna stávajícího uživatele na Běžného" data-hide="▼ Přidání účtu Správce a změna stávajícího uživatele na Běžného">► Přidání účtu Správce a změna stávajícího uživatele na Běžného</span></div>
+<div class="spoilcontent">
+<p>Pokud vám zkratka DNS nic neříká, přečtěte si tento <a target="_blank" rel="noopener" href="https://www.nic.cz/page/312/o-domenach-a-dns/">krátký článek</a>.</p>
+<ul>
+<li>Otevřete si <span class="green">Nastavení</span>. Rozklikněte kategorii <strong>Uživatelé</strong>.</li>
+<li>Klikněte na <span class="green">Odemknout&#8230;</span> a zadejte své heslo.</li>
+<li>V horním pravém rohu zvolte možnost <span class="green">Přidat uživatele&#8230;</span></li>
+<li>Zobrazí se dialog pro přidání uživatele. <strong>Typ účtu</strong> zvolte <span class="green">Správce</span>.</li>
+<li>Do textového pole <em>Celé jméno</em> název účtu Správce (např. <strong>Admin</strong>).</li>
+<li>V sekci <strong>Heslo</strong> zvolte možnost <span class="green">Nastavit heslo nyní</span> a zvolte pro něj silné bezpečné heslo.</li>
+<li>Tlačítkem <span class="green">Přidat</span> v horním pravém rohu účet vytvořte.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/lnxus.png" alt="lnxus"></li>
+<li>Odhlaste se z vašeho účtu a přihlaste se jako <strong>Admin</strong>.</li>
+<li>Otevřete si <span class="green">Nastavení</span>. Rozklikněte kategorii <strong>Uživatelé</strong>.</li>
+<li>Klikněte na <span class="green">Odemknout&#8230;</span> a zadejte heslo administrátora.</li>
+<li>V seznamu uživatelů nalezněte svůj uživatelský účet, klikněte na něj a odeberte mu pravomoci <span class="green">Správce</span>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/lnxus1.png" alt="lnxus1"></li>
+<li>Odhlaste se z administrátorského účtu a přihlaste se zpět na svůj uživatelský účet.</li>
+</ul></div></div>
+<br>
+
+<h3 id="lnx2.3">Bezpečné nastavení sítě:</h3>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Nastavení DNS" data-hide="▼ Nastavení DNS">► Nastavení DNS</span></div>
+<div class="spoilcontent">
+<p>Pokud vám zkratka DNS nic neříká, přečtěte si tento <a target="_blank" rel="noopener" href="https://www.nic.cz/page/312/o-domenach-a-dns/">krátký článek</a>.</p>
+<ul>
+<li>Otevřete si <span class="green">Nastavení</span>.</li>
+<li>Rozklikněte položku <span class="green">Wi-Fi</span> nebo <span class="green">Síť</span> v závislosti na druhu vašeho připojení.</li>
+<li>V seznamu nalezněte příslušné spojení a otevřete jeho nastavení.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/lnxnet.png" alt="lnxnet">
+<img src="https://securityhandbook.cz/img/cs/lnxnet1.png" alt="lnxnet1"></li>
+<li>Přepněte se do záložky IPv4 a v sekci <strong>DNS</strong> vypněte možnost <span class="green">Automatické</span>.</li>
+<li>Do řádku vepište následující DNS servery:</li>
+<li style="list-style-type: none"><pre><code>193.17.47.1,185.43.135.1</code></pre></li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/lnxnet2.png" alt="lnxnet2"></li>
+<li>Pro <em>IPv6</em> aplikujte obdobný postup s následujícími servery:</li>
+<li style="list-style-type: none"><pre><code>2001:148f:ffff::1,2001:148f:fffe::1</code></pre></li>
+<li>Klikněte na tlačítko <span class="green">Použít</span> a nastavení zavřete.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Zakázání IPv6" data-hide="▼ Zakázání IPv6">► Zakázání IPv6</span></div>
+<div class="spoilcontent">
+<p>Pokud nepoužíváte a nepotřebujete IPv6 (nejste-li si jistí, můžete vyzkoušet následující <a target="_blank" rel="noopener" href="http://www.test-ipv6.cz/">test</a>), je rozumné protokol vypnout pro snížení prostoru pro útok.</p>
+<ul>
+<li>Otevřete si <span class="green">Terminál</span>. Zadejte do něj následující příkazy:</li>
+<li style="list-style-type: none"><pre><code>sudo su -
+dnf -y install nano
+nano /etc/default/grub</code></pre></li>
+<li>Nalezněte řádek <span class="green">GRUB_CMDLINE_LINUX_DEFAULT</span> a před poslední uvozovku vepište "<span class="red"> ipv6.disable=1</span>". Řádek tedy bude vypadat nějak takto:</li>
+<li style="list-style-type: none"><pre><code>GRUB_CMDLINE_LINUX_DEFAULT="quiet splash ipv6.disable=1"</code></pre></li>
+<li>Stiskněte klávesovou zkratku <span class="green">Ctrl + X</span>. Pro uložení změn v souboru stiskněte tlačítko <span class="red">Y</span> a následně <span class="green">Enter</span>.</li>
+<li>Budete vráceni do konzole. Zadejte do ní následující příkazy:</li>
+<li style="list-style-type: none"><pre><code>grub2-mkconfig -o /boot/grub2/grub.cfg
+exit
+exit</code></pre></li>
+<li>Restartujte OS.</li>
+</ul></div></div>
+<br>
+
+<h3 id="lnx2.4">Další bezpečnostní nastavení:</h3>
+<ul>
+<li>Vypněte AutoPlay/AutoRun:</li>
+</ul><ul>
+<li style="list-style-type: none"><div class="spoilwrapper"><div class="spoiltitle"><span class="spoilbtn" data-show="► Návod" data-hide="▼ Návod">► Návod</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Nastavení</span> a rozklikněte kategorii <strong>Zařízení</strong>.</li>
+<li>Klikněte na položku <span class="green">Výměnná média</span>.</li>
+<li>Zatrhněte možnost <span class="green">Nikdy se nedotazovat nebo spouštět programy na vloženém médiu</span>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/lnxar.png" alt="lnxar"></li>
+</ul></div></div></li>
+</ul><ul>
+<li>Vypněte sdílení:</li>
+</ul><ul>
+<li style="list-style-type: none"><div class="spoilwrapper"><div class="spoiltitle"><span class="spoilbtn" data-show="► Návod" data-hide="▼ Návod">► Návod</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Nastavení</span> a klikněte na položku <span class="green">Sdílení</span>.</li>
+<li>Zkontrolujte, že je sdílení vypnuto, případně napravte.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/lnxshare.png" alt="lnxshare"></li>
+</ul></div></div></li></ul>
+<br><br><hr><br>
+
+<h2 id="lnx3">Vrstvy zabezpečení:</h2>
+<p>Jako nejúčinnější metoda ochrany proti malware se osvědčila bezpečnostní konfigurace skládající se z více vrstev (<em>&bdquo;layered config&ldquo;</em>) – pokud selže jedna vrstva, nastupuje druhá. Samotný OS poskytuje jistou úroveň ochrany proti malware, která se liší v závislosti na distribuci. V základním nastavení ovšem většinou bohužel nejsou všechny bezpečnostní funkce zapnuty či korektně nastaveny.</p>
+<br>
+<h3 id="lnx3.1">Aktualizace OS a SW:</h3>
+<p>Je důležité mít aktuální verzi veškerého SW, jelikož nové verze často opravují mnoho bezpečnostních chyb. Neaktuální SW je implicitně nebezpečný. Ve všech zmíněných distribucích slouží k aktualizaci SW vestavěná aplikace <span class="green">Software</span>, která kromě tradičních balíčků obstarává i aktualizaci flatpaků či firmware.</p>
+<p><img src="https://securityhandbook.cz/img/cs/lnxupd.png" alt="lnxupd"></p>
+<br>
+<h3 id="lnx3.2">Firewall:</h3>
+<p>Firewall je velmi důležitá vrstva zabezpečení, která chrání OS před útoky ze sítě.</p>
+<p><strong><span class="fe">Fedora</span></strong> má v základu plně funkční firewall.</p>
+<p><strong><span class="os">openSUSE</span></strong> má v základu plně funkční firewall.</p>
+<p><strong><span class="ub">Ubuntu</span></strong> v základu nemá zapnutý firewall, je třeba jej zapnout příkazem:</p>
+<pre><code>sudo ufw enable</code></pre>
+<br>
+<h3 id="lnx3.3">MAC:</h3>
+<p><abbr title="Mandatory Access Control">MAC</abbr> se stal důležitou součástí bezpečnostního modelu linuxových distribucí.</p>
+<p><strong><span class="fe">Fedora</span></strong> používá implementaci <strong>SELinux</strong>. <strong><span class="os">openSUSE</span></strong> a <strong><span class="ub">Ubuntu</span></strong> používají implementaci <strong>AppArmor</strong>, MAC poskytující menší možnosti ochrany nežli např. SELinux.</p>
+<br>
+
+<h3 id="lnx3.4">Virtualizace:</h3>
+<p>Virtualizace může být velmi bezpečný způsob ochrany před malware v závislosti na způsobu implementace, jelikož odděluje požadovanou část OS od jeho zbytku. Standardních způsobů implementace virtualizace je několik:</p>
+<ul>
+<li>sandbox</li>
+<li>semivirtuální stroj (např. docker)</li>
+<li>virtuální stroj (VM; virtual machine)</li>
+</ul>
+
+<h4>Flatpak:</h4>
+<p>Sandbox je populární způsob implementace virtualizace. Existují dva druhy sandboxu:</p>
+<ul>
+<li>sandbox nativně integrovaný v aplikaci (např. <em>Chromium</em>)</li>
+<li>externí sandbox – např. <strong>Flatpak</strong>, <em>firejail</em></li>
+</ul>
+<p>Sandbox nativně integrovaný v aplikaci je nejúčinnější možností implementace sandboxu, jelikož je nastaven přesně na míru dané aplikaci. Externí sandbox nemusí být nutně účinný jako sandbox integrovaný v aplikaci, jelikož není dělaný přesně na míru určité aplikaci, a při porovnání může ponechat větší prostor pro exploitaci. Stále ovšem může být velmi účinný a přirozeně je mnohem lepší, nežli žádný sandbox.</p>
+<p><span class="green">Flatpak</span> je nový způsob distribuce aplikací. Má za cíl odstranit chyby a nedostatky současné architektury – odděluje aplikace od sebe a částí OS (obsahuje implementaci sandboxu), sjednocuje instalaci aplikací pro linuxové distribuce apod.</p>
+<p><strong><span class="fe">Fedora</span></strong> má <strong>flatpak</strong> předinstalovaný.</p>
+<p><strong><span class="os">openSUSE</span></strong> Flatpak předinstalovaný nemá, lze jej ovšem nainstalovat jednoduchým příkazem:</p>
+<pre><code>sudo zypper install flatpak</code></pre>
+<p><strong><span class="ub">Ubuntu</span></strong> Flatpak předinstalovaný nemá, jelikož propaguje svou alternativu k Flatpaku – <a target="_blank" rel="noopener" href="https://www.ubuntu.com/desktop/snappy">Snap</a>. Pakliže se rozhodnete upřednostnit Flatpak před Snap (doporučeno), můžete jej nainstalovat následujícími příkazy:</p>
+<pre><code>sudo add-apt-repository ppa:alexlarsson/flatpak
+sudo apt update
+sudo apt install flatpak</code></pre>
+<br>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Návod k použití Flatpak" data-hide="▼ Návod k použití Flatpak">► Návod k použití Flatpak</span></div>
+<div class="spoilcontent">
+<p>Většinu aplikací můžete nalézt v repozitáři <a target="_blank" rel="noopener" href="https://flathub.org/home">Flathub</a>. Distribuce <strong><span class="fe">Fedora</span></strong> má svůj integrovaný <a target="_blank" rel="noopener" href="https://registry.fedoraproject.org/">kontejnerový repozitář</a>. Flatpak balíčky lze spravovat pomocí vestavěné aplikace <span class="green">Software</span>.</p>
+<p>Budete-li příkaz <strong>flatpak</strong> spouštět v terminálu, <span class="red">nikdy jej nespouštějte pod sudo</span>. Flatpak si o autorizaci případně požádá sám přes GNOME dialog. Níže naleznete základní terminálové příkazy pro správu flatpak aplikací.</p>
+<ul>
+<li>Výpis nainstalovaných aplikací:</li>
+<li style="list-style-type: none"><pre><code>flatpak list</code></pre></li>
+<li>Aktualizace nainstalovaných aplikací:</li>
+<li style="list-style-type: none"><pre><code>flatpak update</code></pre></li>
+<li>Výpis obsahu repozitáře – dostupných aplikací:</li>
+<li style="list-style-type: none"><pre><code>flatpak remote-ls <repozitář></code></pre></li>
+<li>Instalace aplikace z repozitáře:</li>
+<li style="list-style-type: none"><pre><code>flatpak install <repozitář> <název_aplikace></code></pre></li>
+<li>Odinstalace:</li>
+<li style="list-style-type: none"><pre><code>flatpak uninstall <název_aplikace></code></pre></li>
+</ul></div></div>
+<p><span class="green">Flathub</span> je nejrozšířenější platforma pro distribuci Flatpak aplikací. Repozitář <strong>fedora</strong> již obsahuje část GNOME aplikací a některé populární aplikace jako <em>GIMP</em>, nicméně je stále v aktivním vývoji a ne všechny aplikace jsou v použitelném stavu.</p>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Přidání Flathub repozitáře" data-hide="▼ Přidání Flathub repozitáře">► Přidání Flathub repozitáře</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Terminál</span>. Zadejte do něj následující příkaz:</li>
+<li style="list-style-type: none"><pre><code>flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo</code></pre></li>
+<li>Aplikaci zavřete.</li>
+<li>Otevřete si <span class="green">Software</span>.</li>
+<li>Přesuňte se do záložky <strong>Aktualizace</strong> a v levém horním rohu spusťte kontrolu aktualizací.</li>
+<li>Po dokončení kontroly se přesuňte zpět do záložky <strong>Procházet</strong>.</li>
+<li>Aplikaci zavřete.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace GNOME aplikací" data-hide="▼ Instalace GNOME aplikací">► Instalace GNOME aplikací</span></div>
+<div class="spoilcontent">
+<p>Ve Flatpaku by správně měly být všechny aplikace ve výchozím nastavení, na to si ovšem budeme ještě muset chvíli počkat. (<em>Fedora 34?</em>)</p>
+<ul>
+<li>Otevřete si <span class="green">Terminál</span>. Zadejte do něj následující příkazy:</li>
+<li style="list-style-type: none"><pre><code>sudo dnf -y remove eog evince epiphany
+flatpak install fedora org.gnome.eog
+flatpak install fedora org.gnome.Evince
+flatpak install fedora org.gnome.Epiphany</code></pre></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace flatpak aplikace v GNOME Software" data-hide="▼ Instalace flatpak aplikace v GNOME Software">► Instalace flatpak aplikace v GNOME Software</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Software</span>.</li>
+<li>Pomocí vyhledávání nalezněte a rozklikněte požadovanou aplikaci.</li>
+<li>V pravém horním rohu vyberte příslušný zdroj &ndash; Fedora / Flathub:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/lnxflat.png" alt="lnxflat"></li>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Flatpak repozitář <strong>Fedora</strong> preferujte pouze u GNOME aplikací, aplikací <span class="red">GIMP</span> a <span class="red">Transmission</span>. Jinde preferujte <strong>Flathub</strong>.</p></div>
+<li>Klikněte na <span class="green">Instalovat</span>.</li>
+<li>Instalace může trvat delší dobu v závislosti na vašem internetovém připojení, aplikace může vyžadovat runtime, která jsou objemná a musí se nejprve stáhnout.</li>
+<li>Po dokončení instalace aplikaci zavřete.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace flatpak LibreOffice" data-hide="▼ Instalace flatpak LibreOffice">► Instalace flatpak LibreOffice</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Terminál</span>. Odinstalujte původní LibreOffice, které jsou součástí standardní instalace:</li>
+<li style="list-style-type: none"><pre><code>sudo dnf -y remove libreoffice*</code></pre></li>
+<li>Nainstalujte flatpak verzi LibreOffice:</li>
+<li style="list-style-type: none"><pre><code>flatpak install flathub org.libreoffice.LibreOffice</code></pre></li>
+</ul></div></div>
+<br>
+
+<h4>Virtuální stroj:</h4>
+<p>Nejpokročilejší způsob virtualizace je emulace na nejnižší úrovni, kdy je virtualizován celý OS. Za korektního použití a nastavení (např. snapshoty) může jít o vysoce robustní bezpečnostní vrstvu. Po patřičné konfiguraci můžete virtuální stroj používat např. k relativně bezpečnému brouzdání internetem. Virtualizován může být libovolný OS jako Windows nebo linuxová distribuce. Pro virtualizaci OS Windows ovšem budete potřebovat licenci, nebo členství v programu Insider.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://wiki.gnome.org/Apps/Boxes">GNOME Boxes</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.virtualbox.org/">VirtualBox</a></li>
+</ul>
+<p>Nejlepší volbou z hlediska bezpečnosti je využití vestavěného robustního řešení <span class="green">GNOME Boxes</span>. Populární software <span class="red">VirtualBox</span> není ideální k profesionálnímu nasazení, slouží spíše na hraní.</p>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace GNOME Boxes" data-hide="▼ Konfigurace GNOME Boxes">► Konfigurace GNOME Boxes</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stáhněte si .iso obraz OS, který chcete virtualizovat.</li>
+<li>Otevřete si aplikaci <span class="green">Boxy</span>.</li>
+<li>Zobrazí-li se <strong>Úvodní seznámení</strong>, projděte jej a zavřete.</li>
+<li>V levém horním rohu aplikace vytvořte nový virtuální stroj.</li>
+<li>Klikněte na <span class="green">Soubor s obrazem operačního systému</span> a nalezněte požadovaný ISO soubor.</li>
+<li>Odmítněte případnou expresní instalaci.</li>
+<li>Upravte alokaci zdrojů tlačítkem <span class="green">Přizpůsobit</span></li>
+<li>Přidělte virtuálnímu stroji alespoň <em>3 GiB</em> paměti a alespoň <em>22 GiB</em> místa na disku.</li>
+<li style="list-style-type: none"><img alt="gboxes" src="https://securityhandbook.cz/img/cs/gboxes.png"></li>
+<li>Klikněte na <span class="green">Vytvořit</span>.</li>
+<li>Nainstalujte a nakonfigurujte OS. Následně jej vypněte.</li>
+<li>V seznamu na požadovaný virtuální stroj klikněte pravým tlačítkem a otevřete <span class="green">Vlastnosti</span>.</li>
+<li>Přesuňte se do záložky <strong>Snímky</strong>. Existuje-li již nějaký snapshot, ozubeným kolem vpravo otevřete jeho konfiguraci a smažte jej.</li>
+<li>Tlačítkem <span class="green">+</span> v dolním menu vytvořte nový snapshot.</li>
+<li>Ozubeným kolem vpravo otevřete jeho konfiguraci a tlačítkem <span class="green">Přejmenovat</span> si jej pojmenujte jako výchozí snapshot.</li>
+<li style="list-style-type: none"><img alt="gboxes1" src="https://securityhandbook.cz/img/cs/gboxes1.png"></li>
+<li>Nyní můžete kdykoli virtuální stroj po jeho vypnutí snadno obnovit do výchozího stavu.</li>
+<li>Čas od času (např. 1x měsíčně) virtuální OS aktualizujte a vytvořte nový snapshot.</li>
+</ul></div></div>
+<br><br><hr><br>
+
+<h2 id="lnx4">Zabezpečení internetového prohlížeče:</h2>
+<ul>
+<li>bezpečnější nastavení (vypnutí nebezpečných funkcí, ideálně vč. JavaScriptu)</li>
+<li>blokování reklamy</li>
+</ul>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Porovnání prohlížečů z ohledu bezpečnosti" data-hide="▼ Porovnání prohlížečů z ohledu bezpečnosti">► Porovnání prohlížečů z ohledu bezpečnosti</span></div>
+<div class="spoilcontent">
+<p>Všechny prohlížeče jsou po korektním nastavení relativně bezpečné, kritickým důležitým faktorem je také samotný uživatel. V následující sekci naleznete postup pro bezpečnou konfiguraci <strong>Chromium</strong> i <strong>Mozilla Firefox</strong> jakožto dominantních prohlížečů. Také zde naleznete prohlížeče <strong>GNOME Web</strong> (základní jednoduchý prohlížeč příbuzný prohlížeči Safari) a <strong>Brave</strong> (open-source prohlížeč vycházející z Chromium, v <em>základu integruje blokování reklam a trackerů</em>).</p>
+<p>Z uvedených prohlížečů je z hlediska bezpečnosti nejlepší volbou <span class="green">Chromium</span>, případně jeho proprietární varianta <a target="_blank" rel="noopener" href="https://www.google.com/chrome/browser/index.html">Google Chrome</a>.</p>
+<p><span class="green">Chromium / Google Chrome</span> využívají špičkovou implementaci vestavěného sandboxu OS (seccomp-bpf) a integrují moderní mitigace. Prohlížeč <em>Brave</em> je na tom o něco hůře, jeho používání je doporučeno spíše na jiných OS. <strong>GNOME Web</strong> není nijak zvlášť zaměřený na bezpečnost a nehodí se ke každodennímu používání, je ovšem možné jej použít jako oddělený prohlížeč pro citlivé záležitosti (např. bankovnictví). <span class="red">Mozilla Firefox</span> z hlediska zabezpečení v porovnání s konkurencí v některých směrech stále zaostává, obzvláště pak na OS Linux. Na druhou stranu nativně funguje na protokolu <em>wayland</em>, což je významné plus.</p>
+</div></div>
+<br>
+
+<h3 class="chm"><img alt="chm_icon" src="https://securityhandbook.cz/img/icons/chm16.ico"> Chromium:</h3>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace" data-hide="▼ Instalace">► Instalace</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Terminál</span>. Zadejte do něj následující příkazy:</li>
+<li style="list-style-type: none"><pre><code>sudo dnf install -y chromium
+exit</code></pre></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Bezpečnější nastavení" data-hide="▼ Bezpečnější nastavení">► Bezpečnější nastavení</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>V sekci <strong>Ochrana soukromí a zabezpečení</strong> otevřete <span class="green">Nastavení webu</span></li>
+<li>V sekci <strong>Soubory cookie a data webových stránek</strong> zatrhněte možnost <span class="green">Blokovat soubory cookie třetích stran</span>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch.png" alt="ch"></li>
+<li>V sekci <strong>Reklamy</strong> povolte reklamy (blokování reklamy je ošetřeno lépe níže).</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch1.png" alt="ch1"></li>
+<li>V sekci <strong>Synchronizace na pozadí</strong> zablokujte nedávno zavřeným webům dokončit odeslání a příjem dat.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch2.png" alt="ch2"></li>
+<li>V sekci <strong>Přístup pluginu mimo izolovaný prostor</strong> zablokujte webům přístup do počítače pomocí pluginu.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch3.png" alt="ch3"></li>
+<li>V sekci <strong>Sériové porty</strong> zakažte webům přístup k sériovým portům.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch4.png" alt="ch4"></li>
+<li>V sekci <strong>Úprava souborů</strong> zakažte webům upravovat soubory nebo složky v zařízení.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch5.png" alt="ch5"></li>
+<li>V sekci <strong>Schránka</strong> zablokujte webům přístup k datům ve schránce.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch6.png" alt="ch6"></li>
+<li>Prohlížeč restartujte.</li>
+</ul>
+</div></div>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Omezení JavaScript" data-hide="▼ Omezení JavaScript">► Omezení JavaScript</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>V sekci <strong>Ochrana soukromí a zabezpečení</strong> otevřete <span class="green">Nastavení webu</span></li>
+<li>V sekci <strong>JavaScript</strong> zablokujte spouštění JS.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch7.png" alt="ch7"></li>
+<li>Chcete-li manuálně zadat weby, kde je spouštění JS povoleno (rychlejší zadání subdomén přes <strong>*</strong>), klikněte na tlačítko <span class="green">Přidat</span> v sekci <strong>Povolit</strong>. Syntax je jednoduchý.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch8.png" alt="ch8"></li>
+<li>Klikněte na <span class="green">Přidat</span>.</li>
+<li>Spouštění JavaScript také můžete snadno povolovat při otevření webové stránky v pravém rohu prohlížeče.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/chjs.png" alt="chjs"></li>
+</ul>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Blokování reklamy" data-hide="▼ Blokování reklamy">► Blokování reklamy</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Nainstalujte si následující bezpečnostní doplněk: <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm?hl=cs">uBlock Origin</a></li>
+</ul>
+<h4>Nastavení uBlock:</h4>
+<ul>
+<li>Klikněte na ikonu uBlock v horním panelu prohlížeče a následně otevřete nastavení uBlock Origin.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/chublock.png" alt="chublock"></li>
+<li>V sekci <strong>Soukromí</strong> zatrhněte možnost <span class="green">Předejít úniku lokálních IP adres přes WebRTC</span>.</li>
+<li>Přesuňte do záložky <span class="green">Filtry třetích stran</span>.</li>
+<li>Upravte filtry dle obrázku a klikněte na <span class="green">Aktualizovat nyní</span>. Během aktualizace panel nezavírejte.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ublock.png" alt="ublock"></li>
+</ul>
+</div></div>
+
+<br>
+
+<h3 class="epiph"><img alt="epiph_icon" src="https://securityhandbook.cz/img/icons/epiph.png"> GNOME Web:</h3>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace" data-hide="▼ Instalace">► Instalace</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Terminál</span>. Zadejte do něj následující příkazy:</li>
+<li style="list-style-type: none"><pre><code>flatpak install fedora org.gnome.Epiphany
+exit</code></pre></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Bezpečnější nastavení" data-hide="▼ Bezpečnější nastavení">► Bezpečnější nastavení</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Kliknutím na tři tečky v horním pravém rohu otevřete boční panel a zvolte <span class="green">Předvolby</span>.</li>
+<li style="list-style-type: none"><img alt="epiph" src="https://securityhandbook.cz/img/cs/epiph.png"></li>
+<li>Přesuňte se do sekce <strong>Soukromí</strong>. Upravte konfiguraci dle obrázku:</li>
+<li style="list-style-type: none"><img alt="epiph1" src="https://securityhandbook.cz/img/cs/epiph1.png"></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Blokování reklamy" data-hide="▼ Blokování reklamy">► Blokování reklamy</span></div>
+<div class="spoilcontent">
+<p>Prohlížeč má vestavěný blokátor reklam se základními filtry.</p>
+</div></div>
+
+<br>
+
+<h3 class="brv"><img alt="brv_icon" src="https://securityhandbook.cz/img/icons/brv.png"> Brave</h3>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace" data-hide="▼ Instalace">► Instalace</span></div>
+<div class="spoilcontent">
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Níže uvedený postup je platný pro distribuci <strong><span class="fe">Fedora</span></strong>. Používáte-li jinou distribuci, návod k instalaci naleznete <a target="_blank" rel="noopener" href="https://brave-browser.readthedocs.io/en/latest/installing-brave.html#release-channel-installation">zde</a>.</p></div>
+<ul>
+<li>Otevřete si <span class="green">Terminál</span>. Zadejte do něj následující příkazy:</li>
+<li style="list-style-type: none"><pre><code>sudo -i
+dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+dnf install -y brave-browser brave-keyring
+exit
+exit</code></pre></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Bezpečnější nastavení" data-hide="▼ Bezpečnější nastavení">► Bezpečnější nastavení</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>V sekci <strong>Brave shields defaults</strong> zkontrolujte konfiguraci a případně opravte:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/brv.png" alt="brv"></li>
+<li>Vyjeďte na začátek stránky.</li>
+<li>V sekci <strong>Ochrana soukromí a zabezpečení</strong> otevřete <span class="green">Nastavení webu</span></li>
+<li>V sekci <strong>Soubory cookie a data webových stránek</strong> zatrhněte možnost <span class="green">Blokovat soubory cookie třetích stran</span>.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch.png" alt="ch"></li>
+<li>V sekci <strong>Reklamy</strong> povolte reklamy (blokování reklamy je ošetřeno lépe níže).</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch1.png" alt="ch1"></li>
+<li>V sekci <strong>Synchronizace na pozadí</strong> zablokujte nedávno zavřeným webům dokončit odeslání a příjem dat.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch2.png" alt="ch2"></li>
+<li>V sekci <strong>Přístup pluginu mimo izolovaný prostor</strong> zablokujte webům přístup do počítače pomocí pluginu.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch3.png" alt="ch3"></li>
+<li>V sekci <strong>Sériové porty</strong> zakažte webům přístup k sériovým portům.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch4.png" alt="ch4"></li>
+<li>V sekci <strong>Úprava souborů</strong> zakažte webům upravovat soubory nebo složky v zařízení.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch5.png" alt="ch5"></li>
+<li>V sekci <strong>Schránka</strong> zablokujte webům přístup k datům ve schránce.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ch6.png" alt="ch6"></li>
+<li>Prohlížeč restartujte.</li>
+</ul>
+</div></div>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Omezení JavaScript" data-hide="▼ Omezení JavaScript">► Omezení JavaScript</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Nastavení</strong>.</li>
+<li>V sekci <strong>Brave shields defaults</strong> upravte konfiguraci dle obrázku:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/en/brv1.png" alt="brv1"></li>
+<li>Spouštění JavaScript také můžete snadno povolovat při otevření webové stránky v pravém rohu prohlížeče.</li>
+</ul>
+</div></div>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Blokování reklamy" data-hide="▼ Blokování reklamy">► Blokování reklamy</span></div>
+<div class="spoilcontent">
+<p>Prohlížeč v základu integruje blokování reklam a trackerů.</p>
+</div></div>
+
+<br>
+
+<h3 class="ff"><img alt="ff_icon" src="https://securityhandbook.cz/img/icons/ff.png"> Mozilla Firefox</h3>
+
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace" data-hide="▼ Instalace">► Instalace</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <span class="green">Terminál</span>. Zadejte do něj následující příkazy:</li>
+<li style="list-style-type: none"><pre><code>flatpak install fedora org.mozilla.Firefox
+exit</code></pre></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Bezpečnější nastavení" data-hide="▼ Bezpečnější nastavení">► Bezpečnější nastavení</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Skrz nabídku v pravém horním rohu prohlížeče otevřete <strong>Možnosti</strong>.</li>
+<li>V levém panelu se přesuňte do <span class="green">Soukromí a zabezpečení</span>.</li>
+<li>V sekci <strong>Rozšířená ochrana proti sledování</strong> zvolte úroveň <span class="green">Vlastní</span>, kterou nakonfigurujte dle obrázku:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ff.png" alt="ff"></li>
+<li>Sjeďte níže do sekce <strong>Oprávnění</strong> a upravte konfiguraci dle obrázku:</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ff1.png" alt="ff1"></li>
+</ul>
+<ul>
+<li>Do adresního řádku prohlížeče zadejte:</li>
+<li style="list-style-type: none"><pre><code>about:config</code></pre>
+a stiskněte <strong>Enter</strong>.</li>
+<li>Varování potvrďte tlačítkem <span class="green">Beru na vědomí a chci pokračovat</span>.</li>
+<li>Do vyhledávacího pole ve vrchní části stránky zadejte:</li>
+<li style="list-style-type: none"><pre><code>ocsp</code></pre></li>
+<li>Vyhledávání zobrazí veškeré hodnoty s <strong>OCSP</strong> v názvu. Dvakrát poklepejte levým myšítkem na následující hodnotu:</li>
+<li style="list-style-type: none"><pre><code>security.OCSP.require</code></pre></li>
+<li>Tím změníte konfiguraci hodnoty (zapnete/vypnete požadovanou funkci).</li>
+<li style="list-style-type: none"><img alt="ff2" src="https://securityhandbook.cz/img/cs/ff2.png"></li>
+<li>Výše uvedeným způsobem vyhledejte a opravte nastavení následujících hodnot (pokud se neshoduje):</li>
+<li style="list-style-type: none"><pre><code>accessibility.blockautorefresh  ---  true
+security.mixed_content.block_display_content  ---  true
+security.mixed_content.block_object_subrequest --- true
+media.peerconnection.ice.no_host --- true
+javascript.options.asmjs  ---  false</code></pre></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Blokování reklamy" data-hide="▼ Blokování reklamy">► Blokování reklamy</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Nainstalujte si následující bezpečnostní doplněk: <a target="_blank" rel="noopener"href="https://addons.mozilla.org/cs/firefox/addon/ublock-origin/">uBlock Origin</a></li>
+</ul>
+<h4>Nastavení uBlock:</h4>
+<ul>
+<li>Klikněte na ikonu uBlock v horním panelu prohlížeče a následně otevřete nastavení uBlock Origin.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/chublock.png" alt="chublock"></li>
+<li>V sekci <strong>Soukromí</strong> zatrhněte možnost <span class="green">Předejít úniku lokálních IP adres přes WebRTC</span>.</li>
+<li>Přesuňte do záložky <span class="green">Filtry třetích stran</span>.</li>
+<li>Upravte filtry dle obrázku a klikněte na <span class="green">Aktualizovat nyní</span>. Během aktualizace panel nezavírejte.</li>
+<li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/ublock.png" alt="ublock"></li>
+</ul>
+</div></div>
+
+<br><br><hr>
+<h3 class="nocol">To je vše. Stay safe! <img class="smile" src="https://securityhandbook.cz/img/sm/smile.svg" alt="smile"></h3>
+</div></article>
+</main>
+<footer>
+<p>Toto dílo podléhá licenci <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>Podrobnosti o výjimkách z výše zmíněné licence naleznete <a target="_blank" rel="noopener" href="https://securityhandbook.cz/license_cs.php">zde</a>.</p>
+<p>2016-2020 <a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook">@SecurityHandbook</a></p>
+<p><a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs"><img alt="Creative Commons Licence" style="border-width:0" src="https://securityhandbook.cz/img/license.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook/handbook"><img alt="github" src="https://securityhandbook.cz/img/github.png"></a></p>
+</footer>
+<noscript><p>Zapněte si prosím JavaScript, je důležitý pro využití všech funkcí webu. Jedná se pouze o jQuery a pár řádků.</p></noscript>
+<a href="#0" class="cd-top">Top</a>
+<script src="https://securityhandbook.cz/resources/js/jquery-3.4.1.min.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scripts.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scroll.js"></script>
+</body></html>

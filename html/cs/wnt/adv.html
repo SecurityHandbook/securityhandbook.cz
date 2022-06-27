@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<link rel="preload" as="style" href="https://securityhandbook.cz/resources/css/main_alpha.css">
+<link href="https://securityhandbook.cz/resources/css/main_alpha.css" rel="stylesheet" media="screen">
+<link href="https://securityhandbook.cz/resources/css/fonts_min.css" rel="stylesheet">
+<title>OS Windows pro pokročilé</title>
+<meta name="description" content="Zabezpečení OS Windows pro pokročilé.">
+<meta property="og:title" content="OS Windows pro pokročilé">
+<meta property="og:description" content="Zabezpečení OS Windows pro pokročilé.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="HandheldFriendly" content="True">
+<meta name="theme-color" content="#323e4e">
+</head>
+<body>
+<header>
+<div class="hcontent">
+  <a href="https://securityhandbook.cz/cs/index.php">FAQ – Velká příručka bezpečnosti</a>
+  <img src="https://securityhandbook.cz/img/shield.png" alt="logo">
+</div></header>
+<nav>
+<div class="navcontent" id="bignav">
+  <a href="https://securityhandbook.cz/cs/index.php#basics"><strong>Základy bezpečnosti</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>OS Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>OS Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux pro pokročilé</a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>OS Android</strong></a>
+</div>
+<div class="navcontent" id="smallnav">
+  <a href="https://securityhandbook.cz/cs/index.php"><strong>Základy</strong></a>
+  <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt"><strong>Windows</strong></a>
+  <a href="https://securityhandbook.cz/cs/lnx/index.php#lnx"><strong>Linux</strong></a>
+  <a href="https://securityhandbook.cz/cs/iot/andr.php#andr"><strong>Android</strong></a>
+</div>
+</nav>
+<main>
+<article><div class="text">
+<h2><a href="#wnt">OS Windows</a></h2>
+<ul>
+  <li><a href="#wnt1">Bezpečnostní aplikace</a></li>
+  <li><a href="#wnt2">ACL</a></li>
+</ul><br>
+<div class="spoilwrapper" id="tree"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Obsah" data-hide="▼ Obsah">► Obsah</span></div>
+<div class="spoilcontent">
+<ul>
+<li><a href="https://securityhandbook.cz/cs/index.php#basics">Základy bezpečnosti</a></li>
+<li><a href="https://securityhandbook.cz/cs/wnt/index.php#wnt">OS Windows</a></li>
+<li><a href="https://securityhandbook.cz/cs/lnx/index.php#lnx">OS Linux</a></li>
+<li><strong>FAQ – chytrá zařízení (chytré telefony, IoT)</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/iot/andr.php#andr">OS Android</a></li>
+</ul></li>
+<li><strong>FAQ pro pokročilé</strong><ul>
+  <li><a href="https://securityhandbook.cz/cs/wnt/adv.php#wnt">OS Windows</a></li>
+  <li><a href="https://securityhandbook.cz/cs/lnx/adv.php#lnx">OS Linux</a></li>
+</ul></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+</div></div>
+</div></article><br>
+<article id="wnt"><div class="text">
+<h1>OS Windows pro pokročilé</h1>
+<p>Windows se jakožto nejrozšířenější desktopový OS těší velké pozornosti hackerů, jeho dostatečné zabezpečení je proto nezbytné.</p>
+<p>Tato část příručky počítá s tím, že jste pročetli kapitolu <a href="https://securityhandbook.cz/cs/wnt/index.php#wnt">OS Windows pro méně pokročilé</a> a máte minimálně znalosti v kapitole rozebírané.</p>
+<h4>Sekce kapitoly:</h4>
+<ul>
+<li><a href="#wnt1">Bezpečnostní aplikace</a></li>
+<li><a href="#wnt2">ACL</a></li>
+</ul>
+<br>
+<h2 id="wnt1">Bezpečnostní aplikace:</h2>
+<h3 id="wnt1.1">Firewall:</h3>
+<p>Windows v základu integrují <span class="green">Windows Defender Firewall</span> (WDF) pro blokování příchozí komunikace. Co se blokování odchozí komunikace týče, <em>Windows Defender Firewall</em> tuto funkci podporuje, ovšem její nastavení se v nových verzích OS limitně blíží k úrovni nemožného.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace WDF pro blokování odchozí komunikace" data-hide="▼ Konfigurace WDF pro blokování odchozí komunikace">► Konfigurace WDF pro blokování odchozí komunikace</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Otevřete si <strong>hledání Windows</strong>, do vyhledávacího pole zadejte:</li>
+<li style="list-style-type: none"><pre><code>wf.msc</code></pre></li>
+<li>Na nalezenou položku klikněte pravým tlačítkem a zvolte možnost: <img src="https://securityhandbook.cz/img/icons/admin.png" alt="admin"> <strong>Spustit jako správce</strong>.</li><li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdf.png" alt="wdf"></li>
+<li>Otevře se pokročilé nastavení Windows Firewall. V prostředním sloupci zvolte možnost <span class="green">Vlastnosti brány Firewall v programu Windows Defender</span>.</li>
+<li>V horním panelu si otevřete záložku <strong>Privátní profil</strong>. U položky <strong>Odchozí připojení</strong> zvolte možnost <span class="green">Blokovat</span>.</li><li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdf1.png" alt="wdf1"></li>
+<li>Postup zopakujte pro záložku <strong>Veřejný profil</strong>.</li>
+<li>Klikněte na <span class="green">OK</span>.</li><li style="list-style-type: none"><img src="https://securityhandbook.cz/img/cs/wdf2.png" alt="wdf2"></li>
+</ul>
+<div class="alert success"><p><em class="icon-ok-circled"></em><strong>Úspěch</strong><br>
+Nyní WDF blokuje veškerou odchozí komunikaci, která není specificky povolena. Dále je třeba nastavit allowlist.</p></div>
+</div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Allowlist odchozí komunikace" data-hide="▼ Allowlist odchozí komunikace">► Allowlist odchozí komunikace</span></div>
+<div class="spoilcontent">
+<pre><code># sitove sluzby OS
+%SystemRoot%\System32\svchost.exe
+
+# nastaveni
+%SystemRoot%\ImmersiveControlPanel\SystemSettings.exe
+
+# Defender
+%ProgramFiles%\Windows Defender\MsMpEng.exe
+%ProgramFiles%\Windows Defender\MpCmdRun.exe
+%ProgramFiles%\Windows Defender\NisSrv.exe
+%ProgramData%\Microsoft\Windows Defender\Platform\*\MsMpEng.exe
+%ProgramData%\Microsoft\Windows Defender\Platform\*\MpCmdRun.exe
+%ProgramData%\Microsoft\Windows Defender\Platform\*\MpDlpCmd.exe
+%ProgramData%\Microsoft\Windows Defender\Platform\*\NisSrv.exe
+
+# OpenSSH
+%SystemRoot%\System32\OpenSSH\ssh-agent.exe
+</code></pre>
+</div></div>
+<br>
+<h3 id="wnt1.2">MemProtect:</h3>
+<p><a target="_blank" rel="noopener" href="https://excubits.com/content/en/products_memprotect.html">Excubits MemProtect</a> je drobný ovladač určující které procesy mají přístup k jakým procesům v RAM. Jedná se o špičkové řešení mitigace proti exploitům, jehož konfigurace je triviální.</p>
+<p>Existuje bezplatná demo verze, která je po nějakou dobu plně funkční, s omezením velikosti konfigurační souboru na 2 kB, což není dostatek pro pokročilé nastavení, investice do plné verze je tedy žádoucí.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace MemProtect" data-hide="▼ Instalace MemProtect">► Instalace MemProtect</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stáhněte si demo verzi ze stránek výrobce, soubor spusťte a aplikaci vybalte.</li>
+<li>Otevřete složku <strong>64-bit</strong>.</li>
+<li>Klikněte pravým tlačítkem na INF soubor a zvolte <strong>Install</strong>.</li>
+<li>RTFM, který je ve složce <em>Tools</em>.</li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Ukázka syntaxe konfiguračního souboru" data-hide="▼ Ukázka syntaxe konfiguračního souboru">► Ukázka syntaxe konfiguračního souboru</span></div>
+<div class="spoilcontent">
+<p>Příklad: Zablokování přístupu všem nesystémovým procesům k procesům VoodooShield – jednoduché ztížení exploitace.</p>
+<pre><code>[LETHAL]
+[LOGGING]
+[DEFAULTALLOW]
+[WHITELIST]
+!C:\Program Files\VoodooShield\*>C:\Program Files\VoodooShield\*
+!C:\Windows\explorer.exe>C:\Program Files\VoodooShield\*
+!C:\Windows\System32\*>C:\Program Files\VoodooShield\*
+!C:\Windows\SystemApps\*>C:\Program Files\VoodooShield\*
+!C:\Program Files\Windows Defender\*>C:\Program Files\VoodooShield\*
+[BLACKLIST]
+*>C:\Program Files\VoodooShield\*
+[EOF]
+</code></pre>
+</div></div>
+<br>
+<h3 id="wnt1.3">FIDES:</h3>
+<p><a target="_blank" rel="noopener" href="https://excubits.com/content/en/products_pumpernickelfides.html">Excubits FIDES</a> je drobný ovladač určující které procesy mají k jakým souborům/složkám přístup. Jedná se o špičkové řešení mitigace proti exploitům, jehož konfigurace je triviální.</p>
+<p>Existuje bezplatná demo verze, která je po nějakou dobu plně funkční, s omezením velikosti konfigurační souboru na 2 kB, což není dostatek pro pokročilé nastavení, investice do plné verze je tedy žádoucí.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace FIDES" data-hide="▼ Instalace FIDES">► Instalace FIDES</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stáhněte si demo verzi ze stránek výrobce, soubor spusťte a aplikaci vybalte.</li>
+<li>Otevřete složku <strong>64-bit</strong>.</li>
+<li>Klikněte pravým tlačítkem na INF soubor a zvolte <strong>Install</strong>.</li>
+<li>RTFM, který je ve složce <em>Tools</em>.</li>
+</ul></div></div>
+<br>
+<h3 id="wnt1.4">Bouncer:</h3>
+<p><a target="_blank" rel="noopener" href="https://excubits.com/content/en/products_bouncer.html">Excubits Bouncer</a> je drobný ovladač umožňující pokročilý allowlist spustitelných souborů. Jedná se o špičkové řešení mitigace proti exploitům, jehož konfigurace je triviální.</p>
+<p>Existuje bezplatná demo verze, která je po nějakou dobu plně funkční, s omezením velikosti konfigurační souboru na 5 kB, což není dostatek pro pokročilé nastavení, investice do plné verze je tedy žádoucí.</p>
+<br><br><hr><br>
+<h2 id="wnt2">ACL:</h2>
+<p><span class="green">Access Control List</span> je součást bezpečnostního modelu OS, jež v důsledku pro koncového uživatele umožňuje např. spuštění aplikací v určité složce.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Nutná teorie k ACL" data-hide="▼ Nutná teorie k ACL">► Nutná teorie k ACL</span></div>
+<div class="spoilcontent">
+<p><span class="green">ACL</span> je seznam záznamů (jednotlivý záznam je nazýván <strong>ACE</strong>) určujících, který subjekt má jaké pravomoce pro manipulaci se zabezpečeným objektem (konkrétně se budeme bavit pouze o DACL). Při přihlášení je uživateli přiřazen přístupový <strong>token</strong>, který následně přebírají všechny aplikace spuštěné daným uživatelem. Pokud proces chce operovat se zabezpečeným objektem, kontrola přístupu se podívá na jeho token a na deskriptor zabezpečení u objektu.</p>
+<p>Token obsahuje mnoho věcí, pro nás je ale aktuálně důležitá jedna položka: <span class="green">SID</span>.</p>
+<p><strong>SID</strong> je unikátní hodnota určená k identifikaci vlastníka – uživatelského účtu nebo uživatelské skupiny. Např.: <em>S-1-5-32-544</em>.</p>
+<p>Kontrola přístupu z tokenu aplikace získá jeho SID a následně v ACL seznamu vyhledá veškeré záznamy (ACE), ve kterých je daný SID. Následně všechny nalezené ACE sekvenčně prozkoumá, dokud nenalezne ACE, který přístup k objektu explicitně zakáže/povolí. ACE zakazující přístup jsou zkoumány přednostně.</p>
+</div></div>
+<p>ACL lze využít následovně: můžeme zakázat spouštění spustitelných souborů v uživatelských složkách a složce pro dočasné soubory. Běžný uživatel by neměl potřebovat spouštět ve svých složkách spustitelné soubory – a pokud ano, vždy lze nastavit výjimka.</p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Konfigurace exekuce v uživatelské složce" data-hide="▼ Konfigurace exekuce v uživatelské složce">► Konfigurace exekuce v uživatelské složce</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Stiskněte kláv. zkratku <img src="https://securityhandbook.cz/img/icons/wkey.png" alt="win"> <span class="ks">+ X</span> a z nabídky vyberte <span class="green">Windows PowerShell (správce)</span>.</li>
+<li style="list-style-type: none"><img alt="wx" src="https://securityhandbook.cz/img/cs/wx.png"></li>
+<li>Do příkazové řádky zadejte následující příkazy (cestu ke složce uživatele patřičně upravte):</li>
+<li style="list-style-type: none"><pre><code>icacls "(cesta k uživatelské složce)" /c /deny "Everyone:(OI)(CI)(X)"
+# např.: icacls "C:\Users\Uzivatel" /c /deny "Everyone:(OI)(CI)(X)"
+icacls "(cesta k uživatelské složce)\AppData\Local\Microsoft\WindowsApps" /inheritance:d
+icacls "(cesta k uživatelské složce)\AppData\Local\Microsoft\WindowsApps" /remove:d Everyone /t</code></pre></li>
+</ul>
+<div class="alert info"><p><em class="icon-info-circled"></em><strong>Info</strong><br>
+Stejný postup proveďte pro globální složku dočasných souborů.</p></div>
+</div></div>
+<br>
+<h3 id="wnt2.1">Integritní politika:</h3>
+<p>Pomocí integritní politiky je možné např. omezit přístup aplikacím s nízkou úrovní integrity do osobních složek. Pro komplexní konfiguraci přístupu aplikací k disku je doporučeno použít <span class="green">FIDES</span>. Ochranu proti ransomware poskytuje <span class="green">Windows Defender</span>. <em>Tato sekce již nemá příliš praktické využití.</em></p>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Instalace CHML" data-hide="▼ Instalace CHML">► Instalace CHML</span></div>
+<div class="spoilcontent">
+<p>Integrovaný nástroj <strong>icacls</strong> neumožňuje nastavení integritní politiky, je proto nutné použít drobný nástroj třetí strany.</p>
+<ul>
+<li>Stáhněte si <a download="chml.exe" href="https://securityhandbook.cz/mirror/chml.exe">chml</a> (by <em><a target="_blank" rel="noopener"href="https://www.minasi.com/">Mark Minasi</a></em>) a uložte jej <span class="blue">na Plochu</span>.</li>
+<li>Zkontrolujte checksum aplikace:</li>
+<li style="list-style-type: none"><pre><code>SHA-256: 59aa55d2eac6b295d42ef2aadc607b759f034f4557a66dec0214a4cc032ecc17</code></pre></li>
+<li>Aplikaci zkopírujte do umístění: <span class="blue">%SystemRoot%\System32</span></li>
+<li>Smažte <em>chml</em> z původní lokace.</li>
+<li>Stiskněte kláv. zkratku <img alt="win" src="https://securityhandbook.cz/img/icons/wkey.png"> <span class="ks">+ X</span> a z nabídky vyberte <span class="green">Windows PowerShell (správce)</span>.</li><li style="list-style-type: none"><img alt="wx" src="https://securityhandbook.cz/img/cs/wx.png"></li>
+<li>Do příkazové řádky zadejte následující příkaz pro validaci úspěšné instalace aplikace:</li>
+<li style="list-style-type: none"><pre><code>chml</code></pre></li>
+</ul></div></div>
+<div class="spoilwrapper"><div class="spoiltitle">
+<span class="spoilbtn" data-show="► Nastavení integritní politiky osobních složek" data-hide="▼ Nastavení integritní politiky osobních složek">► Nastavení integritní politiky osobních složek</span></div>
+<div class="spoilcontent">
+<ul>
+<li>Do příkazové řádky zadejte následující příkazy:</li>
+<li style="list-style-type: none"><pre><code>chml "(cesta k uživatelské složce)\Documents" -i:m -nw -nx
+chml "(cesta k uživatelské složce)\Pictures" -i:m -nw -nx
+chml "(cesta k uživatelské složce)\Music" -i:m -nw -nx
+chml "(cesta k uživatelské složce)\Videos" -i:m -nw -nx
+
+# -i:l (nízká úroveň integrity)
+# -i:m (střední úroveň integrity)
+# -i:h (vysoká úroveň integrity)
+# -nw (NO_WRITE_UP)
+# -nx (NO_EXECUTE_UP)
+# -nr (NO_READ_UP)</code></pre></li>
+<li>Analogicky lze nastavit integritní politiku pro libovolnou složku/soubor. Úroveň integrity a integritní politika jsou ve výchozím nastavení dědičné atributy.</li>
+</ul></div></div>
+<br><br><hr>
+<h3 class="nocol">To je vše. Stay safe! <img class="smile" src="https://securityhandbook.cz/img/sm/smile.svg" alt="smile"></h3>
+<br></div></article>
+</main>
+<footer>
+<p>Toto dílo podléhá licenci <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br>Podrobnosti o výjimkách z výše zmíněné licence naleznete <a target="_blank" rel="noopener" href="https://securityhandbook.cz/license_cs.php">zde</a>.</p>
+<p>2016-2020 <a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook">@SecurityHandbook</a></p>
+<p><a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.cs"><img alt="Creative Commons Licence" style="border-width:0" src="https://securityhandbook.cz/img/license.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SecurityHandbook/handbook"><img alt="github" src="https://securityhandbook.cz/img/github.png"></a></p>
+</footer>
+<noscript><p>Zapněte si prosím JavaScript, je důležitý pro využití všech funkcí webu. Jedná se pouze o jQuery a pár řádků.</p></noscript>
+<a href="#0" class="cd-top">Top</a>
+<script src="https://securityhandbook.cz/resources/js/jquery-3.4.1.min.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scripts.js"></script>
+<script src="https://securityhandbook.cz/resources/js/scroll.js"></script>
+</body></html>
